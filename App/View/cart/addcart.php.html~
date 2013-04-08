@@ -1,0 +1,4 @@
+<?php 
+ 
+ 	header( "Location:index.php?controller=books&action=index" ); ?>
+ 

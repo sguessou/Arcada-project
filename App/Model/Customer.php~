@@ -1,0 +1,45 @@
+<?php
+
+namespace App\Model;
+
+class Customer {
+	
+	protected $_customer_id;
+	protected $_firstname;
+	protected $_lastname;
+	protected $_email;
+	protected $_username;
+	protected $_password;
+	protected $_phone;
+	protected $_address_line_1;
+	protected $_address_line_2;
+	protected $_town_city;
+	protected $_county;
+	protected $_country;
+	protected $_created_at;
+	protected $_updated_at;
+	protected $_last_login;
+	
+	public function __construct( $customer_id, $firstname, $lastname, $email, $username, $password, $phone,
+											 $address_line_1, $address_line_2, $town_city, $county, $country, $created_at,
+											 $updated_at, $last_login ) {
+			$this->_customer_id = $customer_id;
+			$this->_firstname = $firstname;
+			$this->_lastname = $lastname;
+			$this->_email = $email;
+			$this->_username = $username;
+			$this->_password = $password;
+			$this->_phone = $phone;
+			$this->_address_line_1 = $address_line_1;
+			$this->_address_line_2 = $address_line_2;
+			$this->_town_city = $town_city;
+			$this->_county = $county;
+			$this->_country = $country;
+			$this->_created_at = $created_at;
+			$this->_updated_at = $updated_at;
+			$this->_last_login = $last_login;
+			
+			
+	}
+
+}

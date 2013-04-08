@@ -1,0 +1,104 @@
+<div id="menu"> 
+		<ul>     
+			<li><a href="index.php?controller=index">Main</a></li>
+			<li><a class="current" href="index.php?controller=books">Books</a></li>
+			<li><a href="index.php?controller=dvd">DVD's</a></li>
+			<li><a href="index.php?controller=login">Login</a></li>
+			<li><a href="index.php?controller=admin">Admin</a></li>
+		</ul>
+	</div>
+	
+	<div id="feature">	
+		<div class="left">		
+			<h2 class="cart" id="viewCart">Cart</h2>
+			<?php
+	
+			if ( empty( $qty ) ) 
+			{
+				echo "<p>Your Shopping Cart is empty!</p>";
+			}
+			else
+			{
+				if( $qty == 1 )
+				{
+					echo '<p>Your have <a href="#" id="cartLink">'.$qty.' product</a> in your Shopping Cart!</p>';
+				}
+				else
+				{
+					echo '<p>Your have <a href="#" id="cartLink">'.$qty.' products</a> in your Shopping Cart!</p>';
+				}
+			}
+			?>
+		<div id="cartSlider">	
+			<h3 class="cartSlider">Your Shopping Cart:</h3>
+			
+			<ul class="cartUl"><?php 
+					$total = 0;
+					foreach( $CartProducts as $CartProduct ) { 
+					$total += ( $CartProduct->quantity * $CartProduct->product_price ) +
+							  ( $CartProduct->quantity * 2.95 );
+			?>
+				
+				<li><a href="index.php?controller=index&action=removeCartItem&item_id=<?php echo $CartProduct->item_id; ?>"><img src="/project/images/Trash.png"></a>&nbsp;&nbsp;<a href="index.php?controller=books&action=showProduct&pid=<?php echo $CartProduct->product_id; ?>" id="cSlider"><?php echo $CartProduct->product_name; ?></a>
+				&nbsp;<strong><?php echo $CartProduct->quantity. ($CartProduct->quantity == 1 ? ' Item ' : ' Items '); ?></strong>à&nbsp;€&nbsp;
+				<?php echo $CartProduct->product_price; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Subtotal:</strong>&nbsp;
+				<font color="#FF0000"><strong>€&nbsp;<?php echo $CartProduct->product_price * $CartProduct->quantity; ?></strong></font></li>
+				
+				<?php
+				}
+				?>
+				<li>&nbsp;</li>
+				<li><strong>Total Sum: € <font color="#FF0000"><?php echo $total; ?></strong></font></li>
+			</ul>
+			
+			<a class="close" id="close" href="#">Close</a>
+		</div>	
+	</div>
+<div class="clear">&nbsp;</div>
+</div>
+
+
+<div id="main">
+   
+	
+   
+			<!-- -->
+			<div class="wrapper">
+		<div class="product">
+			<h1 class="instructions"><strong><?php echo htmlspecialchars( $Product->product_name ); ?></strong></h1>
+			<h2 class="instructions"><?php echo  htmlspecialchars( $ProductTypeName["type_name"] ) . " Description"; ?></h2>
+			<?php
+			$img = "/project/images/products_images/" . htmlspecialchars( $Product->product_id ) . "R.jpg";
+			?>
+			<img src="<?php echo $img; ?>" alt="<?php echo $img; ?>" height="180" width="160" />
+			<p><?php echo htmlspecialchars( $Product->product_description ); ?></p>
+			<ul class="author">
+				<li><h2 class="author">More About the Author</h2>
+				<strong>Biography</strong></li>
+				
+			</ul>
+			
+			<h2 class="details">Product Details</h2>
+			<ul>
+				<li><strong>Paperback:</strong>&nbsp;</li>
+				<li><strong>Language:</strong>&nbsp;<?php echo htmlspecialchars( $Product->product_language ); ?></li>
+				<li><strong>ISBN-10:</strong>&nbsp;<?php echo htmlspecialchars( $Product->product_isbn10 ); ?></li>
+				<li><strong>Price:</strong>&nbsp;<?php echo htmlspecialchars( $Product->product_price ); ?>&nbsp;&euro;</li>
+			</ul>
+			<a class="add-cart" href="index.php?controller=cart&action=addcart&pid=<?php echo htmlspecialchars( $Product->product_id ); ?>">Add to cart</a>
+			<a class="more" href="index.php?controller=books&action=index">Go Back</a>
+		</div>
+	</div>
+			
+			
+			
+	<!--		-->	
+				
+		
+     
+      
+      
+			
+      
+         <div class="clear">&nbsp;</div>
+   </div>

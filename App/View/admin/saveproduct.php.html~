@@ -1,0 +1,3 @@
+<?php 
+var_dump($Product);
+ header( "Location:index.php?controller=admin&action=addproduct" ); ?>

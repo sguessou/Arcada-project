@@ -1,0 +1,70 @@
+<div id="menu"> 
+		<ul>     
+			<li><a href="index.php?controller=index">Main</a></li>
+			<li><a href="index.php?controller=books">Books</a></li>
+			<li><a href="index.php?controller=dvd">DVD's</a></li>
+			<li><a href="index.php?controller=login">Login</a></li>
+			<li><a class="current" href="index.php?controller=admin">Admin</a></li>
+		</ul>
+	</div>
+	
+	<div id="feature">
+		<div class="left">			
+			<h2>Welcome to the Admin CMS area!</h2>
+			<!--p>In here you can manage users !</p-->
+		</div>
+			<div class="clear">&nbsp;</div>
+	</div>
+<div id="main">
+   <div id="sidebar">
+			<div class="sidebarbox">
+               <h2>Admin menu</h2>
+				<ul class="sidemenu">
+					<li><a href="">Manage users</a></li>
+					<li><a href="index.php?controller=admin&action=ptypes">Manage product types</a></li>
+					<li><a href="#">Manage books</a>
+						<ul>
+							<li><a href="index.php?controller=admin&action=addbook">Add new book</a></li>
+							<li><a href="">Delete book</a></li>
+							<li><a href="">Update book</a></li>
+						</ul></li>
+					<li><a href="#">Manage dvd's</a>
+					<ul>
+							<li><a href="">Add new dvd</a></li>
+							<li><a href="">Delete dvd</a></li>
+							<li><a href="">Update dvd</a></li>
+						</ul></li>
+					<li><a href="#">Manage orders</a></li>	
+				</ul>
+			</div>
+	    </div> 		   
+	<div id="content">
+   <h3>Admin\Books\Add new book></h3>
+   <div class="wrapper">
+		<form action="" enctype="multipart/form-data" method="post" id="addbook-form">
+			<div><label for="title">Title</label>
+			<input type="text" name="title" id="title" required="required" /></div>
+			
+			<div><label for="price">Price</label>
+			<input type="text" name="price" id="price" required="required"/></div>
+			
+			<div><label for="language">Language</label>
+			<input type="text" name="language" id="language" required="required"/></div>
+			
+			<div><label for="descriptio">Description</label>
+			<textarea name="description" id="description" rows="10" cols="30"></textarea></div>
+			
+			<div><label for="author">Author</label>
+			<input type="text" name="author" id="author" required="required"/></div>
+			
+			<div><label for="cover">Cover</label>
+			<input type="file" name="cover" id="cover" required="required"/></div>
+			
+			<div class="submit"><input type="submit" name="contact-submit" id="contact-submit" value="Submit" /></div>
+		</form>
+	</div>
+		
+	</div>
+	
+	<div class="clear">&nbsp;</div>
+   </div>

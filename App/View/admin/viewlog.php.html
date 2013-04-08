@@ -1,0 +1,115 @@
+<div id="menu"> 
+		<ul>     
+			<li><a href="<?php echo $path ?>/index.php?controller=index">Main</a></li>
+			<li><a href="<?php echo $path ?>/index.php?controller=books">Books</a></li>
+			<li><a href="<?php echo $path ?>/index.php?controller=dvd">Movies</a></li>
+			<?php
+			 
+				if( $loggedIn && !$admin )
+				{
+					echo '<li><a class="current" href="'.$path.'/index.php?controller=login&action=login">My Account</a></li>';
+				}
+				elseif( !$loggedIn)
+				{
+					echo '<li><a class="current" href="'.$path.'/index.php?controller=login">Login</a></li>';
+				}
+				
+				if( $admin )
+				{
+					echo '<li><a class="current" href="'.$path.'/index.php?controller=admin">Admin</a></li>';
+				}
+				?>
+		</ul>
+	</div>
+	
+	<div id="feature">
+		<div class="left">			
+			<h2>Welcome To The Admin CMS Area!</h2>
+			<!--p>In here you can manage users !</p-->
+		</div>
+		
+			<div class="clear">&nbsp;</div>
+	</div>
+<div id="main">
+   <div id="sidebar">
+			<div class="sidebarbox">
+               <h2>Admin Menu</h2>
+				<ul class="sidemenu">
+					<li><a href="">Manage Users</a></li>
+					<li><a href="<?php echo $path ?>/index.php?controller=admin&action=ptypes">Manage Product Types</a></li>
+					<li><a href="#">Manage Products</a>
+						<ul>
+							<li><a href="<?php echo $path ?>/index.php?controller=admin&action=addproduct">Add Product</a></li>
+							<li><a href="">Delete Product</a></li>
+							<li><a href="">Update Product</a></li>
+						</ul></li>
+					<li><a href="#">Manage Orders</a></li>	
+					<li><a href="<?php echo $path ?>/index.php?controller=admin&action=viewLog">View Access Log</a></li>
+					<li><a href="<?php echo $path ?>/index.php?controller=login&action=login&logout=logout">Logout</a></li>	
+				</ul>
+			</div>
+	    </div> 		   
+	<div id="content">
+  
+  <h4>Access Log</h4>
+ <br />
+    <table cellspacing="0" style="width: 45em; border: 1px solid #666;">
+      <tr>
+      	<th align="left">#</th>
+        <th align="left">Web Page</th>
+        <th align="left">Date</th>
+        <th align="left">IP Address</th>
+        <th align="left">Hostname</th>
+      </tr>
+<?php
+$rowCount = 0;
+
+foreach ( $logs as $logEntry ) {
+  $rowCount++;
+?>
+      <tr<?php if ( $rowCount % 2 == 0 ) echo ' class="alt"' ?>>
+      	<td><?php echo $rowCount; ?></td>
+        <td><?php echo $logEntry['pageUrl']; ?></td>
+        <td><?php echo $logEntry['lastAccess']; ?></td>
+        <td><?php echo $logEntry['ip']; ?></td>
+        <td><?php echo $logEntry['host']; ?></td>
+      </tr>
+<?php
+}
+?>
+    </table>
+    
+<div style="width: 75%; margin-top: 20px; text-align: center;">
+<?php if ( $start > 0 ) { ?>
+      <a href="<?php echo $path ?>/index.php?controller=Admin&action=viewLog&start=<?php echo max( $start - $PAGE_SIZE, 0 ) ?>&first=<?php echo max( $first - 1, 1 ) ?>">Previous page</a>
+<?php } ?>
+&nbsp;
+<?php if ( $start + $PAGE_SIZE < $totalRows ) { ?>
+      <a href="<?php echo $path ?>/index.php?controller=Admin&action=viewLog&start=<?php echo min( $start + $PAGE_SIZE, $totalRows ) ?>&first=<?php echo min( $first + 1, ($totalRows / $PAGE_SIZE) + 1 ) ?>">Next page</a>
+<?php } 
+			$last = $totalRows / $PAGE_SIZE;
+			if($totalRows % $PAGE_SIZE) { $last += 1; }
+			echo '&nbsp;&nbsp;( '.$first.' of '.(int)$last.' ) '; ?>
+    </div>
+    
+	<div style="width: 45em; margin-top: 20px; text-align: left;">	
+	<form action="" method="post" class="style-form">
+	<input type="submit" value="Truncate Log Table">
+	</form> 
+	&nbsp;&nbsp;
+	</div>
+
+	
+	 <div class="logsWrapper">
+	 <form action="<?php echo $path ?>/index.php?controller=Admin&action=viewLog" method="post" class="style-form">&nbsp;
+   <input type="text" name="date" id="date" style="width: 35%; float: left;" placeholder="date as: yyyy-mm-dd" />&nbsp;
+	<input type="submit" value="Delete Downward" style="float: left; margin-left: 10px;" />&nbsp;
+	</form></div>
+	
+	
+	
+
+		
+ </div>
+   <div class="clear">&nbsp;</div>
+ </div>

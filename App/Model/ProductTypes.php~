@@ -1,0 +1,12 @@
+<?php
+namespace App\Model;
+
+class ProductTypes extends AbstractMapper {
+	
+	protected $data = array( "product_type_code" => "",
+										"parent_product_type_code" => "",
+										"product_description" => "");
+										
+	
+	
+	}

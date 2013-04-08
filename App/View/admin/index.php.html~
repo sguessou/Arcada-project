@@ -1,0 +1,53 @@
+<div id="menu"> 
+		<ul>     
+			<li><a href="index.php?controller=index">Main</a></li>
+			<li><a href="index.php?controller=books">Books</a></li>
+			<li><a href="index.php?controller=dvd">DVD's</a></li>
+			<li><a href="index.php?controller=login">Login</a></li>
+			<li><a class="current" href="index.php?controller=admin">Admin</a></li>
+		</ul>
+	</div>
+	
+	<div id="feature">
+		<div class="left">			
+			<h2>Welcome to the Admin CMS area!</h2>
+			<!--p>In here you can manage users !</p-->
+		</div>
+		
+			<div class="clear">&nbsp;</div>
+	</div>
+<div id="main">
+   <div id="sidebar">
+			<div class="sidebarbox">
+               <h2>Admin menu</h2>
+				<ul class="sidemenu">
+					<li><a href="">Manage users</a></li>
+					<li><a href="index.php?controller=admin&action=ptypes">Manage product types</a></li>
+					<li><a href="#">Manage products</a>
+						<ul>
+							<li><a href="index.php?controller=admin&action=addproduct">Add product</a></li>
+							<li><a href="">Delete product</a></li>
+							<li><a href="">Update product</a></li>
+						</ul></li>
+					<li><a href="#">Manage orders</a></li>	
+				</ul>
+			</div>
+	    </div> 		   
+	<div id="content">
+   <h3>Welcome (name)!</h3>
+				<p>Your last login was (date).</p>
+			<!-- -->
+			
+			
+			
+			
+	<!--		-->	
+				
+		
+      </div>
+      
+      
+			
+      
+         <div class="clear">&nbsp;</div>
+   </div>

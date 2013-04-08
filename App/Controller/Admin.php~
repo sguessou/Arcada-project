@@ -1,0 +1,40 @@
+<?php
+namespace App\Controller;
+
+
+use App\Model\ProductTypesMapper;
+use App\Model\ProductMapper;
+use App\Model\ProductTypes;
+use App\Model\Product;
+
+Class Admin extends AbstractController {
+		public function index() {
+							
+			}
+			
+		
+		public function addproduct() {
+			$PTMapper = new ProductTypesMapper();
+			$this->viewVars->MPTypes = $PTMapper->fetchMPTypes();	
+							
+			}
+			
+		public function saveproduct() {
+			$PMapper = new ProductMapper();	
+			$PMapper->insertProduct( new Product( 0, $_POST["ptype_id"], $_POST["title"], $_POST["price"], $_POST["language"],
+																	 $_POST["description"], $_POST["author"], $_POST["isbn10"] ) );
+			
+		}	
+
+		public function ptypes() {		
+			$PTMapper = new ProductTypesMapper();
+			$this->viewVars->PTypes = $PTMapper->fetchPTypes();
+					}	
+					
+		public function PTypesSave() {
+			$PTMapper = new ProductTypesMapper();
+			$PTMapper->savePType( new ProductTypes( null, $_POST["parent_ptype_id"], $_POST["type_name"] ) );
+			$this->viewVars->PTypes = $PTMapper->fetchPTypes();				
+		}	
+	
+	}

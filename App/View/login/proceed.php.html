@@ -1,0 +1,191 @@
+<div id="menu"> 
+		<ul>     
+			<li><a href="index.php?controller=index">Main</a></li>
+			<li><a href="index.php?controller=books">Books</a></li>
+			<li><a href="index.php?controller=dvd">Movies</a></li>
+			<?php
+			 
+				if( $loggedIn && !$admin )
+				{
+					echo '<li><a class="current" href="index.php?controller=login&action=login">My Account</a></li>';
+				}
+				elseif( !$loggedIn)
+				{
+					echo '<li><a class="current" href="index.php?controller=login">Login</a></li>';
+				}
+				
+				if( $admin )
+				{
+					echo '<li><a class="current" href="index.php?controller=admin">Admin</a></li>';
+				}
+				?>
+		</ul>
+	</div>
+	
+	<div id="feature">	
+	
+	
+		<div class="left">		
+			<h2 class="cart">Cart</h2>
+			
+			<?php
+	
+			if ( empty( $qty ) ) 
+			{
+				echo "<p>Your Shopping Cart is empty!</p>";
+			}
+			else
+			{
+				if( $qty == 1 )
+				{
+					echo '<p>You have <a href="#" id="cartLink">'.$qty.' product</a> in your Shopping Cart!</p>';
+				}
+				else
+				{
+					echo '<p>You have <a href="#" id="cartLink">'.$qty.' products</a> in your Shopping Cart!</p>';
+				}
+			}
+			?>
+			
+		<div id="cartSlider">	
+			<h1 class="cart_header">Your Shopping Cart:</h1>
+			
+			<ul class="cartUl"><?php 
+					$total = 0;
+					foreach( $CartProducts as $CartProduct ) { 
+					$total += ( $CartProduct->quantity * $CartProduct->product_price ) +
+							  ( $CartProduct->quantity * 2.95 );
+			?>
+				
+				<li><a href="index.php?controller=index&action=removeCartItem&item_id=<?php echo $CartProduct->item_id; ?>"><img src="<?php echo $path; ?>/css/images/bin_closed.png"></a>&nbsp;&nbsp;<a href="index.php?controller=books&action=showProduct&pid=<?php echo $CartProduct->product_id; ?>" id="cSlider"><?php echo $CartProduct->product_name; ?></a>
+				&nbsp;<strong><?php echo $CartProduct->quantity. ($CartProduct->quantity == 1 ? ' Item ' : ' Items '); ?></strong>à&nbsp;€&nbsp;
+				<?php echo $CartProduct->product_price; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Subtotal:</strong>&nbsp;
+				<font color="#FF0000"><strong>€&nbsp;<?php echo $CartProduct->product_price * $CartProduct->quantity; ?></strong></font></li>
+				
+				<?php
+				}
+				?>
+				<li>&nbsp;</li>
+				<li><strong>Total Sum: € <font color="#FF0000"><?php echo $total; ?></strong></font></li>
+			</ul>
+			 <a class="checkout" id="checkout" href="<?php echo $path; ?>/index.php?controller=login&action=index&checkout=checkout">Proceed to Checkout</a>
+			<a class="close" id="close" href="#">Close</a>
+		</div>	
+		
+	</div>
+	
+	
+	<div class="clear">&nbsp;</div>
+</div>
+
+
+
+<div id="main">
+	<div id="sidebar">
+			<div class="sidebarbox">
+               <h2>My Account Menu</h2>
+				<ul class="sidemenu">
+					<li><a href="">View Open Orders</a></li>
+					<li><a href="">Change Account Settings</a></li>
+					<li><a href="index.php?controller=login&action=login&logout=logout">Logout</a></li>	
+				</ul>
+			</div>
+	  </div> 		   
+	
+	
+<?php 
+		echo '<h4>View Open Orders</h4><br />';
+		
+	if( $qty )
+	{
+	?>
+	<table cellspacing="0" style="width: 75%;">
+      <tr>
+        <th align="left">Product name</th>
+        <th align="left">Remove/Add</th>
+        <th align="left">quantity</th>
+        <th align="left">price</th>
+        <th align="left">Subtotal</th>
+      </tr>
+   
+      
+		<!--ul style="list-style-type:none;"-->
+		
+<?php	
+	$rowCount = 0;
+	$totalProceed = 0;
+		foreach( $CartProducts as $CartProduct ) 
+		{
+		$rowCount++;
+		$totalProceed += ( $CartProduct->quantity * $CartProduct->product_price ) +
+							  ( $CartProduct->quantity * 2.95 );
+	?>
+	<tr <?php if ( $rowCount % 2 != 0 ) echo ' class="alt"' ?>>
+	<td><a href="<?php echo $path; ?>/index.php?controller=books&action=showProduct&pid=<?php echo $CartProduct->product_id; ?>" id="cSlider"><?php echo $CartProduct->product_name; ?></a></td>
+	<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="<?php echo $path; ?>/index.php?controller=login&action=proceed&cart=remove&item_id=<?php echo $CartProduct->item_id; ?>"><img src="<?php echo $path; ?>/css/images/minus-small-white.png"></a><a href="<?php echo $path; ?>/index.php?controller=login&action=proceed&cart=add&item_id=<?php echo $CartProduct->item_id; ?>"><img src="<?php echo $path; ?>/css/images/plus-small-white.png"></a><a href=""><img src="<?php echo $path; ?>/css/images/bin_closed.png"></a></td>
+	<td><strong><?php echo $CartProduct->quantity. ($CartProduct->quantity == 1 ? ' Item ' : ' Items '); ?></strong></td><td>à&nbsp;€&nbsp;<?php echo $CartProduct->product_price; ?></td>
+	<td><font color="#FF0000"><strong>€&nbsp;<?php echo $CartProduct->product_price * $CartProduct->quantity; ?></strong></font></td>
+	</tr>	
+	<?php
+				}			
+	?>
+				
+			
+	<tr><td><strong>Total Sum: € <font color="#FF0000"><?php echo $totalProceed; ?></strong></font></td></tr>
+</table>
+<br /><br />
+
+
+
+<form action="<?php echo $path; ?>/index.php?controller=login&action=sendPayment" method="post">
+
+	<table cellspacing="0" style="width: 45em;align:left;">
+      <tr><td><input type="hidden" name="cmd" value="_cart"></td></tr>
+      <tr><td><input type="hidden" name="upload" value="1"><tr><td>
+      <tr><td><input type="hidden" name="first_name" value="<?php echo $userInfo['firstname']; ?>"></td></tr>
+      <tr><td><input type="hidden" name="last_name" value="<?php echo $userInfo['lastname']; ?>"></td></tr>
+      <tr><td><input type="hidden" name="payer_email" value="<?php echo $userInfo['email']; ?>"></td></tr>
+      <tr><td><input type="hidden" name="currency_code" value="EUR"></td></tr>
+      
+<?php 
+	  $rowCount = 0;
+	  foreach( $CartProducts as $CartProduct ) 
+	  {
+	  	$rowCount++;
+	  	$item_name = 'item_name_'.$rowCount;
+	  	$item_number = 'item_number_'.$rowCount;
+	  	$amount = 'amount_'.$rowCount;
+	  	$quantity = 'quantity_'.$rowCount;
+	  	$shipping = 'shipping_'.$rowCount;
+	  	$shipVal = 2.95 * $CartProduct->quantity;
+	  	echo '<tr><td><input type="hidden" name="'.$item_name.'" value="'.$CartProduct->product_name.'"></td></tr>';
+	  	echo '<tr><td><input type="hidden" name="'.$item_number.'" value="'.$rowCount.'"></td></tr>';
+	  	echo '<tr><td><input type="hidden" name="'.$amount.'" value="'.$CartProduct->product_price.'"></td></tr>';
+	    echo '<tr><td><input type="hidden" name="'.$quantity.'" value="'.$CartProduct->quantity.'"></td></tr>';
+	    echo '<tr><td><input type="hidden" name="'.$shipping.'" value="'.$shipVal.'"></td></tr>';
+	    }
+?>
+	  	
+      <tr><td><h4>Proceed to Payment</h4></td><td><input type="image" src="<?php echo $path; ?>/css/images/paypal.png" style="height:32px;width:32px;border:0;position:relative;right:300px;"></td></tr>
+    </table>
+</form>
+
+
+		
+<?php
+		}//End if
+	else
+	{
+		echo '<p>No Open Orders to View!</p>';
+	}
+	
+	//echo 'var_dump';
+	//var_dump($userInfo);
+	//var_dump($CartProducts);
+	
+	?>
+	
+		
+<div class="clear">&nbsp;</div>
+  
+</div>

@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Model;
+
+class CustomerMapper {
+
+		public function savecustomer( Customer $customer ) { 
+				$stmt = $this->_conn->prepare("INSERT INTO customers( firstname, lastname, email, username, password, 
+																							phone, address_line_1, address_line_2, town_city, 
+																							county, country, created_at, updated_at, last_login )
+																				VALUES	( :firstname, :lastname, :email, :username, :password, 
+																							  :phone, :address_line_1, :address_line_2, :town_city, 
+																							  :county, :country, :created_at, :updated_at, :last_login )" );	
+		$stmt->bindParam( ":firstname", $customer->firstname );
+		$stmt->bindParam( ":lastname", $customer->lastname );
+		$stmt->bindParam( ":email", $customer->email );
+		$stmt->bindParam( ":username", $customer->username );
+		$stmt->bindParam( ":password", PASSWORD( $customer->password ) );
+		$stmt->bindParam( ":phone", $customer->phone );
+		$stmt->bindParam( ":address_line_1", $customer->address_line_1 );
+		$stmt->bindParam( ":address_line_2", $customer->address_line_2 );
+		$stmt->bindParam( ":town_city", $customer->town_city );
+		$stmt->bindParam( ":county", $customer->county );
+		$stmt->bindParam( ":country", $customer->country );
+		$stmt->bindParam( ":created_at", CURDATE() );
+		$stmt->bindParam( ":updated_at", CURDATE() );
+		$stmt->bindParam( ":last_login", CURDATE() );
+		
+		
+		
+		
+		
+		
+		
+		}
+
+}

@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Model;
+
+class MergeCartProduct 
+{
+
+	public $product_id;
+	// protected $ptype_id;
+	public $product_name; 
+	public $product_price;
+//	protected $product_language;
+//	protected $product_description;
+//	protected $product_author;
+//	protected $product_isbn10; 
+
+	public $item_id;
+	public $quantity;
+//	protected $added_on;
+	
+	public function __construct( $product_id, $product_name, $product_price, $item_id, $quantity ) 
+	{
+											 
+				$this->product_id = $product_id;
+				//$this->ptype_id = $ptype_id;
+				$this->product_name = $product_name;
+				$this->product_price = $product_price;
+				//$this->product_language = $product_language;
+				//$this->product_description = $product_description;
+				//$this->product_author = $product_author;
+				//$this->product_isbn10 = $product_isbn10;
+				
+				$this->item_id = $item_id;
+				$this->quantity = $quantity;
+				//$this->added_on = $added_on;
+				
+	}
+
+}

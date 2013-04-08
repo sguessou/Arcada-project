@@ -1,0 +1,16 @@
+<?php
+
+namespace App\Controller;
+
+use App\FrontController;
+use App\Model\ShoppingCartMapper;
+
+Class Dvd extends AbstractController {
+		public function index(){
+			
+			$SCart = new ShoppingCartMapper();
+			$SCart->setCartId();	
+			$this->viewVars->qty = $SCart->getQuantity();	
+		}	
+	
+	}

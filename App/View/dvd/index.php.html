@@ -1,0 +1,90 @@
+<div id="menu"> 
+		<ul>     
+			<li><a href="index.php?controller=index">Main</a></li>
+			<li><a href="index.php?controller=books">Books</a></li>
+			<li><a class="current" href="index.php?controller=dvd">Movies</a></li>
+			<?php
+			 
+				if( $loggedIn && !$admin )
+				{
+					echo '<li><a href="index.php?controller=login&action=login">My Account</a></li>';
+				}
+				elseif( !$loggedIn)
+				{
+					echo '<li><a href="index.php?controller=login">Login</a></li>';
+				}
+				
+				if( $admin )
+				{
+					echo '<li><a href="index.php?controller=admin">Admin</a></li>';
+				}
+				?>
+		</ul>
+	</div>
+	
+	<div id="feature">	
+		<div class="left">		
+			<h2 class="cart" id="viewCart">Cart</h2>
+			<?php
+	
+			if ( empty( $qty ) ) 
+			{
+				echo "<p>Your Shopping Cart is empty!</p>";
+			}
+			else
+			{
+				if( $qty == 1 )
+				{
+					echo '<p>Your have <a href="#" id="cartLink">'.$qty.' product</a> in your Shopping Cart!</p>';
+				}
+				else
+				{
+					echo '<p>Your have <a href="#" id="cartLink">'.$qty.' products</a> in your Shopping Cart!</p>';
+				}
+			}
+			?>
+		<div id="cartSlider">	
+			<h1 class="cart_header">Your Shopping Cart:</h1>
+			
+			<ul class="cartUl"><?php 
+					$total = 0;
+					foreach( $CartProducts as $CartProduct ) { 
+					$total += ( $CartProduct->quantity * $CartProduct->product_price ) +
+							  ( $CartProduct->quantity * 2.95 );
+					
+			?>
+				
+				<li><a href="index.php?controller=index&action=removeCartItem&item_id=<?php echo $CartProduct->item_id; ?>"><img src="<?php echo $path.'/css/images/bin_closed.png'; ?>"></a>&nbsp;&nbsp;<a href="index.php?controller=books&action=showProduct&pid=<?php echo $CartProduct->product_id; ?>" id="cSlider"><?php echo $CartProduct->product_name; ?></a>
+				&nbsp;<strong><?php echo $CartProduct->quantity. ($CartProduct->quantity == 1 ? ' Item ' : ' Items '); ?></strong>à&nbsp;€&nbsp;
+				<?php echo $CartProduct->product_price; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Subtotal:</strong>&nbsp;
+				<font color="#FF0000"><strong>€&nbsp;<?php echo $CartProduct->product_price * $CartProduct->quantity; ?></strong></font></li>
+				
+				<?php
+				}
+				?>
+				<li>&nbsp;</li>
+				<li><strong>Total Sum: € <font color="#FF0000"><?php echo $total; ?></strong></font></li>
+			</ul>
+				<a class="checkout" id="checkout" href="<?php echo $path; ?>/index.php?controller=login&action=index&checkout=checkout">Proceed to Checkout</a>
+			<a class="close" id="close" href="#">Close</a>
+		</div>	
+	</div>
+<div class="clear">&nbsp;</div>
+</div>
+	
+	
+	
+<div id="main">
+	<div id="content">
+   <h3><strong>Movies:</strong></h3>
+   	
+   	<br /><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam lorem libero, tincidunt nec ultrices a, tempor dapibus sapien. Pellentesque congue quam vitae elit dictum dapibus. Mauris eu nulla nibh. Praesent eu suscipit justo. Cras at erat massa. Nulla facilisi. Maecenas id leo quis tortor feugiat imperdiet nec et sem. Maecenas pretium tortor massa. Donec urna lorem, fermentum nec tempus eget, congue in mi. Nam luctus dignissim mauris, vitae faucibus lectus venenatis volutpat.</p>
+
+<p>Vivamus ultrices placerat mauris, eget tempus mi pulvinar eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut dui nibh, eu euismod odio. Maecenas dignissim fermentum metus, eu commodo sem lacinia at. Sed cursus, dolor quis facilisis condimentum, est tortor hendrerit arcu, et rhoncus libero justo fringilla urna. Aenean hendrerit, turpis quis pellentesque iaculis, leo nisi euismod leo, in adipiscing metus urna vitae magna. Nullam quam velit, feugiat sed luctus et, placerat nec nisl. Duis ac nisi risus, ac varius purus. Sed adipiscing accumsan ligula, sed ornare lectus cursus et. Etiam quam justo, ultrices id porttitor eget, bibendum ac velit. Etiam vitae nunc neque, tincidunt rutrum magna. Suspendisse potenti. Nullam rhoncus feugiat nisi vitae pharetra. Sed adipiscing volutpat tortor, in pharetra tortor suscipit nec.</p>
+
+<p>Phasellus egestas, ante id cursus fringilla, neque tortor rhoncus eros, id imperdiet sapien est ac eros. Curabitur viverra pellentesque ligula. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed luctus nisi a massa aliquet quis imperdiet sem viverra. Morbi pellentesque tellus vel sapien aliquam dictum porttitor nulla pellentesque. Suspendisse potenti. Mauris imperdiet, nisi vel porttitor dignissim, diam lacus fermentum augue, quis rutrum nibh tortor non velit. Donec eget malesuada nisl. Suspendisse lorem arcu, auctor in ultrices tempus, hendrerit id tortor. Sed sit amet ante eu urna facilisis fermentum. Aenean malesuada libero eget nisi tristique convallis. Maecenas in nulla nec erat semper interdum sed eget arcu. Sed venenatis enim ut nibh suscipit interdum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nulla a consectetur velit.</p>
+
+
+   <div class="clear">&nbsp;</div>
+   </div>
+</div>

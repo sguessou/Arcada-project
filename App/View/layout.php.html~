@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.5 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="description" content="Project for Arcada php course 2012-2013 : online store" />
+	<meta name="keywords" content="Books, dvd's" />
+	<meta name="author" content="sguessou" />
+	<link rel="stylesheet" type="text/css" href="css/variant-multi.css" title="Variant Multi" media="all" />
+	<script src="_js/jquery-1.9.1.min.js"></script>
+	<title>Online Store</title>
+	<script>
+		$(document).ready(function(){
+			$('#cartLink').click(function(){
+				$('#cartSlider').slideToggle(300);
+				return false;
+			});//end click
+			$('#close').click(function(){
+				$('#cartSlider').slideToggle(300);
+				return false;
+			});// end #close
+		});//end ready
+	</script>
+</head>
+<body>
+<div id="containerfull"><!-- Use"containerfull" for 100% width. For fixed width, use "container980", "container760" or "container600" (the number is the layout width in pixels). -->
+	<div id="header">
+	<h1><a href="">Online Store</a></h1>
+		<h2>[My project for the Arcada PHP course 2012-2013]</h2>
+	</div>
+
+<?php $this->getContent() ?>
+
+<div id="footer">
+		<div id="footersections">
+			<div class="half">
+				<h2>Footer area #1</h2>
+				<p>This area uses the div class="half". You can replace it with two div:s 
+				if you give them class="quarter" to get a 4-column footer, or replace the two following div:s 
+				with one div with class="lasthalf" to get a 2-column footer. In this file, I have combined the "half",
+				 "quarter" and "lastquarter" classes.</p>
+			</div>
+
+			<div class="quarter">
+				<h2>Footer area #2</h2>
+				<p>This area uses the div class="quarter".</p>
+				<p>Paragraphs and <a href="#">links</a> work here too.</p>
+			</div>
+
+			<div class="lastquarter">
+				<h2>Footer menu</h2>
+				<ul>
+					<li><a href="index.html">Link #1</a></li>
+					<li><a href="index.html">Link #2</a></li>
+				</ul>	
+			</div>     
+			<div class="clear">&nbsp;</div> 
+		</div>
+	</div> 
+
+	<div id="credits">
+		<p>&copy;&nbsp;<?php echo $this->siteTitle ?>&nbsp;[sguessou 2013]</p>
+	</footer> <br />
+		<span class="small">Template design by <a href="http://andreasviklund.com/">Andreas Viklund</a></span></p>
+	</div>  
+</div>
+</body>
+</html>

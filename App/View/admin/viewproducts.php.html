@@ -1,0 +1,131 @@
+<div id="menu"> 
+		<ul>     
+			<li><a href="<?php echo $path ?>/index.php?controller=index">Main</a></li>
+			<li><a href="<?php echo $path ?>/index.php?controller=books">Books</a></li>
+			<li><a href="<?php echo $path ?>/index.php?controller=dvd">Movies</a></li>
+			<?php
+			 
+				if( $loggedIn && !$admin )
+				{
+					echo '<li><a class="current" href="'.$path.'/index.php?controller=login&action=login">My Account</a></li>';
+				}
+				elseif( !$loggedIn)
+				{
+					echo '<li><a class="current" href="'.$path.'/index.php?controller=login">Login</a></li>';
+				}
+				
+				if( $admin )
+				{
+					echo '<li><a class="current" href="'.$path.'/index.php?controller=admin">Admin</a></li>';
+				}
+				?>
+		</ul>
+	</div>
+	
+	<div id="feature">
+		<div class="left">			
+			<h2>Welcome To The Admin CMS Area!</h2>
+			<!--p>In here you can manage users !</p-->
+		</div>
+		
+			<div class="clear">&nbsp;</div>
+	</div>
+<div id="main">
+   <div id="sidebar">
+			<div class="sidebarbox">
+               <h2>Admin Menu</h2>
+				<ul class="sidemenu">
+					<li><a href="">Manage Users</a></li>
+					<li><a href="<?php echo $path ?>/index.php?controller=admin&action=ptypes">Manage Product Types</a></li>
+					<li><a href="#">Manage Products</a>
+						<ul>
+							<li><a href="<?php echo $path ?>/index.php?controller=admin&action=addproduct">Add Product</a></li>
+							<li><a href="<?php echo $path ?>/index.php?controller=admin&action=viewProducts">Update or Remove</a></li>
+						</ul></li>
+					<li><a href="#">Manage Orders</a></li>	
+					<li><a href="<?php echo $path ?>/index.php?controller=admin&action=viewLog">View Access Log</a></li>
+					<li><a href="<?php echo $path ?>/index.php?controller=login&action=login&logout=logout">Logout</a></li>	
+				</ul>
+			</div>
+	    </div> 		   
+	<div id="content">
+  
+  <h4>Admin>>Manage Products>>Update or Remove-></h4>
+ <br />
+ <?php
+    echo '<form id="PrdTypeForm" action="'.$path.'/index.php?controller=admin&action=viewProducts" method="post">';
+  	echo '<label for="PType">Select the type of the products you wish to review:&nbsp;&nbsp;&nbsp;&nbsp;</label>';
+  	echo '<select id="TypeSelect" name="PType" size="1">'; 
+  	
+  	$var = 0;
+  	if(isset($_POST['PType'])) $var = $_POST['PType'];
+  			echo '<option value="">Select...</option>';
+  	foreach($PrdTypes as $PrdType)
+  	{
+  		if( $PrdType->ptype_id == $var )
+  		{
+			echo '<option value="'.$PrdType->ptype_id.'" selected="selected">'.$PrdType->type_name.'</option>';	
+		}
+		else
+		{
+			echo '<option value="'.$PrdType->ptype_id.'">'.$PrdType->type_name.'</option>';
+		}
+  	}	
+    echo '</select></form><br /><br />';
+    
+    if($products)
+    {
+    ?>
+    	<table cellspacing="0" style="width:100%;">
+         <tr>
+         <th align="left">Product name</th>
+         <th align="left">Update</th>
+         <th align="left">Remove</th>
+         <th align="left">Quantity</th>
+         </tr>
+    <?php
+    	$rowCount = 0;
+    	foreach($products as $product)
+    	{
+    		$rowCount++;
+    ?>
+    	<tr <?php if ( $rowCount % 2 != 0 ) echo ' class="alt"' ?>>
+    	<td><a href="#"><?php echo $product['product_name']; ?></a></td>	
+    	<td><a href="#"><img src="<?php echo $path ?>/css/images/Update.png"></a></td>
+    	<td><a href="#"><img src="<?php echo $path ?>/css/images/Remove.png"></a></td>
+    	<td></td>
+    	</tr>
+    <?php		
+    	}
+    	?>
+    	</table>
+    	<div style="width: 75%; margin-top: 20px; text-align: center;">
+        <?php 
+        if ( $start > 0 ) 
+        { 
+           echo '<a href="'.$path.'/index.php?controller=Admin&action=viewProducts&start='.max( $start - $PAGE_SIZE, 0 ).'&first='.max( $first - 1, 1 ).'&ptid='.$pt.'">Previous page</a>';
+        } 
+        echo '&nbsp;';
+      if ( $start + $PAGE_SIZE < $totalRows ) 
+      { 
+        echo '<a href="'.$path.'/index.php?controller=Admin&action=viewProducts&start='.min( $start + $PAGE_SIZE, $totalRows ).'&first='.min( $first + 1, ($totalRows / $PAGE_SIZE) + 1 ).'&ptid='.$pt.'">Next page</a>';
+      } 
+			$last = $totalRows / $PAGE_SIZE;
+			if($totalRows % $PAGE_SIZE) { $last += 1; }
+			echo '&nbsp;&nbsp;( '.$first.' of '.(int)$last.' ) '; 
+        echo '</div>';
+    	
+    }
+    elseif($products === FALSE)
+    {
+    	echo '<br/><br /><p>NADA!</p>';
+    }
+ 
+ ?>	
+	
+	
+
+		
+ </div>
+   <div class="clear">&nbsp;</div>
+ </div>

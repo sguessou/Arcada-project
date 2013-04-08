@@ -1,0 +1,83 @@
+<div id="menu"> 
+		<ul>     
+			<li><a class="current" href="index.php?controller=index">Main</a></li>
+			<li><a href="index.php?controller=books">Books</a></li>
+			<li><a href="index.php?controller=dvd">Movies</a></li>
+			<li><a href="index.php?controller=login">Login</a></li>
+			<li><a href="index.php?controller=admin">Admin</a></li>
+		</ul>
+	</div>
+	
+	<div id="feature">	
+		<div class="left">		
+		
+			<h2 class="cart" id="viewCart">Cart</h2>
+			<?php
+	
+			if ( empty( $qty ) ) 
+			{
+				echo "<p>Your Shopping Cart is empty!</p>";
+			}
+			else
+			{
+				if( $qty == 1 )
+				{
+					echo '<p>Your have <a href="#" id="cartLink">'.$qty.' product</a> in your Shopping Cart!</p>';
+				}
+				else
+				{
+					echo '<p>Your have <a href="#" id="cartLink">'.$qty.' products</a> in your Shopping Cart!</p>';
+				}
+			}
+			?>
+		<div id="cartSlider">	
+			<h3 class="cartSlider">Your Shopping Cart:</h3>
+			
+			<ul class="cartUl"><?php 
+					$total = 0;
+					foreach( $CartProducts as $CartProduct ) { 
+					$total += ( $CartProduct->quantity * $CartProduct->product_price ) +
+							  ( $CartProduct->quantity * 2.95 );
+			?>
+				
+				<li><a href="index.php?controller=index&action=removeCartItem&item_id=<?php echo $CartProduct->item_id; ?>"><img src="/project/images/Trash.png"></a>&nbsp;&nbsp;<a href="index.php?controller=books&action=showProduct&pid=<?php echo $CartProduct->product_id; ?>" id="cSlider"><?php echo $CartProduct->product_name; ?></a>
+				&nbsp;<strong><?php echo $CartProduct->quantity. ($CartProduct->quantity == 1 ? ' Item ' : ' Items '); ?></strong>à&nbsp;€&nbsp;
+				<?php echo $CartProduct->product_price; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Subtotal:</strong>&nbsp;
+				<font color="#FF0000"><strong>€&nbsp;<?php echo $CartProduct->product_price * $CartProduct->quantity; ?></strong></font></li>
+				
+				<?php
+				}
+				?>
+				<li>&nbsp;</li>
+				<li><strong>Total Sum: € <font color="#FF0000"><?php echo $total; ?></strong></font></li>
+			</ul>
+			
+			<a class="close" id="close" href="#">Close</a>
+		</div>	
+	</div>
+<div class="clear">&nbsp;</div>
+</div>
+
+<div id="main">
+<h3><strong>IT-Books:</strong></h3>
+<p>&nbsp;</p>
+	<!-- div id="content" -->
+   <div class="wrapper-gallery">
+		<ul class="gallery">
+			<?php 
+			   foreach ( $Products as $Product ) { 
+				$coverSrc = "/project/images/products_images/" . $Product->product_id . "R.jpg";
+				?>	
+				<li><a href="index.php?controller=books&action=showproduct&pid=<?php echo $Product->product_id; ?>"><img src="<?php echo $coverSrc; ?>" alt="<?php echo $Product->product_name; ?>" /></a>
+				<span><?php echo "<strong>Price:</strong>&nbsp;" . $Product->product_price; ?>&nbsp;&euro;</span></li>
+				
+			<?php 
+			}
+			?>
+		</ul>
+	</div>
+   <div class="clear">&nbsp;</div>
+   <!--/div -->
+ <h3><strong>Movies:</strong></h3>
+ <p>&nbsp;</p>
+</div>

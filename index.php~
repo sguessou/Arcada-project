@@ -1,0 +1,4 @@
+<?php
+require_once 'App/FrontController.php';
+$app = new App\FrontController();
+$app->run();

@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Controller;
+
+use App\FrontController;
+use App\Model\ProductMapper;
+use App\Model\ProductTypesMapper;
+use App\Model\ShoppingCartMapper;
+
+class Books extends AbstractController {
+
+		public function index(){
+		
+			$PMapper = new ProductMapper();
+			$this->viewVars->Products = $PMapper->getAllProducts( null,"Book" );
+			
+			$SCart = new ShoppingCartMapper();
+			$SCart->setCartId();	
+			$this->viewVars->qty = $SCart->getQuantity();	
+			$this->viewVars->CartProducts = $SCart->getCartProducts();							
+		}	
+		
+		public function showproduct(){
+			
+			$PMapper = new ProductMapper();
+			$PTMapper = new ProductTypesMapper();
+			
+			$SCart = new ShoppingCartMapper();
+			$SCart->setCartId();	
+			$this->viewVars->qty = $SCart->getQuantity();
+			$this->viewVars->CartProducts = $SCart->getCartProducts();							
+		
+			$pid = (int) $_GET["pid"];
+		
+			$this->viewVars->Product = $PMapper->getProduct( $pid );	
+			$this->viewVars->ProductTypeName = $PTMapper->fetchTypeName( $this->viewVars->Product->ptype_id );
+						
+		}	
+	
+	}

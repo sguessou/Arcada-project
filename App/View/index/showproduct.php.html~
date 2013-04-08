@@ -1,0 +1,66 @@
+<div id="menu"> 
+		<ul>     
+			<li><a class="current" href="index.php?controller=index">Main</a></li>
+			<li><a href="index.php?controller=books">Books</a></li>
+			<li><a href="index.php?controller=dvd">DVD's</a></li>
+			<li><a href="index.php?controller=login">Login</a></li>
+			<li><a href="index.php?controller=admin">Admin</a></li>
+		</ul>
+	</div>
+	
+	<div id="feature">
+		<div class="left">			
+			<h2>Welcome to the Online Store&copy;!</h2>
+			<!--p>In here you can manage users !</p-->
+		</div>
+		<div class="right">
+			<h2>Feature #2</h2>
+			<p>Use div class="left" and "right" for two columns, or remove the two extra div:s to use a single column here.</p>
+		</div>
+			<div class="clear">&nbsp;</div>
+	</div>
+<div id="main">
+   
+	
+   <h3>Welcome (name)!</h3>
+				<p>Your last login was (date).</p>
+			<!-- -->
+			<div class="wrapper">
+		<div class="product">
+			<h1><?php echo $Product->product_name; ?></h1>
+			<h2 class="instructions"><?php echo $ProductTypeName["type_name"] . " Description"; ?></h2>
+			<?php
+			$img = "/project/images/products_images/" . $Product->product_id . "R.jpg";
+			?>
+			<img src="<?php echo $img; ?>" alt="<?php echo $img; ?>" height="180" width="160" />
+			<p><?php echo $Product->product_description; ?></p>
+			<ul class="author">
+				<li><h2>More About the Author</h2>
+				<strong>Biography</strong></li>
+				
+			</ul>
+			
+			<h2 class="instructions">Product Details</h2>
+			<ul>
+				<li><strong>Paperback:</strong>&nbsp;</li>
+				<li><strong>Publisher:</strong>&nbsp;</li>
+				<li><strong>Language:</strong>&nbsp;<?php echo $Product->product_language; ?></li>
+				<li><strong>ISBN-10:</strong>&nbsp;<?php echo $Product->product_isbn10; ?></li>
+				<li><strong>Price:</strong>&nbsp;<?php echo $Product->product_price; ?>&nbsp;&euro;</li>
+			</ul>
+			<a class="more" href="index.php?controller=index">Go Back</a>
+		</div>
+	</div>
+			
+			
+			
+	<!--		-->	
+				
+		
+     
+      
+      
+			
+      
+         <div class="clear">&nbsp;</div>
+   </div>

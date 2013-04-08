@@ -1,0 +1,72 @@
+<div id="menu"> 
+		<ul>     
+			<li><a href="<?php echo $path ?>/index.php?controller=index">Main</a></li>
+			<li><a href="<?php echo $path ?>/index.php?controller=books">Books</a></li>
+			<li><a href="<?php echo $path ?>/index.php?controller=dvd">Movies</a></li>
+			<?php
+			 
+				if( $loggedIn && !$admin )
+				{
+					echo '<li><a class="current" href="'.$path.'/index.php?controller=login&action=login">My Account</a></li>';
+				}
+				elseif( !$loggedIn)
+				{
+					echo '<li><a class="current" href="'.$path.'/index.php?controller=login">Login</a></li>';
+				}
+				
+				if( $admin )
+				{
+					echo '<li><a class="current" href="'.$path.'/index.php?controller=admin">Admin</a></li>';
+				}
+				?>
+		</ul>
+	</div>
+	
+	<div id="feature">
+		<div class="left">			
+			<h2>Welcome to the Admin CMS area!</h2>
+			<!--p>In here you can manage users !</p-->
+		</div>
+		
+			<div class="clear">&nbsp;</div>
+	</div>
+<div id="main">
+   <div id="sidebar">
+			<div class="sidebarbox">
+               <h2>Admin Menu</h2>
+				<ul class="sidemenu">
+					<li><a href="">Manage Users</a></li>
+					<li><a href="<?php echo $path ?>/index.php?controller=admin&action=ptypes">Manage Product Types</a></li>
+					<li><a href="#">Manage Products</a>
+						<ul>
+							<li><a href="<?php echo $path ?>/index.php?controller=admin&action=addproduct">Add Product</a></li>
+							<li><a href="<?php echo $path ?>/index.php?controller=admin&action=viewProducts">Update/Remove</a></li>
+						</ul></li>
+					<li><a href="#">Manage Orders</a></li>	
+					<li><a href="<?php echo $path ?>/index.php?controller=admin&action=viewLog">View Access Log</a></li>
+					<li><a href="<?php echo $path ?>/index.php?controller=login&action=login&logout=logout">Logout</a></li>	
+				</ul>
+			</div>
+	    </div> 		   
+	<div id="content">
+  
+  <?php 
+  	if( $user['last_log'] )
+  	{
+		 	echo '<p><h4>'.$msg.' '.$user['firstname'].'!</h4></p>'; 
+		 	echo '<p>Last login: '.$user['last_log'].'</p>';
+		}
+		else
+		{
+			echo '<p><h4>Welcome To Your Account '.$user['firstname'].'!</h4></p>'; 
+		}
+	?>
+				
+		
+      </div>
+      
+      
+			
+      
+         <div class="clear">&nbsp;</div>
+   </div>

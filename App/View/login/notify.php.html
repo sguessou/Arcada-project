@@ -1,0 +1,107 @@
+<div id="menu"> 
+		<ul>     
+			<li><a href="index.php?controller=index">Main</a></li>
+			<li><a href="index.php?controller=books">Books</a></li>
+			<li><a href="index.php?controller=dvd">Movies</a></li>
+			<?php
+			 
+				if( $loggedIn && !$admin )
+				{
+					echo '<li><a class="current" href="index.php?controller=login&action=login">My Account</a></li>';
+				}
+				elseif( !$loggedIn)
+				{
+					echo '<li><a class="current" href="index.php?controller=login">Login</a></li>';
+				}
+				
+				if( $admin )
+				{
+					echo '<li><a class="current" href="index.php?controller=admin">Admin</a></li>';
+				}
+				?>
+		</ul>
+	</div>
+	
+	<div id="feature">	
+	
+	
+		<div class="left">		
+			<h2 class="cart">Cart</h2>
+			
+			<?php
+	
+			if ( empty( $qty ) ) 
+			{
+				echo "<p>Your Shopping Cart is empty!</p>";
+			}
+			else
+			{
+				if( $qty == 1 )
+				{
+					echo '<p>You have <a href="#" id="cartLink">'.$qty.' product</a> in your Shopping Cart!</p>';
+				}
+				else
+				{
+					echo '<p>You have <a href="#" id="cartLink">'.$qty.' products</a> in your Shopping Cart!</p>';
+				}
+			}
+			?>
+			
+		<div id="cartSlider">	
+			<h1 class="cart_header">Your Shopping Cart:</h1>
+			
+			<ul class="cartUl"><?php 
+					$total = 0;
+					foreach( $CartProducts as $CartProduct ) { 
+					$total += ( $CartProduct->quantity * $CartProduct->product_price ) +
+							  ( $CartProduct->quantity * 2.95 );
+			?>
+				
+				<li><a href="index.php?controller=index&action=removeCartItem&item_id=<?php echo $CartProduct->item_id; ?>"><img src="<?php echo $path; ?>/css/images/bin_closed.png"></a>&nbsp;&nbsp;<a href="index.php?controller=books&action=showProduct&pid=<?php echo $CartProduct->product_id; ?>" id="cSlider"><?php echo $CartProduct->product_name; ?></a>
+				&nbsp;<strong><?php echo $CartProduct->quantity. ($CartProduct->quantity == 1 ? ' Item ' : ' Items '); ?></strong>à&nbsp;€&nbsp;
+				<?php echo $CartProduct->product_price; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Subtotal:</strong>&nbsp;
+				<font color="#FF0000"><strong>€&nbsp;<?php echo $CartProduct->product_price * $CartProduct->quantity; ?></strong></font></li>
+				
+				<?php
+				}
+				?>
+				<li>&nbsp;</li>
+				<li><strong>Total Sum: € <font color="#FF0000"><?php echo $total; ?></strong></font></li>
+			</ul>
+				<a class="checkout" id="checkout" href="<?php echo $path; ?>/index.php?controller=login&action=index&checkout=checkout">Proceed to Checkout</a>
+			<a class="close" id="close" href="#">Close</a>
+		</div>	
+		
+	</div>
+	
+	
+	<div class="clear">&nbsp;</div>
+</div>
+
+
+
+<div id="main">
+	<div id="sidebar">
+			<div class="sidebarbox">
+               <h2>My Account Menu</h2>
+				<ul class="sidemenu">
+					<li><a href="">View Open Orders</a></li>
+					<li><a href="">Change Account Settings</a></li>
+					<li><a href="index.php?controller=login&action=login&logout=logout">Logout</a></li>	
+				</ul>
+			</div>
+	  </div> 		   
+	
+	
+<?php 
+		//echo '<h4>Payment Notification</h4><br />';
+		
+	//var_dump($userInfo);
+	echo "<h4>$msg</h4>";
+	
+	?>
+	
+		
+<div class="clear">&nbsp;</div>
+  
+</div>

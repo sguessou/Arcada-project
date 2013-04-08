@@ -1,0 +1,9 @@
+<?php
+
+$stuff = parse_ini_file( 'db_settings.ini', TRUE );
+
+//var_dump( $stuff );
+
+echo $stuff['db_settings']['DB_DSN'];
+
+?>

@@ -1,0 +1,159 @@
+<div id="menu"> 
+		<ul>     
+			<li><a href="index.php?controller=index">Main</a></li>
+			<li><a href="index.php?controller=books">Books</a></li>
+			<li><a href="index.php?controller=dvd">Movies</a></li>
+			<?php
+			 
+				if( $loggedIn && !$admin )
+				{
+					echo '<li><a class="current" href="index.php?controller=login&action=login">My Account</a></li>';
+				}
+				elseif( !$loggedIn)
+				{
+					echo '<li><a class="current" href="index.php?controller=login">Login</a></li>';
+				}
+				
+				if( $admin )
+				{
+					echo '<li><a class="current" href="index.php?controller=admin">Admin</a></li>';
+				}
+				?>
+		</ul>
+	</div>
+	
+	<div id="feature">	
+	
+	
+		<div class="left">		
+			<h2 class="cart">Cart</h2>
+			
+			<?php
+	
+			if ( empty( $qty ) ) 
+			{
+				echo "<p>Your Shopping Cart is empty!</p>";
+			}
+			else
+			{
+				if( $qty == 1 )
+				{
+					echo '<p>You have <a href="#" id="cartLink">'.$qty.' product</a> in your Shopping Cart!</p>';
+				}
+				else
+				{
+					echo '<p>You have <a href="#" id="cartLink">'.$qty.' products</a> in your Shopping Cart!</p>';
+				}
+			}
+			?>
+			
+		<div id="cartSlider">	
+			<h1 class="cart_header">Your Shopping Cart:</h1>
+			
+			<ul class="cartUl"><?php 
+					$total = 0;
+					foreach( $CartProducts as $CartProduct ) { 
+					$total += ( $CartProduct->quantity * $CartProduct->product_price ) +
+							  ( $CartProduct->quantity * 2.95 );
+			?>
+				
+				<li><a href="index.php?controller=index&action=removeCartItem&item_id=<?php echo $CartProduct->item_id; ?>"><img src="<?php echo $path.'/css/images/bin_closed.png'; ?>"></a>&nbsp;&nbsp;<a href="index.php?controller=books&action=showProduct&pid=<?php echo $CartProduct->product_id; ?>" id="cSlider"><?php echo $CartProduct->product_name; ?></a>
+				&nbsp;<strong><?php echo $CartProduct->quantity. ($CartProduct->quantity == 1 ? ' Item ' : ' Items '); ?></strong>à&nbsp;€&nbsp;
+				<?php echo $CartProduct->product_price; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Subtotal:</strong>&nbsp;
+				<font color="#FF0000"><strong>€&nbsp;<?php echo $CartProduct->product_price * $CartProduct->quantity; ?></strong></font></li>
+				
+				<?php
+				}
+				?>
+				<li>&nbsp;</li>
+				<li><strong>Total Sum: € <font color="#FF0000"><?php echo $total; ?></strong></font></li>
+			</ul>
+				<a class="checkout" id="checkout" href="<?php echo $path; ?>/index.php?controller=login&action=index&checkout=checkout">Proceed to Checkout</a>
+			<a class="close" id="close" href="#">Close</a>
+		</div>	
+		
+	</div>
+	
+	
+	<div class="clear">&nbsp;</div>
+</div>
+
+
+
+<div id="main">
+	<div id="sidebar">
+			<div class="sidebarbox">
+               <h2>My Account Menu</h2>
+				<ul class="sidemenu">
+					<li><a href="index.php?controller=login&action=proceed">View Open Orders</a></li>
+					<li><a href="">Change Account Settings</a></li>
+					<li><a href="index.php?controller=login&action=login&logout=logout">Logout</a></li>	
+				</ul>
+			</div>
+	  </div> 		   
+	
+	
+<?php 
+	if($user['last_log'])
+	 {	
+		echo '<p><h4>'.$msg.' '.$user['firstname'].'!</h4>'; 
+		echo 'Last login: '.$user['last_log'].'</p>';
+	 }
+	 else
+	 {
+	 	echo '<p><h4> Welcome for the first time '.$user['firstname'].'!</h4>';
+	 }	
+		if( $checkout && !$address )
+		{
+	  	echo '<h3 class="alert">Add a shipping address please!</h3>';
+	  ?>
+	  		
+				<form action="index.php?controller=login&action=proceed&save=save" method="post">
+				<div>
+				<label style="float:left; text-align:left;margin-top:10px;" for="address_line_1">Address Line1:</label>
+				<input type="text" name="address_line_1" id="address_line_1" placeholder="Street address, P.O. box, company name, c/o" style="width:85%;float:left;" required="required" />
+				<input type="hidden" name="login" id="login" value="<?php echo $login; ?>">
+				</div>
+				<div>
+				<label style="float:left; text-align:left;" for="address_line_2">Address Line2:</label>
+				<input type="text" name="address_line_2" id="address_line_2" placeholder="Apartment, suite, unit, building, floor, etc." style="width:85%;float:left;" required="required" />
+				</div>
+				<div>
+				<label style="float:left; text-align:left;" for="city">City:</label>
+				<input type="text" name="city" id="city" style="width:85%;float:left;" required="required" />
+				</div>
+				<div>
+				<label style="float:left; text-align:left; width:60%;" for="county">State/Province/Region:</label>
+				<input type="text" name="county" id="county" style="width:85%;float:left;" required="required" />
+				</div>	
+				<div><label for="country" style="float:left; text-align:left;">Country:</label>
+						<select name="country" id="country" size="1" style="width:85%;height:28px;float:left;"> 
+				<?php   
+			  	 foreach ( $countries as $country ) { ?>
+							<option value="<?php echo $country['name']; ?>" <?php if($country['name'] == 'FINLAND') echo ' selected'; ?>><?php echo $country['printable_name']; ?></option>	
+				<?php } ?>	
+						</select>
+				</div>		
+				<div><input type="submit" value="Submit"></div>
+				</form> <br /><br />
+				&nbsp;&nbsp;
+				
+<?php	  
+	  	echo '<div style="float:left;width:50%;"><h4>Address Accuracy</h4>
+						<p>Make sure you get your stuff! If the address is not entered correctly, your package may be returned 
+						as undeliverable. You would then have to place a new order. Save time and avoid frustration by 
+						entering the address information in the appropriate boxes and double-checking 
+						for typos and other errors.</p></div>';
+		}
+		elseif( $checkout && $address )
+		{
+			header('Location:index.php?controller=login&action=proceed');
+		}
+?>
+
+	
+
+	
+<div class="clear">&nbsp;</div>
+  
+</div>

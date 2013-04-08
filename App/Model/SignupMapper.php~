@@ -1,0 +1,132 @@
+<?php
+
+namespace App\Model;
+
+
+// Base custom exception class for the SignUp class.
+class SignUpException extends Exception
+{
+  public function __construct($message = null, $code = 0) 
+  {
+    parent::__construct($message, $code);
+    error_log('Error in '.$this->getFile().
+      ' Line: '.$this->getLine().
+      ' Error: '.$this->getMessage()
+    );
+  }
+}
+
+// Indicates database exception in signup process.
+class SignUpDatabaseException extends SignUpException {}
+
+// Indicates user already exists in signup process.
+class SignUpNotUniqueException extends SignUpException {}
+
+// Indicates email problem in signup confirmation process.
+class SignUpEmailException extends SignUpException {}
+
+// Indicates confirmation problem in signup process.
+class SignUpConfirmationException extends SignUpException {}
+
+class SignupMapper extends AbstractMapper
+{
+	  protected $_db; // Database connection
+	  protected $_from; // The name / address the signup email should be sent from
+	  protected $_to; //The name / address the signup email should be sent to
+	  protected $_subject; // The subject of the confirmation email
+	  protected $_message; // Text of message to send with confirmation email
+	  protected $_listener; // Url to use for confirmation
+	  protected $_confirmCode; // Confirmation code to append to $this->listener
+	  
+	  public function __construct( $listener, $frmName, $frmAddress, $subj, $msg )
+  	  {
+      	$this->_db             = parent::connect();
+    	$this->_listener       = $listener;
+    	$this->_from[$frmName] = $frmAddress;
+    	$this->_subject        = $subj;
+    	$this->_message        = $msg;
+      }
+      
+      // Creates the confirmation code
+      private function createCode( $login )
+  	  {
+      	srand((double)microtime() * 1000000); 
+   		$this->_confirmCode = md5( $login . time() . rand(1, 1000000));
+  	  }
+  	  
+  	  // Inserts a record into the signup table
+  	  public function createSignup( $userDetails )
+      {
+    
+      	try
+      	{
+        // First check login and email are unique in user table
+       		 $sql = "SELECT COUNT(*) AS num_row FROM user 
+          	 									WHERE login = :login
+          	 										  OR email = :email"; 	
+          
+      		 $stmt = $this->db->prepare($sql);
+      		 $stmt->bindParam(':login', $userDetails['login']);
+      		 $stmt->bindParam(':email', $userDetails['email']);
+      		 $stmt->execute();
+      		 $result = $stmt->fetch(PDO::FETCH_ASSOC);
+          }
+     	 catch ( PDOException $e )
+    	 {
+      		throw new SignUpDatabaseException('Database error when checking' .
+          	' user is unique: '.$e->getMessage());
+    	 }
+
+    	if ( $result['num_row'] > 0 )
+    	{
+      		throw new SignUpNotUniqueException('username and email address not unique');
+    	}
+
+    	$this->createCode( $userDetails['login'] );
+    	$toName = $userDetails['firstname'] . ' ' . $userDetails['lastname'];
+   	 	$this->_to[$toName] = $userDetails['email'];
+    
+    	try
+    	{
+      		$sql = "INSERT INTO signup( login, password, email, firstname, lastname, confirm_code, created )
+      		                    VALUES ( :login, :password, :email, :firstname, :lastname, :confirm, :time)";
+      		$stmt = $this->db->prepare($sql);
+      		$stmt->bindParam(':login', $userDetails['login']);
+      		$stmt->bindParam(':password', $userDetails['password']);
+      		$stmt->bindParam(':email', $userDetails['email']);
+      		$stmt->bindParam(':firstname', $userDetails['firstname']);
+      		$stmt->bindParam(':lastname', $userDetails['lastname']);
+      		$stmt->bindParam(':confirm', $this->_confirmCode);
+      		$stmt->bindParam(':time', time());
+      		$stmt->execute();
+    	}
+    	catch (PDOException $e)
+    	{
+      		throw new SignUpDatabaseException('Database error when inserting' .
+          	' into signup: '.$e->getMessage());
+    	}
+   	  }// End function createSignup
+   	
+   		// Sends the confirmation email
+   		public function sendConfirmation()
+  		{
+    		
+    		$fromName = $this->_from;
+    		$subject = $this->_subject
+    		$hdrs = $this->_from[$fromName];
+    		
+    		$replace = '<a href="' . $this->_listener . '?code=' .
+          			   $this->_confirmCode . '">' . $this->_listener .
+          			   '?code=' . $this->_confirmCode . '</a>';
+    		
+    		$this->_message = str_replace( '<confirm_url/>', $replace, $this->_message );
+    		
+    		if ( !mail( $this->_to, $subject, $this->_message, $hdrs ) )
+    		{
+      			throw new SignUpEmailException( 'Error sending confirmation email.' );
+    		}
+    	}// End function sendConfirmation
+  
+  
+	
+}

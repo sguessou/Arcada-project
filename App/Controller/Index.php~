@@ -1,0 +1,51 @@
+<?php
+namespace App\Controller;
+
+use App\FrontController;
+use App\Model\ProductMapper;
+use App\Model\ProductTypesMapper;
+use App\Model\ShoppingCartMapper;
+
+class Index extends AbstractController {
+		
+		public function index(){
+		
+			$PMapper = new ProductMapper();
+			$this->viewVars->Products = $PMapper->getAllProducts( 4,"Book" );
+			// We get the most recent four books for display.
+			
+			$PTypesMapper = new ProductTypesMapper();
+			$this->viewVars->PTypes = $PTypesMapper->fetchMPTypes(); 
+			// This code gets the main product types. The navigation tabs are loaded based on these.
+			
+			$SCart = new ShoppingCartMapper();
+			$SCart->setCartId();	
+			$this->viewVars->qty = $SCart->getQuantity();	
+			$this->viewVars->CartProducts = $SCart->getCartProducts();			
+		}	
+		
+		public function showproduct(){
+		
+			$PMapper = new ProductMapper();
+			$PTMapper = new ProductTypesMapper();
+			
+			$SCart = new ShoppingCartMapper();
+			$SCart->setCartId();	
+			$this->viewVars->qty = $SCart->getQuantity();
+		
+			$pid = ( int ) $_GET["pid"];
+		
+			$this->viewVars->Product = $PMapper->getProduct( $pid );	
+			$this->viewVars->ProductTypeName = $PTMapper->fetchTypeName( $this->viewVars->Product->ptype_id );
+						
+		}	
+		
+		// Remove item from shopping cart @param $item_id
+		public function removeCartItem( $item_id )
+		{
+			$SCart = new ShoppingCartMapper();
+			$SCart->setCartId();
+			$SCart->removeItem( $item_id );
+		}
+	
+	}

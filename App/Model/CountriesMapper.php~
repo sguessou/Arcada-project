@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Model;
+
+class CountriesMapper {
+	
+	protected $_countries = array();
+	
+	protected $_conn;
+
+	public function __construct() {
+			$this->_conn = AbstractMapper::connect(); 
+			}
+			
+	public function getCountries() {
+		$sql = "SELECT printable_name FROM country ORDER BY printable_name ASC";
+		$dbh = $this->_conn->query( $sql);
+		while ( $row = $dbh->fetch() )	{
+				$this->_countries[] = $row;
+				}
+		return $this->_countries; 
+		
+				
+	}
+
+}

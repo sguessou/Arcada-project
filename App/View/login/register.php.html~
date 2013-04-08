@@ -1,0 +1,105 @@
+<div id="menu"> 
+		<ul>     
+			<li><a href="index.php?controller=index">Main</a></li>
+			<li><a href="index.php?controller=books">Books</a></li>
+			<li><a href="index.php?controller=dvd">Movies</a></li>
+			<li><a class="current" href="index.php?controller=login">Login</a></li>
+			<li><a href="index.php?controller=admin">Admin</a></li>
+		</ul>
+	</div>
+	
+	<div id="feature">	
+		<div class="left">		
+			<h2 class="cart" id="viewCart">Cart</h2>
+			<?php
+	
+			if ( empty( $qty ) ) 
+			{
+				echo "<p>Your Shopping Cart is empty!</p>";
+			}
+			else
+			{
+				if( $qty == 1 )
+				{
+					echo '<p>Your have <a href="#" id="cartLink">'.$qty.' product</a> in your Shopping Cart!</p>';
+				}
+				else
+				{
+					echo '<p>Your have <a href="#" id="cartLink">'.$qty.' products</a> in your Shopping Cart!</p>';
+				}
+			}
+			?>
+		<div id="cartSlider">	
+			<h3 class="cartSlider">Your Shopping Cart:</h3>
+			
+			<ul class="cartUl"><?php 
+					$total = 0;
+					foreach( $CartProducts as $CartProduct ) { 
+					$total += ( $CartProduct->quantity * $CartProduct->product_price ) +
+							  ( $CartProduct->quantity * 2.95 );
+			?>
+				
+				<li><a href="index.php?controller=index&action=removeCartItem&item_id=<?php echo $CartProduct->item_id; ?>"><img src="/project/images/Trash.png"></a>&nbsp;&nbsp;<a href="index.php?controller=books&action=showProduct&pid=<?php echo $CartProduct->product_id; ?>" id="cSlider"><?php echo $CartProduct->product_name; ?></a>
+				&nbsp;<strong><?php echo $CartProduct->quantity. ($CartProduct->quantity == 1 ? ' Item ' : ' Items '); ?></strong>à&nbsp;€&nbsp;
+				<?php echo $CartProduct->product_price; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Subtotal:</strong>&nbsp;
+				<font color="#FF0000"><strong>€&nbsp;<?php echo $CartProduct->product_price * $CartProduct->quantity; ?></strong></font></li>
+				
+				<?php
+				}
+				?>
+				<li>&nbsp;</li>
+				<li><strong>Total Sum: € <font color="#FF0000"><?php echo $total; ?></strong></font></li>
+			</ul>
+			
+			<a class="close" id="close" href="#">Close</a>
+		</div>	
+	</div>
+<div class="clear">&nbsp;</div>
+</div>
+	
+<div id="main">
+  <div class="wrapper-register">
+  <p>&nbsp;</p>
+   <h3>&nbsp;&nbsp;New Registration</h3><br>
+   
+     <h2 class="register">New To Online Store? Register Below.</h2><br>
+     
+	
+   
+		<div class="registration-form">
+   		<form action="index.php?controller=login&action=signup" method="post" id="registration-form">
+			<div><label for="login">My Username Is:</label>
+			<input type="text" name="login" id="login" required="required" /></div>
+			
+			<div><label for="firstname">My Firstname Is:</label>
+			<input type="text" name="firstname" id="firstname" required="required" /></div>
+			
+			<div><label for="lastname">My Lastname Is:</label>
+			<input type="text" name="lastname" id="lastname" required="required" /></div>
+			
+			<div><label for="email">My E-mail Address is:</label>
+			<input type="email" name="email" id="email" required="required"/></div>
+			
+			<div><label for="email2">Type It Again:</label>
+			<input type="email" name="email2" id="email2" required="required"/></div>
+			
+			
+			<div><h2 class="password">Protect Your Information With A Password!</h2>
+							</div>
+							
+			<div><label for="password">Enter A New Password:</label>
+			<input type="password"  name="password" id="password" required="required"/></div>
+			
+			<div><label for="password2">Type It Again:</label>
+			<input type="password"  name="password2" id="password2" required="required"/></div>
+			
+			
+			<div class="submit"><input type="submit" name="registration-submit" id="registration-submit" value="Register" /></div>
+		</form>
+		</div>		
+		
+	 
+   
+   <div class="clear">&nbsp;</div>
+   </div>
+</div>

@@ -1,0 +1,204 @@
+<?php
+
+namespace App\Controller;
+
+use App\FrontController;
+//use App\Model\CountriesMapper;
+use App\Model\ShoppingCartMapper;
+use App\Model\SignUpMapper;
+use App\Validators\RegFormValidator;
+
+Class Login extends AbstractController {
+		
+		public function index()
+		{
+			$SCart = new ShoppingCartMapper();
+			$SCart->setCartId();	
+			$this->viewVars->qty = $SCart->getQuantity();
+			$this->viewVars->CartProducts = $SCart->getCartProducts();			
+		}	
+		
+		public function register() 
+		{	
+			$SCart = new ShoppingCartMapper();
+			$SCart->setCartId();	
+			$this->viewVars->qty = $SCart->getQuantity();
+			$this->viewVars->CartProducts = $SCart->getCartProducts();					
+			
+			//$countryMapper = new CountriesMapper();
+			//$this->viewVars->Countries = $countryMapper->getCountries();
+			
+			
+		}
+		
+		public function signup()
+		{
+			$SCart = new ShoppingCartMapper();
+			$SCart->setCartId();	
+			$this->viewVars->qty = $SCart->getQuantity();
+			$this->viewVars->CartProducts = $SCart->getCartProducts();	
+			
+			$urlPath = 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
+			
+			$reg_messages = array( 'success' => array( 'title'   => 'Confirmation Successful!',
+        												 'content' => '<p>Thank you! Your account has now been confirmed.' .
+        															  'You can now <a href="<confirm_url/>">login</a></p>'
+    													),
+    								'confirm_error' => array( 'title'   => 'Confirmation Problem',
+        													   'content' => '<p>There was a problem confirming your account.' .
+        																	'<br />Please try again or contact the site ' .
+        																	'administrators</p>'
+   															 ),
+    								'email_sent' => array( 'title'   => 'Check your email!',
+        													'content' => '<p>Thank you! Please check your email to ' .
+        																 'confirm your account.</p>'
+    														),
+    								'email_error' => array( 'title'   => 'Email Problem',
+        													 'content' => '<p>Unable to send confirmation email.<br />' .
+                                                                          'Please contact the site administrators.</p>'
+    														),
+    							    'signup_not_unique' => array( 'title'   => 'Registration Problem',
+        														   'content' => '<p>There was an error creating your account.<br />' .
+        																		'The desired username or email address has already been taken.</p>'
+    															  ),
+    								'signup_error' => array( 'title'   => 'Registration Problem',
+        													  'content' => '<p>There was an error creating your account.<br />' .
+        																   'Please contact the site administrators.</p>'
+    														) );
+    		// Settings for SignUp class
+			$listener = $urlPath;
+			$frmName = 'OnlineStore Admin';
+			$frmAddress = 'noreply@onlinestore.com';
+			$subj = 'Account Confirmation';
+			$msg = <<<EOD
+				<html>
+				<body>
+				<h2>Thank you for registering!</h2>
+				<div>The final step is to confirm 
+				your account by clicking on:</div>
+				<div><confirm_url/></div>
+				<div>
+				<b>OnlineStore Team</b>
+				</div>
+				</body>
+				</html>
+EOD;
+			
+			try
+			{
+				// Instantiate the signup class
+  				$signUp = new SignUpMapper( $listener, $frmName, $frmAddress, $subj, $msg );
+  				
+  				// Is this an account confirmation?
+  				if ( isset( $_GET['code']) )
+  				{
+  					if( $signUp->confirm( $_GET['code'] ) )
+  					{
+	  					//Replace <confirm_url/> with real login url in message content
+	  					$msg = $reg_messages['success']['content'];
+	  					$msg = str_replace( '<confirm_url/>', 'http://'.$_SERVER['SERVER_NAME'].'/project/index.php?controller=login', $msg );
+		  				$this->viewVars->display = '<div><h3 class="success">'.$reg_messages['success']['title']
+		    					 				   .'</h3><h2 class="neutral">'.$msg
+		    					 				   .'</h2></div>'; 
+		  				$this->viewVars->missingFields = NULL;
+      				}
+      				else
+      				{
+      					$this->viewVars->display = '<div><h3 class="codeErr">Confirmation Code Error!'
+		    					 				   .'</h3><h2 class="neutral">There was an error with your code: '.$_GET['code'].
+		    					 				   .' Sign up again!</h2></div>'; 
+		  				$this->viewVars->missingFields = NULL;
+      				}
+  				}
+  				// Has the form been submitted?
+  				elseif ( isset( $_POST['login'] ) )
+  				{
+  					$submitVars = array( 'login' => $_POST['login'],
+          								  'password' => $_POST['password'],
+          								  'email' => $_POST['email'],
+          							      'firstname' => $_POST['firstname'],
+          								  'lastname' => $_POST['lastname'], 
+          								  'email2'	=> $_POST['email2'],
+          								  'password2' => $_POST['password2'] );
+          								  
+          		    $formValidator = new RegFormValidator();
+          		    
+          		    //Check for empty fields
+          		    $missingFields = $formValidator->processForm( $submitVars );
+                    
+                    //If no empty field is found, validate login, emails and passwords
+                    if(!$missingFields)
+                    {
+                    	$missingFields = $formValidator->validateFields( $submitVars );
+                    }
+                    
+                    $this->viewVars->loginMsg = NULL;
+                    $this->viewVars->emailMsg = NULL;
+                    
+                    //Finally check the uniqueness of login & email
+                    if( $signUp->isUnique( 'login', $submitVars['login'], 'user' ) )
+                    {
+                    	$missingFields[] = 'login';
+                    	$this->viewVars->loginMsg = 'Chosen username is already in use! Enter another one!';
+                    	
+                    }
+                    
+                    if( $signUp->isUnique( 'email', $submitVars['email'] , 'user' ) )
+                    {
+                    	$missingFields[] = 'email';
+                    	$this->viewVars->emailMsg = 'Chosen email is already in use! Enter another one!';
+                    	
+                    }
+                    //If error in submitted data, display it 
+                    $this->viewVars->missingFields = NULL;
+                    if( $missingFields )
+                    {
+                    	$this->viewVars->missingFields = $missingFields;
+                    	$this->viewVars->messages = $formValidator->getMessages();
+                    	$this->viewVars->vars = $submitVars;
+                    }
+                    else
+                    {         		    
+          		    
+          				try
+      					{
+      						$submitVars['password'] = md5( $submitVars['password'] );
+      						$submitVars['password2'] = $submitVars['password'];	
+        				// Create signup 
+        					$signUp->createSignup($submitVars);
+        				// Send confirmation email
+        					$signUp->sendConfirmation($submitVars);
+        				
+        					$this->viewVars->display = '<div><h3 class="signup">'.$reg_messages['email_sent']['title']
+        					 						   .'</h3><h2 class="neutral">'.$reg_messages['email_sent']['content']
+     												   .'</h2></div>';
+        					//$this->viewVars->data = $submitVars;
+      					}
+      					catch (SignUpEmailException $e)
+      					{
+        					$this->viewVars->display = $reg_messages['email_error'];
+      					}
+     					catch (SignUpNotUniqueException $e)
+      					{
+        					$this->viewVars->display = $reg_messages['signup_not_unique'];
+      					}
+      					catch (SignUpException $e)
+      					{
+        					$this->viewVars->display = $reg_messages['signup_error'];
+      					}
+      				  }// End inner if
+  					}// End outer if
+  				
+				} // End outer try
+				catch (Exception $e)
+				{
+  					error_log( 'Error in '.$e->getFile().
+      					   	   ' Line: '.$e->getLine().
+      					   	   ' Error: '.$e->getMessage() );
+  					$display = $reg_messages['signup_error'];
+				}        
+			
+			
+		} // End function signup
+	
+	}
