@@ -74,20 +74,29 @@
 
 <div id="main">
    <h3><strong>IT-Books:</strong></h3>
-   <p>&nbsp;</p>
    
-	<div class="wrapper-gallery">
-		<ul class="gallery">
-			<?php 
+	<div class="wrapper-book">
+		<ul class="gallery-dvd">
+		  <table width="100%" align="center">
+		   <tbody>
+			<?php
+			   $rowCnt = 0; 
+			   echo '<tr height="235">';	
 			   foreach ( $Products as $Product ) { 
+			   $rowCnt++;
 				$coverSrc = $path."/images/products_images/" . $Product->product_id . "R.jpg";
+				echo '<td>';
 				?>	
-				<li><a href="index.php?controller=books&action=showproduct&pid=<?php echo $Product->product_id; ?>"><img src="<?php echo $coverSrc; ?>" alt="<?php echo $Product->product_name; ?>" /></a>
-				<span><?php echo "<strong>Price:</strong>&nbsp;" . $Product->product_price; ?>&nbsp;&euro;</span></li>
-				
+				<li><a href="index.php?controller=books&action=showproduct&pid=<?php echo $Product->product_id; ?>"><img src="<?php echo $coverSrc; ?>" alt="<?php echo $Product->product_name; ?>" height="225" width="150" /></a>
+				<span><?php echo "<strong>$Product->product_name</strong><br /><strong>Price:</strong>&nbsp;" . $Product->product_price; ?>&nbsp;&euro;<br /><strong>Click for more details!</strong></span></li>
 			<?php 
+				echo '</td>';
+				if($rowCnt % 4 == 0) echo '</tr><tr height="235">';
 			}
+				echo '</tr>';
 			?>
+			</tbody>
+			</table>
 		</ul>
 	</div>   
    

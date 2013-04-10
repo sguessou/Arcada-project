@@ -78,14 +78,30 @@
 	<div id="content">
    <h3><strong>Movies:</strong></h3>
    	
-   	<br /><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam lorem libero, tincidunt nec ultrices a, tempor dapibus sapien. Pellentesque congue quam vitae elit dictum dapibus. Mauris eu nulla nibh. Praesent eu suscipit justo. Cras at erat massa. Nulla facilisi. Maecenas id leo quis tortor feugiat imperdiet nec et sem. Maecenas pretium tortor massa. Donec urna lorem, fermentum nec tempus eget, congue in mi. Nam luctus dignissim mauris, vitae faucibus lectus venenatis volutpat.</p>
-
-<p>Vivamus ultrices placerat mauris, eget tempus mi pulvinar eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ut dui nibh, eu euismod odio. Maecenas dignissim fermentum metus, eu commodo sem lacinia at. Sed cursus, dolor quis facilisis condimentum, est tortor hendrerit arcu, et rhoncus libero justo fringilla urna. Aenean hendrerit, turpis quis pellentesque iaculis, leo nisi euismod leo, in adipiscing metus urna vitae magna. Nullam quam velit, feugiat sed luctus et, placerat nec nisl. Duis ac nisi risus, ac varius purus. Sed adipiscing accumsan ligula, sed ornare lectus cursus et. Etiam quam justo, ultrices id porttitor eget, bibendum ac velit. Etiam vitae nunc neque, tincidunt rutrum magna. Suspendisse potenti. Nullam rhoncus feugiat nisi vitae pharetra. Sed adipiscing volutpat tortor, in pharetra tortor suscipit nec.</p>
-
-<p>Phasellus egestas, ante id cursus fringilla, neque tortor rhoncus eros, id imperdiet sapien est ac eros. Curabitur viverra pellentesque ligula. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed luctus nisi a massa aliquet quis imperdiet sem viverra. Morbi pellentesque tellus vel sapien aliquam dictum porttitor nulla pellentesque. Suspendisse potenti. Mauris imperdiet, nisi vel porttitor dignissim, diam lacus fermentum augue, quis rutrum nibh tortor non velit. Donec eget malesuada nisl. Suspendisse lorem arcu, auctor in ultrices tempus, hendrerit id tortor. Sed sit amet ante eu urna facilisis fermentum. Aenean malesuada libero eget nisi tristique convallis. Maecenas in nulla nec erat semper interdum sed eget arcu. Sed venenatis enim ut nibh suscipit interdum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nulla a consectetur velit.</p>
-
-<p>Phasellus egestas, ante id cursus fringilla, neque tortor rhoncus eros, id imperdiet sapien est ac eros. Curabitur viverra pellentesque ligula. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed luctus nisi a massa aliquet quis imperdiet sem viverra. Morbi pellentesque tellus vel sapien aliquam dictum porttitor nulla pellentesque. Suspendisse potenti. Mauris imperdiet, nisi vel porttitor dignissim, diam lacus fermentum augue, quis rutrum nibh tortor non velit. Donec eget malesuada nisl. Suspendisse lorem arcu, auctor in ultrices tempus, hendrerit id tortor. Sed sit amet ante eu urna facilisis fermentum. Aenean malesuada libero eget nisi tristique convallis. Maecenas in nulla nec erat semper interdum sed eget arcu. Sed venenatis enim ut nibh suscipit interdum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nulla a consectetur velit.</p>
-
+   	<div class="wrapper-dvd">
+		<ul class="gallery-dvd">
+		  <table width="100%" align="center">
+		   <tbody>
+			<?php
+			   $rowCnt = 0; 
+			   echo '<tr height="235">';	
+			   foreach ( $Dvds as $Product ) { 
+			   $rowCnt++;
+				$coverSrc = $path."/images/products_images/" . $Product->product_id . "R.jpg";
+				echo '<td>';
+				?>	
+				<li><a href="index.php?controller=books&action=showproduct&pid=<?php echo $Product->product_id; ?>"><img src="<?php echo $coverSrc; ?>" alt="<?php echo $Product->product_name; ?>" height="225" width="150" /></a>
+				<span><?php echo "<strong>$Product->product_name</strong><br /><strong>Price:</strong>&nbsp;" . $Product->product_price; ?>&nbsp;&euro;<br /><strong>Click for more details!</strong></span></li>
+			<?php 
+				echo '</td>';
+				if($rowCnt % 4 == 0) echo '</tr><tr height="235">';
+			}
+				echo '</tr>';
+			?>
+			</tbody>
+			</table>
+		</ul>
+	</div>   
 
    <div class="clear">&nbsp;</div>
    </div>

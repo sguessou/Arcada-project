@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\FrontController;
 use App\Model\ShoppingCartMapper;
+use App\Model\ProductMapper;
 use App\Util\Auth;
 use App\Util\Session;
 
@@ -33,7 +34,11 @@ Class Dvd extends AbstractController {
 				{
 					$this->viewVars->admin = TRUE;
 				}
-			}		
-		}	
+			}
+			
+			$PMapper = new ProductMapper();
+			$this->viewVars->Dvds = $PMapper->getAllProducts( NULL,"Dvd");
+					
+		}// End index	
 	
 	}

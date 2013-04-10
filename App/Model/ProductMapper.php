@@ -48,7 +48,14 @@ The file product_id.jpg is moved to the products_images folder.
 			echo "<p>Sorry, there was a problem uploading that photo.</p>"	;	
 		} else {
 			// Instantiate the thumbnail
-			$tn = new Thumbnail(140, 140);
+			if($Product->ptype_id == 1)
+			{
+				$tn = new Thumbnail(150, 197);
+		    }
+		    else
+		    {
+		    	$tn = new Thumbnail(150, 225);
+		    }
 
 			// Load an image into a string (this could be from a database)
 			$image = file_get_contents( $imageTmp.$imageName );
@@ -86,7 +93,7 @@ This function returns a list of products according to the parameters $limit and 
 		$ptype_id = $this->getPTypeId( $PName );
 		
 		if( $limit != null ) {
-				$stmt = $this->_conn->prepare( "SELECT * FROM products WHERE ptype_id = :ptype_id LIMIT :limit" );
+				$stmt = $this->_conn->prepare("SELECT * FROM products WHERE ptype_id = :ptype_id ORDER BY product_id DESC LIMIT :limit");
 				$stmt->bindParam( ":limit", $limit, \PDO::PARAM_INT );
 				$stmt->bindParam( ":ptype_id", $ptype_id["ptype_id"], \PDO::PARAM_INT );
 		
