@@ -48,13 +48,13 @@ The file product_id.jpg is moved to the products_images folder.
 			echo "<p>Sorry, there was a problem uploading that photo.</p>"	;	
 		} else {
 			// Instantiate the thumbnail
-			if($Product->ptype_id == 1)
+			if($Product->ptype_id == 2) //Dvd
 			{
-				$tn = new Thumbnail(150, 197);
-		    }
-		    else
-		    {
 		    	$tn = new Thumbnail(150, 225);
+		    }
+		    elseif($Product->ptype_id == 1)//Book
+		    {	
+		    	$tn = new Thumbnail(150, 188);
 		    }
 
 			// Load an image into a string (this could be from a database)
