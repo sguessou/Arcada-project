@@ -76,6 +76,6 @@ class Books extends AbstractController {
 					$this->viewVars->admin = TRUE;
 				}
 			}		
-		}	
+		}//End showProduct	
 	
 	}

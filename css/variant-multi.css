@@ -232,7 +232,7 @@ input[type="email"]:focus:required:invalid {
   transform: rotate(5deg);
 }
 
-h1.instructions {
+h1.dvd {
   /*clear:both;*/
   font-size: 150%;
   border-bottom: 1px solid #999;
@@ -242,7 +242,28 @@ h1.instructions {
 	margin-right: 0;
 	margin-left: 0;
   padding: 1em 0 1em 0;
+  background-image: url(./images/DVD.png);
+  background-repeat: no-repeat;
+  background-position: left center;
+  padding-left: 55px;
 }
+
+h1.book {
+  /*clear:both;*/
+  font-size: 150%;
+  border-bottom: 1px solid #999;
+  /* margin: 1em 0 1em 0;*/
+   margin-top: 0;
+	margin-bottom:20px;
+	margin-right: 0;
+	margin-left: 0;
+  padding: 1em 0 1em 0;
+  background-image: url(./images/book.png);
+  background-repeat: no-repeat;
+  background-position: left center;
+  padding-left: 55px;
+}
+
 h1.cart_header {
   /*clear:both;*/
   font-size: 120%;
@@ -509,6 +530,10 @@ a.cart-dvd:link, a.cart-dvd:visited {
   text-decoration: none;
 }
 
+a.dvd 
+{
+	text-decoration: none;
+}
 /*
 CSS for Products gallery
 */
