@@ -494,6 +494,21 @@ a.cart-index:link, a.cart-index:visited {
   text-decoration: none;
 }
 
+a.cart-dvd:link, a.cart-dvd:visited {
+  display: block;
+  /* padding: 0.3em 40px 0.3em 0; */
+  padding-left: 30px;
+  height: 24px;
+  margin-left: 2px;
+  text-align: left;
+  color: #666;
+  font-weight: bold;
+  background-image: url(./images/001_47.png);
+  background-position: left center; 
+  background-repeat: no-repeat;
+  text-decoration: none;
+}
+
 /*
 CSS for Products gallery
 */
@@ -681,3 +696,5 @@ ul.cartUl
 tr.alt td { background: #ddd; }
 
 .group { display: inline-block; }
+
+.click { color: red; }

@@ -100,7 +100,7 @@
 		 echo '<td width="370" style="border-bottom:1px dashed green;">';
 		 echo '<a title="'.$Product->product_name.'" href="'.$path.'/index.php?controller=books&action=showproduct&pid='.$Product->product_id.'">'.$Product->product_name.'</a>';
 		 echo '<div style="padding-top:10px; text-align:justify;">'.htmlentities($description).'</div>';
-		 echo '<div style="padding-top:10px;padding-bottom:10px; text-align:justify;"><a class="cart-index" href="index.php?controller=cart&action=addcart&pid='.htmlspecialchars( $Product->product_id ).'&front=front">Add to cart</a></div></td>';
+		 echo '<div style="padding-top:10px;padding-bottom:10px; text-align:justify;"><a class="cart-dvd" href="index.php?controller=cart&action=addcart&pid='.htmlspecialchars( $Product->product_id ).'&front=front">Add to cart</a></div></td>';
 		 echo '<td width="20"> </td>';
 		 if($rowCount % 2 == 0 && $rowCount != 4) echo '</tr><tr height="150">';
 		 elseif($rowCount % 2 == 0 && $rowCount == 4) echo '</tr>'; 
@@ -135,7 +135,7 @@
 		 echo '<td width="370" style="border-bottom:1px dashed green;">';
 		 echo '<a title="'.$Dvd->product_name.'" href="'.$path.'/index.php?controller=books&action=showproduct&pid='.$Dvd->product_id.'">'.$Dvd->product_name.'</a>';
 		 echo '<div style="padding-top:10px; text-align:justify;">'.$descp.'</div>';
-		 echo '<div style="padding-top:10px;padding-bottom:10px; text-align:justify;"><a class="cart-index" href="index.php?controller=cart&action=addcart&pid='.htmlspecialchars( $Dvd->product_id ).'&front=front">Add to cart</a></div></td>';
+		 echo '<div style="padding-top:10px;padding-bottom:10px; text-align:justify;"><a class="cart-dvd" href="index.php?controller=cart&action=addcart&pid='.htmlspecialchars( $Dvd->product_id ).'&front=front">Add to cart</a></div></td>';
 		 echo '<td width="20"> </td>';
 		 if($rowCnt % 2 == 0 && $rowCnt != 4) echo '</tr><tr height="150">';
 		 elseif($rowCnt % 2 == 0 && $rowCnt == 4) echo '</tr>'; 
