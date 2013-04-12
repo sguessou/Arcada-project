@@ -1,10 +1,24 @@
 <div id="menu"> 
 		<ul>     
 			<li><a class="current" href="index.php?controller=index">Main</a></li>
-			<li><a href="index.php?controller=books">Books</a></li>
+			<li><a href="index.php?controller=books&flag=begin">Books</a></li>
 			<li><a href="index.php?controller=dvd">Movies</a></li>
-			<li><a href="index.php?controller=login">Login</a></li>
-			<li><a href="index.php?controller=admin">Admin</a></li>
+			<?php
+			 
+				if( $loggedIn && !$admin )
+				{
+					echo '<li><a href="index.php?controller=login&action=login">My Account</a></li>';
+				}
+				elseif( !$loggedIn)
+				{
+					echo '<li><a href="index.php?controller=login">Login</a></li>';
+				}
+				
+				if( $admin )
+				{
+					echo '<li><a href="index.php?controller=admin">Admin</a></li>';
+				}
+				?>
 		</ul>
 	</div>
 	
@@ -30,9 +44,12 @@
 				}
 			}
 			?>
+
+			<!--div class="arrow-up2"></div-->
 		<div id="cartSlider">	
-			<h3 class="cartSlider">Your Shopping Cart:</h3>
-			
+				
+			<!--h2 style="font-size:120%;font-weight:bold;color:#3f4c6b;clear:both;border-bottom: 1px solid #999;margin: 0 auto 1em auto;padding: 0 0 1em 30px;">Your Shopping Cart:</h2-->
+			<h1 class="cart_header">Your Shopping Cart:</h1>
 			<ul class="cartUl"><?php 
 					$total = 0;
 					foreach( $CartProducts as $CartProduct ) { 
@@ -40,7 +57,7 @@
 							  ( $CartProduct->quantity * 2.95 );
 			?>
 				
-				<li><a href="index.php?controller=index&action=removeCartItem&item_id=<?php echo $CartProduct->item_id; ?>"><img src="/project/images/Trash.png"></a>&nbsp;&nbsp;<a href="index.php?controller=books&action=showProduct&pid=<?php echo $CartProduct->product_id; ?>" id="cSlider"><?php echo $CartProduct->product_name; ?></a>
+				<li><a href="index.php?controller=index&action=removeCartItem&item_id=<?php echo $CartProduct->item_id; ?>"><img src="<?php echo $path.'/css/images/bin_closed.png'; ?>"></a>&nbsp;&nbsp;<a href="index.php?controller=books&action=showProduct&pid=<?php echo $CartProduct->product_id; ?>" id="cSlider"><?php echo $CartProduct->product_name; ?></a>
 				&nbsp;<strong><?php echo $CartProduct->quantity. ($CartProduct->quantity == 1 ? ' Item ' : ' Items '); ?></strong>à&nbsp;€&nbsp;
 				<?php echo $CartProduct->product_price; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Subtotal:</strong>&nbsp;
 				<font color="#FF0000"><strong>€&nbsp;<?php echo $CartProduct->product_price * $CartProduct->quantity; ?></strong></font></li>
@@ -51,33 +68,90 @@
 				<li>&nbsp;</li>
 				<li><strong>Total Sum: € <font color="#FF0000"><?php echo $total; ?></strong></font></li>
 			</ul>
-			
+			<a class="checkout" id="checkout" href="<?php echo $path; ?>/index.php?controller=login&action=index&checkout=checkout">Proceed to Checkout</a>
 			<a class="close" id="close" href="#">Close</a>
-		</div>	
+		  </div>	
 	</div>
+	  
 <div class="clear">&nbsp;</div>
+
 </div>
 
-<div id="main">
-<h3><strong>IT-Books:</strong></h3>
-<p>&nbsp;</p>
-	<!-- div id="content" -->
-   <div class="wrapper-gallery">
-		<ul class="gallery">
-			<?php 
-			   foreach ( $Products as $Product ) { 
-				$coverSrc = "/project/images/products_images/" . $Product->product_id . "R.jpg";
-				?>	
-				<li><a href="index.php?controller=books&action=showproduct&pid=<?php echo $Product->product_id; ?>"><img src="<?php echo $coverSrc; ?>" alt="<?php echo $Product->product_name; ?>" /></a>
-				<span><?php echo "<strong>Price:</strong>&nbsp;" . $Product->product_price; ?>&nbsp;&euro;</span></li>
-				
-			<?php 
-			}
-			?>
-		</ul>
-	</div>
-   <div class="clear">&nbsp;</div>
-   <!--/div -->
- <h3><strong>Movies:</strong></h3>
+<div id="main">	
+     
+   <table width="100%" border="0" align="center">
+   <tbody>
+    <tr>
+    <td>
+    <h3><strong>Last Upload eBooks:</strong></h3><br />
+     <table width="100%" align="center">
+      <tbody>
+      <?php
+      	$rowCount = 0;
+      	echo '<tr height="150">';
+      	foreach ( $Products as $Product ) 
+      	{ 
+      	 $rowCount++;
+		 $coverSrc = $path."/images/products_images/" . $Product->product_id . "R.jpg";
+		 $description = implode(' ', array_slice(explode(' ', $Product->product_description), 0, 40));
+		 $description .= '...'; 
+		 
+		 echo '<td width="120">';
+		 echo '<a title="'.$Product->product_name.'" href="'.$path.'/index.php?controller=books&action=showproduct&pid='.$Product->product_id.'">';
+		 echo '<img class="border" width="100" alt="'.$Product->product_name.'" src="'.$coverSrc.'"></a></td>';
+		 echo '<td width="370" style="border-bottom:1px dashed green;">';
+		 echo '<a title="'.$Product->product_name.'" href="'.$path.'/index.php?controller=books&action=showproduct&pid='.$Product->product_id.'">'.$Product->product_name.'</a>';
+		 echo '<div style="padding-top:10px; text-align:justify;">'.htmlentities($description).'</div>';
+		 echo '<div style="padding-top:10px;padding-bottom:10px; text-align:justify;"><a class="cart-dvd" href="index.php?controller=cart&action=addcart&pid='.htmlspecialchars( $Product->product_id ).'&front=front">Add to cart</a></div></td>';
+		 echo '<td width="20"> </td>';
+		 if($rowCount % 2 == 0 && $rowCount != 4) echo '</tr><tr height="150">';
+		 elseif($rowCount % 2 == 0 && $rowCount == 4) echo '</tr>'; 
+		}
+		echo '</tr>';
+      ?>
+      </tbody>
+     </table>
+    </td>
+    </tr>
+   </tbody>
+   </table>
+   <br />
+   <br />
+ <h3><strong>Last Upload Dvd's:</strong></h3><br />
+ <table width="100%" align="center">
+      <tbody>
+      <?php 
+      
+      	$rowCnt = 0;
+      	echo '<tr height="150">';
+      	foreach ( $Dvds as $Dvd ) 
+      	{ 
+      	 $rowCnt++;
+		 $cvrSrc = $path."/images/products_images/" . $Dvd->product_id . "R.jpg";
+		 $descp = implode(' ', array_slice(explode(' ', $Dvd->product_description), 0, 40));
+		 $descp .= '...'; 
+		 
+		 echo '<td width="120">';
+		 echo '<a title="'.$Dvd->product_name.'" href="'.$path.'/index.php?controller=books&action=showproduct&pid='.$Dvd->product_id.'">';
+		 echo '<img class="border" width="100" alt="'.$Dvd->product_name.'" src="'.$cvrSrc.'"></a></td>';
+		 echo '<td width="370" style="border-bottom:1px dashed green;">';
+		 echo '<a title="'.$Dvd->product_name.'" href="'.$path.'/index.php?controller=books&action=showproduct&pid='.$Dvd->product_id.'">'.$Dvd->product_name.'</a>';
+		 echo '<div style="padding-top:10px; text-align:justify;">'.$descp.'</div>';
+		 echo '<div style="padding-top:10px;padding-bottom:10px; text-align:justify;"><a class="cart-dvd" href="index.php?controller=cart&action=addcart&pid='.htmlspecialchars( $Dvd->product_id ).'&front=front">Add to cart</a></div></td>';
+		 echo '<td width="20"> </td>';
+		 if($rowCnt % 2 == 0 && $rowCnt != 4) echo '</tr><tr height="150">';
+		 elseif($rowCnt % 2 == 0 && $rowCnt == 4) echo '</tr>'; 
+		}
+		echo '</tr>';
+      ?>
+      </tbody>
+     </table>
+    </td>
+    </tr>
+   </tbody>
+   </table>
+ 
+		
  <p>&nbsp;</p>
+ <div class="clear">&nbsp;</div>
 </div>

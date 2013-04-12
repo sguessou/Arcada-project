@@ -1,7 +1,7 @@
 <div id="menu"> 
 		<ul>     
 			<li><a href="<?php echo $path ?>/index.php?controller=index">Main</a></li>
-			<li><a href="<?php echo $path ?>/index.php?controller=books">Books</a></li>
+			<li><a href="<?php echo $path ?>/index.php?controller=books&flag=begin">Books</a></li>
 			<li><a href="<?php echo $path ?>/index.php?controller=dvd">Movies</a></li>
 			<?php
 			 

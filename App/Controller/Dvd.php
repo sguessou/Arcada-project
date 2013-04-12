@@ -37,8 +37,25 @@ Class Dvd extends AbstractController {
 				}
 			}
 			
-			$PMapper = new ProductMapper();
-			$this->viewVars->Dvds = $PMapper->getAllProducts( NULL,"Dvd");			
+			$PrdMapper = new ProductMapper();
+
+			if(isset($_GET['flag']) && $_GET['flag'] == 'begin')
+			{
+				$this->viewVars->first = 1;
+		    	$this->viewVars->start = 0;
+		    	$this->viewVars->PAGE_SIZE = 10;		
+				list( $this->viewVars->Dvds, $this->viewVars->totalRows ) = $PrdMapper->fetchProducts(2, 'product_id', $this->viewVars->start, 10);	
+				unset($_GET['flag']);
+			}				
+			
+			if( isset( $_GET["start"] ) )
+			{
+				$this->viewVars->PAGE_SIZE = 10;
+				$this->viewVars->start  = (int)$_GET["start"];
+				$this->viewVars->first = (int)$_GET["first"];
+			    list( $this->viewVars->Dvds, $this->viewVars->totalRows ) = $PrdMapper->fetchProducts(2, 'product_id', $this->viewVars->start, 10);
+
+			} 			
 		}// End index
 		
 		public function showDvd()
