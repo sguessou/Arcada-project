@@ -3,8 +3,22 @@
 			<li><a href="index.php?controller=index">Main</a></li>
 			<li><a href="index.php?controller=books">Books</a></li>
 			<li><a href="index.php?controller=dvd">Movies</a></li>
-			<li><a class="current" href="index.php?controller=login">Login</a></li>
-			<li><a href="index.php?controller=admin">Admin</a></li>
+			<li><?php
+			 
+				if ( $loggedIn )
+				{
+					echo '<a class="current" href="index.php?controller=login&action=login&logout=logout">Logout</a></li>';
+				}
+				else
+				{
+					echo '<a class="current" href="index.php?controller=login">Login</a></li>';
+				}
+				
+				if( $admin )
+				{
+					echo '<li><a href="index.php?controller=admin">Admin</a></li>';
+				}
+				?>
 		</ul>
 	</div>
 	
@@ -30,7 +44,7 @@
 			}
 			?>
 		<div id="cartSlider">	
-			<h3 class="cartSlider">Your Shopping Cart:</h3>
+			<h1 class="cart_header">Your Shopping Cart:</h1>
 			
 			<ul class="cartUl"><?php 
 					$total = 0;
@@ -39,7 +53,7 @@
 							  ( $CartProduct->quantity * 2.95 );
 			?>
 				
-				<li><a href="index.php?controller=index&action=removeCartItem&item_id=<?php echo $CartProduct->item_id; ?>"><img src="/project/images/Trash.png"></a>&nbsp;&nbsp;<a href="index.php?controller=books&action=showProduct&pid=<?php echo $CartProduct->product_id; ?>" id="cSlider"><?php echo $CartProduct->product_name; ?></a>
+				<li><a href="index.php?controller=index&action=removeCartItem&item_id=<?php echo $CartProduct->item_id; ?>"><img src="<?php echo $path.'/css/images/bin_closed.png'; ?>"></a>&nbsp;&nbsp;<a href="index.php?controller=books&action=showProduct&pid=<?php echo $CartProduct->product_id; ?>" id="cSlider"><?php echo $CartProduct->product_name; ?></a>
 				&nbsp;<strong><?php echo $CartProduct->quantity. ($CartProduct->quantity == 1 ? ' Item ' : ' Items '); ?></strong>à&nbsp;€&nbsp;
 				<?php echo $CartProduct->product_price; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Subtotal:</strong>&nbsp;
 				<font color="#FF0000"><strong>€&nbsp;<?php echo $CartProduct->product_price * $CartProduct->quantity; ?></strong></font></li>
@@ -50,10 +64,13 @@
 				<li>&nbsp;</li>
 				<li><strong>Total Sum: € <font color="#FF0000"><?php echo $total; ?></strong></font></li>
 			</ul>
-			
+									<a class="checkout" id="checkout" href="<?php echo $path; ?>/index.php?controller=login&action=index&checkout=checkout">Proceed to Checkout</a>
 			<a class="close" id="close" href="#">Close</a>
 		</div>	
 	</div>
+	
+	
+		
 <div class="clear">&nbsp;</div>
 </div>
 	
@@ -77,9 +94,9 @@
 						   		 foreach($messages as $message) echo $message.'<br />'; ?></p>
 
      	<div class="registration-form">
-   		<form action="index.php?controller=login&action=signup" method="post" id="registration-form">
-			<div><label for="login"<?php if(in_array("login",$missingFields)) echo ' class="error"';   ?>>My Username Is:</label>
-			<input type="text" name="login" id="login" value="<?php if($vars['login']) echo $vars['login']; ?>"/></div>
+   		<form action="index.php?controller=login&action=signup" method="post" class="style-form">
+			<div><label for="username"<?php if(in_array("login",$missingFields)) echo ' class="error"';   ?>>My Username Is:</label>
+			<input type="text" name="username" id="username" value="<?php if($vars['login']) echo $vars['login']; ?>"/></div>
 			
 			<div><label for="firstname"<?php if(in_array("firstname",$missingFields)) echo ' class="error"';   ?>>My Firstname Is:</label>
 			<input type="text" name="firstname" id="firstname" value="<?php if($vars['firstname']) echo $vars['firstname']; ?>"/></div>
@@ -112,11 +129,10 @@
      		
      <?php	}
      		else
-     		
-     		echo '<div><h3>&nbsp;&nbsp;&nbsp;'.$display['title'].'</h3><h2 class="signup">'.$display['content']
-     		.'</h2></div>';
-     		
-     ?>	
+     		{
+     			echo $display;
+     		}
+     		?>	
 		
 	 
    

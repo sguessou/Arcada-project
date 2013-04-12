@@ -1,16 +1,30 @@
 <div id="menu"> 
 		<ul>     
-			<li><a href="index.php?controller=index">Main</a></li>
-			<li><a href="index.php?controller=books">Books</a></li>
-			<li><a href="index.php?controller=dvd">Movies</a></li>
-			<li><a href="index.php?controller=login">Login</a></li>
-			<li><a class="current" href="index.php?controller=admin">Admin</a></li>
+			<li><a href="<?php echo $path ?>/index.php?controller=index">Main</a></li>
+			<li><a href="<?php echo $path ?>/index.php?controller=books">Books</a></li>
+			<li><a href="<?php echo $path ?>/index.php?controller=dvd">Movies</a></li>
+			<?php
+			 
+				if( $loggedIn && !$admin )
+				{
+					echo '<li><a class="current" href="'.$path.'/index.php?controller=login&action=login">My Account</a></li>';
+				}
+				elseif( !$loggedIn)
+				{
+					echo '<li><a class="current" href="'.$path.'/index.php?controller=login">Login</a></li>';
+				}
+				
+				if( $admin )
+				{
+					echo '<li><a class="current" href="'.$path.'/index.php?controller=admin">Admin</a></li>';
+				}
+				?>
 		</ul>
 	</div>
 	
 	<div id="feature">
 		<div class="left">			
-			<h2>Welcome to the Admin CMS area!</h2>
+			<h2>Welcome To The Admin CMS Area!</h2>
 			<!--p>In here you can manage users !</p-->
 		</div>
 			<div class="clear">&nbsp;</div>
@@ -18,25 +32,30 @@
 <div id="main">
    <div id="sidebar">
 			<div class="sidebarbox">
-               <h2>Admin menu</h2>
+               <h2>Admin Menu</h2>
 				<ul class="sidemenu">
-					<li><a href="">Manage users</a></li>
-					<li><a href="index.php?controller=admin&action=ptypes">Manage product types</a></li>
-					<li><a href="#">Manage products</a>
+					<li><a href="">Manage Users</a></li>
+					<li><a href="<?php echo $path ?>/index.php?controller=admin&action=ptypes">Manage Product Types</a></li>
+					<li><a href="#">Manage Products</a>
 						<ul>
-							<li><a href="index.php?controller=admin&action=addproduct">Add product</a></li>
-							<li><a href="">Delete product</a></li>
-							<li><a href="">Update product</a></li>
+							<li><a href="<?php echo $path ?>/index.php?controller=admin&action=addproduct">Add Product</a></li>
+							<li><a href="">Delete Product</a></li>
+							<li><a href="">Update Product</a></li>
 						</ul></li>
-					<li><a href="#">Manage orders</a></li>	
+					<li><a href="#">Manage Orders</a></li>	
+					<li><a href="<?php echo $path ?>/index.php?controller=admin&action=viewLog">View Access Log</a></li>
+					<li><a href="<?php echo $path ?>/index.php?controller=login&action=login&logout=logout">Logout</a></li>	
 				</ul>
 			</div>
 	    </div> 		   
 	<div id="content">
-   <h3>Admin\Manage product types></h3>
-   <div class="wrapper">
+   <h4>Admin >> Manage Product Types-></h4>
+   <br />
+   <br />
    
-	<form action="index.php?controller=admin&action=PTypesSave" method="post">
+   <!--div class="wrapper" -->
+   
+	<form action="<?php echo $path ?>/index.php?controller=admin&action=PTypes" method="post" class="style-form">
 		
 		<div><label for="parent_ptype_id">Parent product type</label>
 			<select name="parent_ptype_id" id="parent_ptype_id" size="1"> 
@@ -55,7 +74,7 @@
 		</form>
    	
    
-   </div>
+   <!--/div-->
    
    </div>
    <div class="clear">&nbsp;</div>
