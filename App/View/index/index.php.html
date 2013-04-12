@@ -97,10 +97,10 @@
 		 $description .= '...'; 
 		 
 		 echo '<td width="120">';
-		 echo '<a title="'.$Product->product_name.'" href="'.$path.'/index.php?controller=books&action=showproduct&pid='.$Product->product_id.'">';
-		 echo '<img class="border" width="100" alt="'.$Product->product_name.'" src="'.$coverSrc.'"></a></td>';
+		 echo '<a title="Price: '.$Product->product_price.' €" href="'.$path.'/index.php?controller=books&action=showproduct&pid='.$Product->product_id.'&flag=begin">';
+		 echo '<img class="border" width="100" alt="Price: '.$Product->product_price.' €" src="'.$coverSrc.'"></a></td>';
 		 echo '<td width="370" style="border-bottom:1px dashed green;">';
-		 echo '<a title="'.$Product->product_name.'" href="'.$path.'/index.php?controller=books&action=showproduct&pid='.$Product->product_id.'">'.$Product->product_name.'</a>';
+		 echo '<a title="Price: '.$Product->product_price.' €" href="'.$path.'/index.php?controller=books&action=showproduct&pid='.$Product->product_id.'&flag=begin">'.$Product->product_name.'</a>';
 		 echo '<div style="padding-top:10px; text-align:justify;">'.htmlentities($description).'</div>';
 		 echo '<div style="padding-top:10px;padding-bottom:10px; text-align:justify;"><a class="cart-dvd" href="index.php?controller=cart&action=addcart&pid='.htmlspecialchars( $Product->product_id ).'&front=front">Add to cart</a></div></td>';
 		 echo '<td width="20"> </td>';
@@ -132,10 +132,10 @@
 		 $descp .= '...'; 
 		 
 		 echo '<td width="120">';
-		 echo '<a title="'.$Dvd->product_name.'" href="'.$path.'/index.php?controller=books&action=showproduct&pid='.$Dvd->product_id.'">';
-		 echo '<img class="border" width="100" alt="'.$Dvd->product_name.'" src="'.$cvrSrc.'"></a></td>';
+		 echo '<a title="Price: '.$Dvd->product_price.' €" href="'.$path.'/index.php?controller=dvd&action=showDvd&pid='.$Dvd->product_id.'&flag=begin">';
+		 echo '<img class="border" width="100" alt="Price: '.$Dvd->product_price.' €" src="'.$cvrSrc.'"></a></td>';
 		 echo '<td width="370" style="border-bottom:1px dashed green;">';
-		 echo '<a title="'.$Dvd->product_name.'" href="'.$path.'/index.php?controller=books&action=showproduct&pid='.$Dvd->product_id.'">'.$Dvd->product_name.'</a>';
+		 echo '<a title="Price: '.$Dvd->product_price.' €" href="'.$path.'/index.php?controller=dvd&action=showDvd&pid='.$Dvd->product_id.'&flag=begin">'.$Dvd->product_name.'</a>';
 		 echo '<div style="padding-top:10px; text-align:justify;">'.$descp.'</div>';
 		 echo '<div style="padding-top:10px;padding-bottom:10px; text-align:justify;"><a class="cart-dvd" href="index.php?controller=cart&action=addcart&pid='.htmlspecialchars( $Dvd->product_id ).'&front=front">Add to cart</a></div></td>';
 		 echo '<td width="20"> </td>';
