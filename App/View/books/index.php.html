@@ -84,20 +84,43 @@
 			   echo '<tr height="235">';	
 			   foreach ( $Products as $Product ) { 
 			   $rowCnt++;
-				$coverSrc = $path."/images/products_images/" . $Product->product_id . "R.jpg";
+				$coverSrc = $path."/images/products_images/" . $Product['product_id'] . "R.jpg";
 				echo '<td>';
 				?>	
-				<li><a href="<?php echo $path; ?>/index.php?controller=books&action=showproduct&pid=<?php echo $Product->product_id; ?>"><img src="<?php echo $coverSrc; ?>" alt="<?php echo $Product->product_name; ?>" height="225" width="150" /></a>
-				<span><?php echo "<strong>$Product->product_name</strong><br /><strong>Price:</strong>&nbsp;" . $Product->product_price; ?>&nbsp;&euro;<br /><br /><a class="dvd" href="<?php echo $path; ?>/index.php?controller=books&action=showproduct&pid=<?php echo $Product->product_id; ?>"><strong class="click">CLICK FOR MORE DETAILS!</strong></a></span></li>
+				<li><a href="<?php echo $path; ?>/index.php?controller=books&action=showproduct&pid=<?php echo $Product['product_id']; ?>"><img src="<?php echo $coverSrc; ?>" alt="<?php echo $Product['product_name']; ?>" height="225" width="150" /></a>
+				<span><strong><?php echo $Product['product_name'] ?></strong><br /><strong>Price:</strong>&nbsp;<?php echo $Product['product_price']; ?>&nbsp;&euro;<br /><br /><a class="dvd" href="<?php echo $path; ?>/index.php?controller=books&action=showproduct&pid=<?php echo $Product['product_id']; ?>"><strong class="click">CLICK FOR MORE DETAILS!</strong></a></span></li>
 			<?php 
-				echo '<div style="padding-top:0;padding-bottom:10px; text-align:justify;"><a class="cart-dvd" href="index.php?controller=cart&action=addcart&pid='.htmlspecialchars( $Product->product_id ).'">Add to cart</a></div></td>';
-				if($rowCnt % 4 == 0) echo '</tr><tr height="235">';
+				echo '<div style="padding-top:0;padding-bottom:10px; text-align:justify;"><a class="cart-dvd" href="index.php?controller=cart&action=addcart&pid='.htmlspecialchars( $Product['product_id'] ).'">Add to cart</a></div></td>';
+				if($rowCnt % 5 == 0 && $rowCnt != 10) echo '</tr><tr height="235">';
+				elseif($rowCnt == 10) echo '</tr>';
 			}
-				echo '</tr>';
+				
 			?>
 			</tbody>
 			</table>
 		</ul>
+
+	<table>
+	<tr width="60%">
+	<td> 	
+	
+        <?php 
+        $last = $totalRows / $PAGE_SIZE;
+			if($totalRows % $PAGE_SIZE) { $last += 1; }
+			$str = '&nbsp;&nbsp;( '.$first.' of '.(int)$last.' ) '; 
+        if ( $start > 0 ) 
+        { 
+           echo '<td><a class="prev_entry" href="'.$path.'/index.php?controller=Books&action=index&start='.max( $start - $PAGE_SIZE, 0 ).'&first='.max( $first - 1, 1 ).'">Previous page</a><td>';
+        } 
+        echo '&nbsp;';
+      if ( $start + $PAGE_SIZE < $totalRows ) 
+      { 
+        echo '<td><a class="next_entry" href="'.$path.'/index.php?controller=Books&action=index&start='.min( $start + $PAGE_SIZE, $totalRows ).'&first='.min( $first + 1, ($totalRows / $PAGE_SIZE) + 1 ).'">Next Page'.$str.'</a></td>';
+      } 
+			
+        echo '</tr></table>';
+        ?>
+        
 	</div>   
    
    

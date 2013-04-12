@@ -79,7 +79,7 @@ li{padding-bottom:5px;}
 #credits a{color:#aaa;font-weight:400;}
 
 .left{float:left;width:49%;}
-.right{float:left;width:48%; margin-left: 80%; }
+.right{float:left;width:48%; margin: 0 0 0 50%; }
 .clear{clear:both;visibility:hidden;}
 .small{font-size:0.8em;}
 /*
@@ -266,7 +266,7 @@ h1.book {
 
 h1.cart_header {
   /*clear:both;*/
-  font-size: 120%;
+  font-size: 150%;
   color:#3f4c6b;
   border-bottom: 1px dotted #999;
   /* margin: 1em 0 1em 0;*/
@@ -274,7 +274,10 @@ h1.cart_header {
 	margin-bottom:10px;
 	margin-right: 20px;
 	margin-left: 0;
-  padding: 1em 0 1em 0;
+  padding: 1em 0 1em 100px;
+  background-image: url(./images/shopping-cart62.png);
+  background-repeat: no-repeat;
+  background-position: left center;
 }
 
 /*h2 {
@@ -453,21 +456,48 @@ a.proceed:link, a.proceed:visited {
   text-decoration: none;
 }
 
-
-a.checkout:link, a.checkout:visited {
+a.next_entry:link, a.next_entry:visited {
   display: block;
-  border-top: 1px dotted #999;
-  padding: 0.3em 20px 0.3em 20px;
-  text-align: left;
-  
-  margin-top: 10px;
-	margin-bottom:10px;
-	margin-right: 20px;
-	margin-left: 0;
-
+  padding: 0.3em 20px 0.3em 150px;
+  text-align: center;
+  margin-left: 90px;
   color: #666;
   font-weight: bold;
-  background-image: url(./images/checkout3-green.png);
+  background-image: url(./images/next_entry.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  text-decoration: none;
+}
+
+a.prev_entry:link, a.prev_entry:visited {
+  display: block;
+  padding: 0.3em 120px 0.3em 0;
+  text-align: center;
+  margin-left: 100px;
+  color: #666;
+  font-weight: bold;
+  background-image: url(./images/previous_entry.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  text-decoration: none;
+}
+
+
+a.checkout:link, a.checkout:visited 
+{
+  display: block;
+  border-top: 1px dotted #999;
+  padding: 15px 20px 10px 40px;
+  text-align: left;
+  
+  margin-top: 0;
+  margin-bottom:10px;
+  margin-right: 20px;
+  margin-left: 0;
+   
+  color: #666;
+  font-weight: bold;
+  background-image: url(./images/shopping_cart32.png);
   background-position: left;
   background-repeat: no-repeat;
   text-decoration: none;
@@ -489,13 +519,12 @@ a.login:link, a.login:visited {
 
 a.add-cart:link, a.add-cart:visited {
   display: block;
-  /* padding: 0.3em 40px 0.3em 0; */
-  padding-left: 20px;
-  margin-left: 30px;
+  padding: 10px 0 10px 35px; 
+  margin-left: 10px;
   text-align: left;
   color: #666;
   font-weight: bold;
-  background-image: url(./images/Buy.png);
+  background-image: url(./images/cart_add32.png);
   background-position: left center; 
   background-repeat: no-repeat;
   text-decoration: none;
@@ -548,7 +577,7 @@ CSS for Products gallery
 .wrapper-book {
   width: 100%;
   /* margin: 0 20px 10px 40px; */
-  margin: 15px 20px;
+  margin: 20px 32px;
 }
 
 ul.gallery {

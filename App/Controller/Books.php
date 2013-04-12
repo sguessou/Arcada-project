@@ -16,8 +16,8 @@ class Books extends AbstractController {
 			$session = new Session();
 			$this->viewVars->path = $session->get('path');
 			
-			$PMapper = new ProductMapper();
-			$this->viewVars->Products = $PMapper->getAllProducts( null,"Book" );
+			//$PMapper = new ProductMapper();
+			//$this->viewVars->Products = $PMapper->getAllProducts( null,"Book" );
 			
 			$SCart = new ShoppingCartMapper();
 			$SCart->setCartId();	
@@ -39,7 +39,27 @@ class Books extends AbstractController {
 				{
 					$this->viewVars->admin = TRUE;
 				}
-			}					
+			}
+			
+			$PrdMapper = new ProductMapper();		
+			
+			if(isset($_GET['flag']) && $_GET['flag'] == 'begin')
+			{
+				$this->viewVars->first = 1;
+		    	$this->viewVars->start = 0;
+		    	$this->viewVars->PAGE_SIZE = 10;		
+				list( $this->viewVars->Products, $this->viewVars->totalRows ) = $PrdMapper->fetchProducts(1, 'product_id', $this->viewVars->start, 10);	
+				unset($_GET['flag']);
+			}				
+			
+			if( isset( $_GET["start"] ) )
+			{
+				$this->viewVars->PAGE_SIZE = 10;
+				$this->viewVars->start  = (int)$_GET["start"];
+				$this->viewVars->first = (int)$_GET["first"];
+			    list( $this->viewVars->Products, $this->viewVars->totalRows ) = $PrdMapper->fetchProducts(1, 'product_id', $this->viewVars->start, 10);
+				//return;
+			} 
 		}	
 		
 		public function showproduct()
