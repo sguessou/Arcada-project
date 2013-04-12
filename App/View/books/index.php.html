@@ -76,6 +76,7 @@
    <h3><strong>IT-Books:</strong></h3>
    
 	<div class="wrapper-book">
+	
 		<ul class="gallery">
 		  <table width="100%" align="center">
 		   <tbody>
@@ -100,29 +101,27 @@
 			</table>
 		</ul>
 
-	<table>
-	<tr width="60%">
-	<td> 	
 	
+	 <div style="width: 100%; margin-top: 20px; text-align: center;">
         <?php 
-        $last = $totalRows / $PAGE_SIZE;
-			if($totalRows % $PAGE_SIZE) { $last += 1; }
-			$str = '&nbsp;&nbsp;( '.$first.' of '.(int)$last.' ) '; 
+        
         if ( $start > 0 ) 
         { 
-           echo '<td><a class="prev_entry" href="'.$path.'/index.php?controller=Books&action=index&start='.max( $start - $PAGE_SIZE, 0 ).'&first='.max( $first - 1, 1 ).'">Previous page</a><td>';
+           echo '<a href="'.$path.'/index.php?controller=Books&action=index&start='.max( $start - $PAGE_SIZE, 0 ).'&first='.max( $first - 1, 1 ).'"><strong>Previous Page</strong></a>';
         } 
-        echo '&nbsp;';
+        echo '&nbsp;&nbsp;&nbsp;';
       if ( $start + $PAGE_SIZE < $totalRows ) 
       { 
-        echo '<td><a class="next_entry" href="'.$path.'/index.php?controller=Books&action=index&start='.min( $start + $PAGE_SIZE, $totalRows ).'&first='.min( $first + 1, ($totalRows / $PAGE_SIZE) + 1 ).'">Next Page'.$str.'</a></td>';
+        echo '<a href="'.$path.'/index.php?controller=Books&action=index&start='.min( $start + $PAGE_SIZE, $totalRows ).'&first='.min( $first + 1, ($totalRows / $PAGE_SIZE) + 1 ).'"><strong>Next Page</strong></a>';
       } 
-			
-        echo '</tr></table>';
+		$last = $totalRows / $PAGE_SIZE;
+			if($totalRows % $PAGE_SIZE) { $last += 1; }
+			echo '&nbsp;&nbsp;<strong>( Page '.$first.' of '.(int)$last.' )</strong>'; 
+        echo '</div>';	
         ?>
         
-	</div>   
+	 
    
-   
+   </div>
    <div class="clear">&nbsp;</div>
 </div>
