@@ -150,16 +150,15 @@ class ShoppingCartMapper extends AbstractMapper {
     
     public function getCartProducts()
     {
-    	$stmt = $this->_conn->prepare("SELECT 	products.product_id, products.product_name, products.product_price,
+    	$stmt = $this->_conn->prepare("SELECT 	products.product_id, products.product_name, products.product_price, products.ptype_id,
     											shopping_cart.item_id, shopping_cart.quantity	  
     									FROM 	products, shopping_cart 
     									WHERE 	products.product_id IN (
-    																	SELECT	product_id
-    																	FROM	shopping_cart
-    																	WHERE	cart_id = :cart_id )
-    																	
-    											AND products.product_id = shopping_cart.product_id
-    											AND	shopping_cart.cart_id = :cart_id");
+    													 SELECT	product_id
+    													   FROM	shopping_cart
+    													  WHERE	cart_id = :cart_id )
+    									AND products.product_id = shopping_cart.product_id
+    									AND shopping_cart.cart_id = :cart_id");
     									
     	$stmt->bindParam( ":cart_id", $this->_cartId,\PDO::PARAM_STR );
     	
@@ -171,8 +170,8 @@ class ShoppingCartMapper extends AbstractMapper {
 				{
 				
 					$this->_ProductData[] = new MergeCartProduct( $row["product_id"], $row["product_name"],
-											   				   $row["product_price"], $row["item_id"], 
-											   				   $row["quantity"] );
+										      $row["product_price"], $row["ptype_id"], $row["item_id"], 
+										      $row["quantity"] );
 			 	}// End outer while
 			}
     	else
