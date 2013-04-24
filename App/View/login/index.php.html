@@ -84,6 +84,10 @@
 	{
 		echo '<h2 class="warning">You should be logged in to proceed!</h2>';
     }
+    elseif($loginProblem)
+	{
+		echo '<h2 class="warning-2">That account doesn\'t exist. Enter a new username or <a href="index.php?controller=login&action=register">get a new account.</a></h2>';
+    }
     else { echo '<h2 class="login">Sign in to access your account:</h2>'; }
 ?>
       <br>

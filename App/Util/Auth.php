@@ -75,7 +75,7 @@ class Auth extends AbstractMapper
 		// If there isn't exactly one entry, redirect
 		if ( $row['num_users'] != 1 )
 		{    
-			$this->redirect();
+			$this->redirect('notOk');
 		}
 		// Else is a valid user; set the session variables
 		else
@@ -128,9 +128,9 @@ class Auth extends AbstractMapper
   }
 
 	//Redirects browser and terminates script execution
-	private function redirect()
+	private function redirect($str = 'ok')
   {
-		header( 'Location:' . $this->_redirect );		
+		header( 'Location:' . $this->_redirect . '&flag=' . $str );		
 		exit();
   }
   	

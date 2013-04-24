@@ -328,6 +328,16 @@ h2.warning {
   margin-left: 30px;
 }  
 
+h2.warning-2 {
+  font-size: 125%;
+  color: red;
+  background-image: url(./images/warning-round-red.png);
+  background-repeat: no-repeat;
+  background-position: left center;
+  padding-left: 30px; 
+  margin-left: 20px;
+}  
+
 h2.cart {
   font-size: 100%;
   background-image: url(./images/Cart2.png);

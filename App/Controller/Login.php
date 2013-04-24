@@ -56,6 +56,12 @@ Class Login extends AbstractController {
 				exit();
 			}
 			
+			//If username isn't found in db, we inform user.
+			$this->viewVars->loginProblem = NULL;
+			if(isset($_GET['flag']) && $_GET['flag'] == 'notOk')
+			{
+				$this->viewVars->loginProblem = TRUE;
+			}
 			
 				
 		}	
