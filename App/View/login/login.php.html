@@ -87,19 +87,22 @@
 			<div class="sidebarbox">
                <h2>My Account Menu</h2>
 				<ul class="sidemenu">
-					<li><a href="index.php?controller=login&action=proceed">View Open Orders</a></li>
-					<li><a href="">Change Account Settings</a></li>
-					<li><a href="index.php?controller=login&action=login&logout=logout">Logout</a></li>	
+					<li><a href="<?php echo $path ?>/index.php?controller=login&action=proceed">View Open Orders</a></li>
+					<li><a href="<?php echo $path ?>/index.php?controller=login&action=viewUser">Change Account Settings</a></li>
+					<li><a href="<?php echo $path ?>/index.php?controller=login&action=login&logout=logout">Logout</a></li>	
 				</ul>
 			</div>
 	  </div> 		   
 	
 	
 <?php 
+
+	echo '<h4 class="my-account">My Account Menu-></h4><br />';
+	
 	if($user['last_log'])
 	 {	
-		echo '<p><h4>'.$msg.' '.$user['firstname'].'!</h4>'; 
-		echo 'Last login: '.$user['last_log'].'</p>';
+		echo '<h4>'.$msg.' '.$user['firstname'].'!</h4><br />'; 
+		echo 'Last login: '.$user['last_log'];
 	 }
 	 else
 	 {

@@ -79,7 +79,7 @@ li{padding-bottom:5px;}
 #credits a{color:#aaa;font-weight:400;}
 
 .left{float:left;width:49%;}
-.right{float:left;width:48%; margin: 0 0 0 50%; }
+.right{float:right;width:48%;}
 .clear{clear:both;visibility:hidden;}
 .small{font-size:0.8em;}
 /*
@@ -412,8 +412,36 @@ h3.alert {
   background-image: url(./images/Alert.png);
   background-repeat: no-repeat;
   background-position: left center;
-  padding-left: 20px;
-  
+  padding-left: 20px; 
+} 
+
+h4.data-updated { 
+  font-size: 100%;
+  background-image: url(./images/db_update.png);
+  background-repeat: no-repeat;
+  background-position: left center;
+  padding-left: 30px;
+  height: 25px;
+} 
+
+h4.my-account { 
+  font-size: 100%;
+  background-image: url(./images/my-account.png);
+  background-repeat: no-repeat;
+  background-position: left center;
+  padding-left: 38px;
+  padding-top: 18px;
+  height: 32px;
+} 
+
+h4.passwd-warning { 
+  font-size: 100%;
+  background-image: url(./images/warning-round-red.png);
+  background-repeat: no-repeat;
+  background-position: left center;
+  padding-left: 38px;
+  padding-top: 10px;
+  height: 32px;
 } 
 
 ul.author {

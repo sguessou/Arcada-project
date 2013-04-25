@@ -117,7 +117,7 @@ class UserMapper extends AbstractMapper
 	
 	/**
 	* Updates table user, set the address and address related columns
-	*	@param array $_POST 
+	* @param array $_POST 
 	* @return none
 	*/
 	public function updateUser( $data )
@@ -149,6 +149,71 @@ class UserMapper extends AbstractMapper
 			print_r( $stmt->errorInfo() );
 			return;
 		}
-	}
+	}//End method updateUser
+	
+	/**
+	* Updates table user, set the personal data and it's related columns
+	* @param array $_POST 
+	* @return none
+	*/
+	public function updatePersonal( $data )
+	{
+		$sql = "UPDATE user SET firstname = :firstname,
+								lastname = :lastname,
+								email = :email,
+								updated_at = :updated
+								WHERE login = :login 
+									  AND user_id = :user_id";
+														
+	  $stmt = $this->_db->prepare($sql);
+	  $stmt->bindParam(':firstname', $data['firstname'], \PDO::PARAM_STR );
+	  $stmt->bindParam(':lastname', $data['lastname'], \PDO::PARAM_STR );
+	  $stmt->bindParam(':email', $data['email'], \PDO::PARAM_STR );
+	  $date = date("Y-m-d H:i:s");
+	  $stmt->bindParam(':updated', $date, \PDO::PARAM_STR );  
+	  $stmt->bindParam(':login', $data['username'], \PDO::PARAM_STR );
+	  $stmt->bindParam(':user_id', $data['user_id'], \PDO::PARAM_INT );
+		
+		if( $stmt->execute() )
+		{
+			return TRUE;
+		}
+		else
+		{
+			print_r( $stmt->errorInfo() );
+			return FALSE;
+		}
+	}//End method updatePersonal
+	
+	/**
+	* Updates table user, set the password column
+	* @param array $_POST 
+	* @return none
+	*/
+	public function updatePasswd( $data )
+	{
+		$sql = "UPDATE user SET password = MD5(:password),
+								updated_at = :updated
+								WHERE login = :login 
+									  AND user_id = :user_id";
+														
+	  $stmt = $this->_db->prepare($sql);
+	  $stmt->bindParam(':password', $data['new_passwd'], \PDO::PARAM_STR );
+	  $date = date("Y-m-d H:i:s");
+	  $stmt->bindParam(':updated', $date, \PDO::PARAM_STR );  
+	  $stmt->bindParam(':login', $data['username'], \PDO::PARAM_STR );
+	  $stmt->bindParam(':user_id', $data['user_id'], \PDO::PARAM_INT );
+		
+		if( $stmt->execute() )
+		{
+			return TRUE;
+		}
+		else
+		{
+			print_r( $stmt->errorInfo() );
+			return FALSE;
+		}
+	}//End method updatePersonal
+	
 
 }//End Class UserMapper

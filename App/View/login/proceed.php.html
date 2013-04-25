@@ -87,16 +87,16 @@
 			<div class="sidebarbox">
                <h2>My Account Menu</h2>
 				<ul class="sidemenu">
-					<li><a href="">View Open Orders</a></li>
-					<li><a href="">Change Account Settings</a></li>
-					<li><a href="index.php?controller=login&action=login&logout=logout">Logout</a></li>	
+					<li><a href="<?php echo $path ?>/index.php?controller=login&action=proceed">View Open Orders</a></li>
+					<li><a href="<?php echo $path ?>/index.php?controller=login&action=viewUser">Change Account Settings</a></li>
+					<li><a href="<?php echo $path ?>/index.php?controller=login&action=login&logout=logout">Logout</a></li>	
 				</ul>
 			</div>
 	  </div> 		   
 	
 	
 <?php 
-		echo '<h4>View Open Orders</h4><br />';
+		echo '<h4 class="my-account">My Account Menu>>View Open Orders-></h4><br />';
 		
 	if( $qty )
 	{

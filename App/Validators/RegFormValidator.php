@@ -156,15 +156,15 @@ use App\Model\SignUpMapper;
    			$r3='/[!@#$%^&*()\-_=+{};:,<.>]/';  // special char!
    			$r4='/[0-9]/';  //numbers
 
-   			if(preg_match_all($r1,$candidate, $o)<2) return FALSE;
+   			if(preg_match_all($r1, $candidate, $o) < 2) return FALSE;
 
-   			if(preg_match_all($r2,$candidate, $o)<2) return FALSE;
+   			if(preg_match_all($r2, $candidate, $o) < 2) return FALSE;
 
-   			if(preg_match_all($r3,$candidate, $o)<2) return FALSE;
+   			if(preg_match_all($r3, $candidate, $o) < 2) return FALSE;
 
-   			if(preg_match_all($r4,$candidate, $o)<2) return FALSE;
+   			if(preg_match_all($r4, $candidate, $o) < 2) return FALSE;
 
-   			if(strlen($candidate)<8) return FALSE;
+   			if(strlen($candidate) < 8) return FALSE;
 
    			return TRUE;
 		}

@@ -416,7 +416,7 @@ EOD;
 			$this->viewVars->CartProducts = $SCart->getCartProducts();
 			
 			$auth = new Auth();
-			$auth->register( 'Login->proceed', $_SERVER['REMOTE_ADDR'], gethostbyaddr( $_SERVER['REMOTE_ADDR'] ) );
+			$auth->register( 'Login->sendPayment', $_SERVER['REMOTE_ADDR'], gethostbyaddr( $_SERVER['REMOTE_ADDR'] ) );
 			
 			$this->viewVars->loggedIn = NULL;
 			$this->viewVars->admin = NULL;
@@ -469,16 +469,19 @@ EOD;
 		
 		public function notify()
 		{
+			//Create session for user
 			$session = new Session();
 			$this->viewVars->path = $session->get('path');
 			
+			//Create cart for user & populate it
 			$SCart = new ShoppingCartMapper();
 			$SCart->setCartId();	
 			$this->viewVars->qty = $SCart->getQuantity();
 			$this->viewVars->CartProducts = $SCart->getCartProducts();
 			
+			//Create Auth instance to check for right credentials
 			$auth = new Auth();
-			$auth->register( 'Login->proceed', $_SERVER['REMOTE_ADDR'], gethostbyaddr( $_SERVER['REMOTE_ADDR'] ) );
+			$auth->register( 'Login->notify', $_SERVER['REMOTE_ADDR'], gethostbyaddr( $_SERVER['REMOTE_ADDR'] ) );
 			
 			$this->viewVars->loggedIn = NULL;
 			$this->viewVars->admin = NULL;
@@ -495,10 +498,117 @@ EOD;
 			}	
 			if( !$this->viewVars->loggedIn ) header('Location:index.php?controller=login&action=login');	
 			
+			//Get user data
 			$user = new UserMapper();
 			$this->viewVars->userInfo = $user->retUserInfo($auth->getLogin());
 			
 			$this->viewVars->msg = $_GET['msg'];
 		}
+		
+		public function viewUser()
+		{
+			//Create session for user
+			$session = new Session();
+			$this->viewVars->path = $session->get('path');
+			
+			//Create cart for user & populate it
+			$SCart = new ShoppingCartMapper();
+			$SCart->setCartId();	
+			$this->viewVars->qty = $SCart->getQuantity();
+			$this->viewVars->CartProducts = $SCart->getCartProducts();
+			
+			//Create Auth instance to check for right credentials
+			$auth = new Auth();
+			$auth->register( 'Login->viewUser', $_SERVER['REMOTE_ADDR'], gethostbyaddr( $_SERVER['REMOTE_ADDR'] ) );
+			
+			$this->viewVars->loggedIn = NULL;
+			$this->viewVars->admin = NULL;
+			if( $auth->isLogged() )
+			{
+			  $this->viewVars->loggedIn = TRUE;
+			  $this->viewVars->login = $auth->getLogin();
+				
+				//Checks for admin credentials
+				if( $auth->isAdmin( $auth->getLogin() ) )
+				{
+					$this->viewVars->admin = TRUE;
+				}
+			}	
+			if( !$this->viewVars->loggedIn ) header('Location:index.php?controller=login&action=login');	
+			
+			//Get user data
+			$user = new UserMapper();
+			$this->viewVars->userInfo = $user->fetchUser($auth->getLogin());
+			
+			//First we check param PType, so we can display right form
+			$this->viewVars->flag = NULL;
+			
+			if(isset($_POST['PType']) && $_POST['PType'] == 'personal')
+			{
+				$this->viewVars->flag = 'personal';
+			}
+			elseif(isset($_POST['PType']) && $_POST['PType'] == 'address')
+			{
+				$this->viewVars->flag = 'address';
+			}
+			elseif(isset($_POST['PType']) && $_POST['PType'] == 'passwd')
+			{
+				$this->viewVars->flag = 'passwd';
+			}
+			
+			//Next we update proper fields of user table
+			//Here, firstname lastname and email are updated 
+			if(isset($_POST['personal']) && $_POST['personal'] == 'update')
+			{
+				$var = $user->updatePersonal($_POST);
+				if($var)
+				{
+					$_POST['personal'] = 'updated';
+					$this->viewVars->flag = 'personal';
+					$this->viewVars->userInfo = $user->fetchUser($auth->getLogin());
+				}
+			}
+			
+			//Here, password is updated
+			$this->viewVars->passwdErrorMsg = NULL;
+			if(isset($_POST['passwd']) && $_POST['passwd'] == 'update')
+			{
+				//We check validity of password
+				//password should be between 6 and 12 characters long
+				if( strlen($_POST['new_passwd']) < 6 ||  strlen($_POST['new_passwd']) > 12)
+				{
+					$this->viewVars->passwdErrorMsg = "They were some errors while updating! The entered password should be between 6 and 12 characters long!";
+					$this->viewVars->flag = 'passwd';
+					$this->viewVars->userInfo = $user->fetchUser($auth->getLogin());
+				}
+				//Check to see that first password contains 1 number at least
+				elseif(preg_match_all( '/[0-9]/' , $_POST['new_passwd'], $out ) < 1)
+				{
+					$this->viewVars->passwdErrorMsg = "They were some errors while updating! The password should contain at least one number!";
+					$this->viewVars->flag = 'passwd';
+					$this->viewVars->userInfo = $user->fetchUser($auth->getLogin());				
+				}
+				//Check to see that both passwords are identical
+				elseif( !($_POST['new_passwd'] == $_POST['new_passwd_2']) )
+				{
+					$this->viewVars->passwdErrorMsg = "They were some errors while updating! The entered passwords are not identical. Retype them correctly!";
+					$this->viewVars->flag = 'passwd';
+					$this->viewVars->userInfo = $user->fetchUser($auth->getLogin());
+				}
+				else
+				{
+					$var = $user->updatePasswd($_POST);
+					if($var)
+					{
+						$_POST['passwd'] = 'updated';
+						$this->viewVars->flag = 'passwd';
+						$this->viewVars->userInfo = $user->fetchUser($auth->getLogin());
+					}
+				}//End inner if stmt
+					
+			}//End outer if stmt
+			
+			
+		}//End function viewUser
 	
 	}//End Class Login
