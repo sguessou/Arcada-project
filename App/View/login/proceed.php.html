@@ -121,9 +121,11 @@
 		$rowCount++;
 		$totalProceed += ( $CartProduct->quantity * $CartProduct->product_price ) +
 							  ( $CartProduct->quantity * 2.95 );
-	?>
+	    if($CartProduct->ptype_id == 1) $request_1 = $path."/index.php?controller=books&action=showProduct&pid=$CartProduct->product_id";
+		elseif($CartProduct->ptype_id == 2) $request_1 = $path."/index.php?controller=dvd&action=showDvd&pid=$CartProduct->product_id";
+	                              ?>
 	<tr <?php if ( $rowCount % 2 != 0 ) echo ' class="alt"' ?>>
-	<td><a href="<?php echo $path; ?>/index.php?controller=books&action=showProduct&pid=<?php echo $CartProduct->product_id; ?>" id="cSlider"><?php echo $CartProduct->product_name; ?></a></td>
+	<td><a href="<?php echo $request_1; ?>"><?php echo $CartProduct->product_name; ?></a></td>
 	<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="<?php echo $path; ?>/index.php?controller=login&action=proceed&cart=remove&item_id=<?php echo $CartProduct->item_id; ?>"><img src="<?php echo $path; ?>/css/images/minus-small-white.png"></a><a href="<?php echo $path; ?>/index.php?controller=login&action=proceed&cart=add&item_id=<?php echo $CartProduct->item_id; ?>"><img src="<?php echo $path; ?>/css/images/plus-small-white.png"></a><a href=""><img src="<?php echo $path; ?>/css/images/bin_closed.png"></a></td>
 	<td><strong><?php echo $CartProduct->quantity. ($CartProduct->quantity == 1 ? ' Item ' : ' Items '); ?></strong></td><td>à&nbsp;€&nbsp;<?php echo $CartProduct->product_price; ?></td>
 	<td><font color="#FF0000"><strong>€&nbsp;<?php echo $CartProduct->product_price * $CartProduct->quantity; ?></strong></font></td>
