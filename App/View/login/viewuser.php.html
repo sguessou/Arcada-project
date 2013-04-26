@@ -149,9 +149,51 @@
 		echo '</form>';		
 		
 		//var_dump($_POST);
-	}
-	elseif($flag == 'address')
-	{
+		}
+		elseif($flag == 'address')
+		{
+			echo '<form action="index.php?controller=login&action=viewUser" method="post" class="style-form">';
+			echo '<div><label for="address_line_1">Address Line1:</label>';
+			echo '<input type="text" name="address_line_1" value="'.$userInfo['address_line_1'].'" required="required" /></div>';
+				
+			echo '<input type="hidden" name="login" value="'.$userInfo['login'].'">';
+			echo '<input type="hidden" value="'.$userInfo['user_id'].'" name="user_id" />';
+			echo '<input type="hidden" value="update" name="address" />';
+				
+			echo '<div><label for="address_line_2">Address Line2:</label>';
+			echo '<input type="text" name="address_line_2" value="'.$userInfo['address_line_2'].'" required="required" /></div>';
+				
+			echo '<div><label for="city">City:</label>';
+			echo '<input type="text" name="city" value="'.$userInfo['town_city'].'" required="required" /></div>';
+			
+			echo '<div><label for="county">State/Province/Region:</label>';
+			echo '<input type="text" name="county" value="'.$userInfo['county'].'" required="required" /></div>';	
+				
+			echo '<div><label for="country">Country:</label>';
+			echo '<select name="country" size="1">'; 
+			
+			foreach ( $countries as $country ) 
+			{ 
+				if($country['name'] == $userInfo['country']) { echo '<option value="'.$country['name'].'" selected="selected">'.$country['printable_name'].'</option>'; }
+				else echo '<option value="'.$country['name'].'">'.$country['printable_name'].'</option>';
+			} 	
+			
+			echo '</select></div>';		
+			echo '<div class="submit"><input type="submit" value="Change"></div>';
+			
+			if(isset($_POST['address']) && $_POST['address'] == 'updated')
+			{
+				echo '<div><h4 class="data-updated">Your address have been updated.</h4></div>';
+				unset($_POST['address']);
+			}
+				
+			echo '</form>'; 
+				  
+	  	 echo '<div style="float:left;width:50%;"><h4>Address Accuracy</h4>
+				<p>Make sure you get your stuff! If the address is not entered correctly, your package may be returned 
+				as undeliverable. You would then have to place a new order. Save time and avoid frustration by 
+				entering the address information in the appropriate boxes and double-checking 
+				for typos and other errors.</p></div>';
 		
 	}
 	elseif($flag == 'passwd')

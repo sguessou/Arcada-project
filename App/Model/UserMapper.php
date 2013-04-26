@@ -213,7 +213,45 @@ class UserMapper extends AbstractMapper
 			print_r( $stmt->errorInfo() );
 			return FALSE;
 		}
-	}//End method updatePersonal
+	}//End method updatePasswd
+	
+	/**
+	* Updates table user, set the personal data and it's related columns
+	* @param array $_POST 
+	* @return none
+	*/
+	public function updateAddress( $data )
+	{
+		$sql = "UPDATE user SET address_line_1 = :address_line_1,
+								address_line_2 = :address_line_2,
+								town_city = :city,
+								county = :county,
+								country = :country,
+								updated_at = :updated
+								WHERE login = :login 
+									  AND user_id = :user_id";
+														
+	  $stmt = $this->_db->prepare($sql);
+	  $stmt->bindParam(':address_line_1', $data['address_line_1'], \PDO::PARAM_STR );
+	  $stmt->bindParam(':address_line_2', $data['address_line_2'], \PDO::PARAM_STR );
+	  $stmt->bindParam(':city', $data['city'], \PDO::PARAM_STR );
+	  $stmt->bindParam(':county', $data['county'], \PDO::PARAM_STR );
+	  $stmt->bindParam(':country', $data['country'], \PDO::PARAM_STR );
+	  $date = date("Y-m-d H:i:s");
+	  $stmt->bindParam(':updated', $date, \PDO::PARAM_STR );  
+	  $stmt->bindParam(':login', $data['login'], \PDO::PARAM_STR );
+	  $stmt->bindParam(':user_id', $data['user_id'], \PDO::PARAM_INT );
+		
+		if( $stmt->execute() )
+		{
+			return TRUE;
+		}
+		else
+		{
+			print_r( $stmt->errorInfo() );
+			return FALSE;
+		}
+	}//End method updateAddress
 	
 
 }//End Class UserMapper

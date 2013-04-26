@@ -540,6 +540,9 @@ EOD;
 			$user = new UserMapper();
 			$this->viewVars->userInfo = $user->fetchUser($auth->getLogin());
 			
+			$countries = new CountriesMapper();
+			$this->viewVars->countries = $countries->getCountries();
+			
 			//First we check param PType, so we can display right form
 			$this->viewVars->flag = NULL;
 			
@@ -565,6 +568,18 @@ EOD;
 				{
 					$_POST['personal'] = 'updated';
 					$this->viewVars->flag = 'personal';
+					$this->viewVars->userInfo = $user->fetchUser($auth->getLogin());
+				}
+			}
+			
+			//Here, address related fields are updated 
+			if(isset($_POST['address']) && $_POST['address'] == 'update')
+			{
+				$var = $user->updateAddress($_POST);
+				if($var)
+				{
+					$_POST['address'] = 'updated';
+					$this->viewVars->flag = 'address';
 					$this->viewVars->userInfo = $user->fetchUser($auth->getLogin());
 				}
 			}

@@ -102,7 +102,7 @@
 	if($user['last_log'])
 	 {	
 		echo '<h4>'.$msg.' '.$user['firstname'].'!</h4><br />'; 
-		echo 'Last login: '.$user['last_log'];
+		echo 'Last login: '.$user['last_log'].'<br /><br />';
 	 }
 	 else
 	 {
@@ -110,37 +110,37 @@
 	 }	
 		if( $checkout && !$address )
 		{
-	  	echo '<h3 class="alert">Add a shipping address please!</h3>';
+	  	echo '<h3 class="alert">Add a shipping address please!</h3><br />';
 	  ?>
 	  		
-				<form action="index.php?controller=login&action=proceed&save=save" method="post">
+				<form action="index.php?controller=login&action=proceed&save=save" method="post" class="style-form">
 				<div>
-				<label style="float:left; text-align:left;margin-top:10px;" for="address_line_1">Address Line1:</label>
-				<input type="text" name="address_line_1" id="address_line_1" placeholder="Street address, P.O. box, company name, c/o" style="width:85%;float:left;" required="required" />
+				<label for="address_line_1">Address Line1:</label>
+				<input type="text" name="address_line_1" id="address_line_1" placeholder="Street address, P.O. box, company name, c/o" required="required" />
 				<input type="hidden" name="login" id="login" value="<?php echo $login; ?>">
 				</div>
 				<div>
-				<label style="float:left; text-align:left;" for="address_line_2">Address Line2:</label>
-				<input type="text" name="address_line_2" id="address_line_2" placeholder="Apartment, suite, unit, building, floor, etc." style="width:85%;float:left;" required="required" />
+				<label for="address_line_2">Address Line2:</label>
+				<input type="text" name="address_line_2" id="address_line_2" placeholder="Apartment, suite, unit, building, floor, etc." required="required" />
 				</div>
 				<div>
-				<label style="float:left; text-align:left;" for="city">City:</label>
-				<input type="text" name="city" id="city" style="width:85%;float:left;" required="required" />
+				<label for="city">City:</label>
+				<input type="text" name="city" id="city" required="required" />
 				</div>
 				<div>
-				<label style="float:left; text-align:left; width:60%;" for="county">State/Province/Region:</label>
-				<input type="text" name="county" id="county" style="width:85%;float:left;" required="required" />
+				<label for="county">State/Province/Region:</label>
+				<input type="text" name="county" id="county" required="required" />
 				</div>	
-				<div><label for="country" style="float:left; text-align:left;">Country:</label>
-						<select name="country" id="country" size="1" style="width:85%;height:28px;float:left;"> 
+				<div><label for="country">Country:</label>
+						<select name="country" id="country" size="1"> 
 				<?php   
 			  	 foreach ( $countries as $country ) { ?>
 							<option value="<?php echo $country['name']; ?>" <?php if($country['name'] == 'FINLAND') echo ' selected'; ?>><?php echo $country['printable_name']; ?></option>	
 				<?php } ?>	
 						</select>
 				</div>		
-				<div><input type="submit" value="Submit"></div>
-				</form> <br /><br />
+				<div class="submit"><input type="submit" value="Submit"></div>
+				</form> 
 				&nbsp;&nbsp;
 				
 <?php	  
