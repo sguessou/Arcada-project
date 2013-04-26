@@ -215,7 +215,7 @@ class Admin extends AbstractController {
 				$this->viewVars->start = 0;
 				$this->viewVars->pt = $_POST['PType'];
 				list( $this->viewVars->products, $this->viewVars->totalRows ) = $PrdMapper->fetchProducts((int)$_POST['PType'], 'product_id', $this->viewVars->start, $PSize);
-				unset($_POST);
+				//unset($_POST);
 				//return;
 			}
 			

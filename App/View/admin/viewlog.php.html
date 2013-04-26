@@ -37,11 +37,10 @@
 				<ul class="sidemenu">
 					<li><a href="">Manage Users</a></li>
 					<li><a href="<?php echo $path ?>/index.php?controller=admin&action=ptypes">Manage Product Types</a></li>
-					<li><a href="#">Manage Products</a>
+					<li><a href="<?php echo $path ?>/index.php?controller=admin&action=addproduct">Manage Products</a>
 						<ul>
 							<li><a href="<?php echo $path ?>/index.php?controller=admin&action=addproduct">Add Product</a></li>
-							<li><a href="">Delete Product</a></li>
-							<li><a href="">Update Product</a></li>
+							<li><a href="<?php echo $path ?>/index.php?controller=admin&action=viewProducts">Update or Remove</a></li>
 						</ul></li>
 					<li><a href="#">Manage Orders</a></li>	
 					<li><a href="<?php echo $path ?>/index.php?controller=admin&action=viewLog">View Access Log</a></li>
@@ -51,11 +50,10 @@
 	    </div> 		   
 	<div id="content">
   
-  <h4>Access Log</h4>
+  <h4 class="admin-sign">Admin Menu>>View Access Log-></h4>
  <br />
-    <table cellspacing="0" style="width: 45em; border: 1px solid #666;">
+    <table cellspacing="0" style="width: 45em;">
       <tr>
-      	<th align="left">#</th>
         <th align="left">Web Page</th>
         <th align="left">Date</th>
         <th align="left">IP Address</th>
@@ -68,7 +66,6 @@ foreach ( $logs as $logEntry ) {
   $rowCount++;
 ?>
       <tr<?php if ( $rowCount % 2 == 0 ) echo ' class="alt"' ?>>
-      	<td><?php echo $rowCount; ?></td>
         <td><?php echo $logEntry['pageUrl']; ?></td>
         <td><?php echo $logEntry['lastAccess']; ?></td>
         <td><?php echo $logEntry['ip']; ?></td>

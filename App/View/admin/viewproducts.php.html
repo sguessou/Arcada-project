@@ -37,7 +37,7 @@
 				<ul class="sidemenu">
 					<li><a href="">Manage Users</a></li>
 					<li><a href="<?php echo $path ?>/index.php?controller=admin&action=ptypes">Manage Product Types</a></li>
-					<li><a href="#">Manage Products</a>
+					<li><a href="<?php echo $path ?>/index.php?controller=admin&action=addproduct">Manage Products</a>
 						<ul>
 							<li><a href="<?php echo $path ?>/index.php?controller=admin&action=addproduct">Add Product</a></li>
 							<li><a href="<?php echo $path ?>/index.php?controller=admin&action=viewProducts">Update or Remove</a></li>
@@ -50,7 +50,7 @@
 	    </div> 		   
 	<div id="content">
   
-  <h4>Admin>>Manage Products>>Update or Remove-></h4>
+  <h4 class="admin-sign">Admin Menu>>Manage Products>>Update or Remove-></h4>
  <br />
  <?php
     echo '<form id="PrdTypeForm" action="'.$path.'/index.php?controller=admin&action=viewProducts" method="post">';
@@ -58,7 +58,7 @@
   	echo '<select id="TypeSelect" name="PType" size="1">'; 
   	
   	$var = 0;
-  	if(isset($_POST['PType'])) $var = $_POST['PType'];
+  	if(isset($_POST['PType'])) $var = (int)$_POST['PType'];
   			echo '<option value="">Select...</option>';
   	foreach($PrdTypes as $PrdType)
   	{
@@ -71,10 +71,14 @@
 			echo '<option value="'.$PrdType->ptype_id.'">'.$PrdType->type_name.'</option>';
 		}
   	}	
-    echo '</select></form><br /><br />';
+    echo '</select></form><br />';
     
     if($products)
     {
+		if($pt == 1)
+		echo '<h4 class="book-selected">Product Book Selected.</h4><br />';
+		elseif($pt == 2) echo '<h4 class="dvd-selected">Product Dvd Selected.</h4><br />';	
+		
     ?>
     	<table cellspacing="0" style="width:100%;">
          <tr>
@@ -91,8 +95,8 @@
     ?>
     	<tr <?php if ( $rowCount % 2 != 0 ) echo ' class="alt"' ?>>
     	<td><a href="#"><?php echo $product['product_name']; ?></a></td>	
-    	<td><a href="#"><img src="<?php echo $path ?>/css/images/Update.png"></a></td>
-    	<td><a href="#"><img src="<?php echo $path ?>/css/images/Remove.png"></a></td>
+    	<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"><img src="<?php echo $path ?>/css/images/Update.png"></a></td>
+    	<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"><img src="<?php echo $path ?>/css/images/Remove.png"></a></td>
     	<td></td>
     	</tr>
     <?php		
@@ -118,7 +122,7 @@
     }
     elseif($products === FALSE)
     {
-    	echo '<br/><br /><p>NADA!</p>';
+    	echo '<br/><br /><p>No Products!</p>';
     }
  
  ?>	

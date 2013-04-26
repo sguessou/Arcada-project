@@ -36,11 +36,10 @@
 				<ul class="sidemenu">
 					<li><a href="">Manage Users</a></li>
 					<li><a href="<?php echo $path ?>/index.php?controller=admin&action=ptypes">Manage Product Types</a></li>
-					<li><a href="#">Manage Products</a>
+					<li><a href="<?php echo $path ?>/index.php?controller=admin&action=addproduct">Manage Products</a>
 						<ul>
 							<li><a href="<?php echo $path ?>/index.php?controller=admin&action=addproduct">Add Product</a></li>
-							<li><a href="">Delete Product</a></li>
-							<li><a href="">Update Product</a></li>
+							<li><a href="<?php echo $path ?>/index.php?controller=admin&action=viewProducts">Update or Remove</a></li>
 						</ul></li>
 					<li><a href="#">Manage Orders</a></li>	
 					<li><a href="<?php echo $path ?>/index.php?controller=admin&action=viewLog">View Access Log</a></li>
@@ -49,9 +48,8 @@
 			</div>
 	    </div> 		   
 	<div id="content">
-   <h4>Admin >> Manage Product Types-></h4>
-   <br />
-   <br />
+   <h4 class="admin-sign">Admin Menu>>Manage Product Types-></h4>
+   <br /><br />
    
    <!--div class="wrapper" -->
    

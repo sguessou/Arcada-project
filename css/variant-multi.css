@@ -434,6 +434,36 @@ h4.my-account {
   height: 32px;
 } 
 
+h4.admin-sign { 
+  font-size: 100%;
+  background-image: url(./images/admin32.png);
+  background-repeat: no-repeat;
+  background-position: left center;
+  padding-left: 42px;
+  padding-top: 18px;
+  height: 32px;
+} 
+
+h4.book-selected { 
+  font-size: 100%;
+  background-image: url(./images/Book32.png);
+  background-repeat: no-repeat;
+  background-position: left center;
+  padding-left: 42px;
+  padding-top: 18px;
+  height: 32px;
+} 
+
+h4.dvd-selected { 
+  font-size: 100%;
+  background-image: url(./images/DVD32.png);
+  background-repeat: no-repeat;
+  background-position: left center;
+  padding-left: 42px;
+  padding-top: 18px;
+  height: 32px;
+} 
+
 h4.passwd-warning { 
   font-size: 100%;
   background-image: url(./images/warning-round-red.png);

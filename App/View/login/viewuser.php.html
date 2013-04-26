@@ -183,17 +183,21 @@
 			
 			if(isset($_POST['address']) && $_POST['address'] == 'updated')
 			{
+				echo '<div>&nbsp;</div>';
 				echo '<div><h4 class="data-updated">Your address have been updated.</h4></div>';
 				unset($_POST['address']);
 			}
+			
+			echo '<div>&nbsp;</div>
+				  <div><h4>Address Accuracy</h4><br />
+				  <p>Make sure you get your stuff! If the address is not entered correctly, your package may be returned 
+				  as undeliverable. You would then have to place a new order. Save time and avoid frustration by 
+				  entering the address information in the appropriate boxes and double-checking 
+				  for typos and other errors.</p></div>';
 				
 			echo '</form>'; 
 				  
-	  	 echo '<div style="float:left;width:50%;"><h4>Address Accuracy</h4>
-				<p>Make sure you get your stuff! If the address is not entered correctly, your package may be returned 
-				as undeliverable. You would then have to place a new order. Save time and avoid frustration by 
-				entering the address information in the appropriate boxes and double-checking 
-				for typos and other errors.</p></div>';
+	  	 
 		
 	}
 	elseif($flag == 'passwd')
