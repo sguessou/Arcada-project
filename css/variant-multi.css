@@ -16,7 +16,7 @@ ul,ol,dl{margin:0 0 20px 20px; padding:0;}
 li{padding-bottom:5px;}
 
 #containerfull,#container980,#container760,#container600{margin:0 auto;padding:0;overflow:hidden;border-left:1px solid #ddd;border-right:1px solid #ddd;}
-#containerfull{width:80%;border:0;}
+#containerfull{width:95%;border:0;}
 #container980{width:980px;}
 #container760{width:760px;}
 #container600{width:600px;}
@@ -662,19 +662,23 @@ CSS for Products gallery
 
 .wrapper-book {
   width: 100%;
+  max-width: 1024px;
+  min-width: 1000px;
   /* margin: 0 20px 10px 40px; */
-  margin: 20px 32px;
+  margin: auto;
+  padding-left: 30px;
+  padding-top: 20px;
 }
 
-ul.gallery {
-  margin: 0;
+ul.gallery {	
+  margin: auto;
   padding: 0;
   list-style: none;
 }
 
 ul.gallery li {
   display: inline-block;
-  /*float: left;*/
+  float: left; 
   width: 150px;
   height: 220px;
   margin: 0 20px 20px 0;
@@ -838,3 +842,4 @@ tr.alt td { background: #ddd; }
 .group { display: inline-block; }
 
 .click { color: red; }
+
