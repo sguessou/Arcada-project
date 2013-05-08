@@ -16,7 +16,7 @@ ul,ol,dl{margin:0 0 20px 20px; padding:0;}
 li{padding-bottom:5px;}
 
 #containerfull,#container980,#container760,#container600{margin:0 auto;padding:0;overflow:hidden;border-left:1px solid #ddd;border-right:1px solid #ddd;}
-#containerfull{width:95%;border:0;}
+#containerfull{width:1024px;border:0;}
 #container980{width:980px;}
 #container760{width:760px;}
 #container600{width:600px;}
