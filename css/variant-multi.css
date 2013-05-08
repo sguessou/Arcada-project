@@ -754,14 +754,17 @@ ul.gallery-dvd li:hover span {
   margin-left: 0;
 }
 /*********************************************/
+
+.link { position:relative; }
+
 #cartLink { text-decoration: none; }
 
 #cartSlider {   
     width: 600px;
     min-height:40px;
 	position: absolute;
-	left: 50px;
-	top: 270px;
+	left: 10px;
+	top: 15px;
 	z-index: 100;
     display:none;
     margin: 20px auto 40px auto;
@@ -842,4 +845,6 @@ tr.alt td { background: #ddd; }
 .group { display: inline-block; }
 
 .click { color: red; }
+
+
 
