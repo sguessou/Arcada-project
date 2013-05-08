@@ -666,7 +666,7 @@ CSS for Products gallery
   min-width: 1000px;
   /* margin: 0 20px 10px 40px; */
   margin: auto;
-  padding-left: 30px;
+  padding-left: 60px;
   padding-top: 20px;
 }
 
@@ -760,7 +760,7 @@ ul.gallery-dvd li:hover span {
     width: 600px;
     min-height:40px;
 	position: absolute;
-	left: 150px;
+	left: 50px;
 	top: 270px;
 	z-index: 100;
     display:none;
