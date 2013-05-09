@@ -29,7 +29,7 @@
 	
 			if ( empty( $qty ) ) 
 			{
-				echo "<p>Your Shopping Cart is empty!</p>";
+				echo "<div><p>Your Shopping Cart is empty!</p>";
 			}
 			else
 			{
@@ -86,9 +86,10 @@
 		foreach ( $Products as $Product ) { 
 		echo '<li>';		
 		$rowCnt++;
-		$coverSrc = $path."/images/products_images/" . $Product['product_id'] . "R.jpg";
+		$coverSrc = $path."/images/products_images/" . $Product['product_id'] . ".jpg";
 	    echo '<a href="'.$path.'/index.php?controller=books&action=showproduct&pid='.$Product['product_id'].'"><img src="'.$coverSrc.'" alt="'.$Product['product_name'].'" height="225" width="150" /></a>';        
 	    echo '<span><strong>'.$Product['product_name'].'</strong><br /><strong>Price:</strong>&nbsp;'.$Product['product_price'].'&nbsp;&euro;<br /><br /><a class="dvd" href="'.$path.'/index.php?controller=books&action=showproduct&pid='.$Product['product_id'].'"><strong class="click">CLICK FOR MORE DETAILS!</strong></a></span>';
+	    echo '<br /><a class="add-cart-book" href="index.php?controller=cart&action=addcart&pid='.htmlspecialchars( $Product['product_id'] ).'">Add to cart</a>';
 	    echo '</li>';	
 	   }
 	?>		

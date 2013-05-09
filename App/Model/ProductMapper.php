@@ -2,8 +2,6 @@
 
 namespace App\Model;
 
-use App\Model\Thumbnail;
-
 class ProductMapper extends AbstractMapper {
 
 	protected $_productTypes = array();
@@ -42,34 +40,11 @@ The file product_id.jpg is moved to the products_images folder.
 		$path = realpath(APPLICATION_PATH);
 		$imageTmp = $path.'/images/tmp_images/';
 		$imagePath = $path.'/images/products_images/';
-		$imageName = "$pid.jpg";
+		$imageName = $pid.".jpg";
 		
-		if( !move_uploaded_file( $_FILES["cover"]["tmp_name"], $imageTmp.$imageName ) ) {
+		if( !move_uploaded_file( $_FILES["cover"]["tmp_name"], $imagePath.$imageName ) ) {
 			echo "<p>Sorry, there was a problem uploading that photo.</p>"	;	
-		} else {
-			// Instantiate the thumbnail
-			if($Product->ptype_id == 2) //Dvd
-			{
-		    	$tn = new Thumbnail(150, 225);
-		    }
-		    elseif($Product->ptype_id == 1)//Book
-		    {	
-		    	$tn = new Thumbnail(150, 188);
-		    }
-
-			// Load an image into a string (this could be from a database)
-			$image = file_get_contents( $imageTmp.$imageName );
-
-			// Load the image data
-			$tn->loadData($image, 'image/jpeg');
-
-			// Build the thumbnail and store as a file
-			$resizedImg = $pid."R.jpg";
-			$tn->buildThumb( $imagePath.$resizedImg );
-			
-			//chmod( $imageTmp.$image, 0777 );
-			//unlink( $imageTmp.$image );		
-		   } 
+		}
 	}
 /*
 This function returns the products type id (ptype_id), it's used in the next function to get a list of products 
@@ -130,7 +105,8 @@ This function returns a list of products according to the parameters $limit and 
 														 $row["product_price"], $row["product_language"], $row["product_description"],
 														 $row["product_author"], $row["product_isbn10"] );				
 		} else {
-				print_r( $stmt->errorInfo() );		
+				print_r( $stmt->errorInfo() );	
+				return FALSE;	
 				}
 				
 		return $this->_products;
@@ -166,6 +142,55 @@ This function returns a list of products according to the parameters $limit and 
     return array( $this->_products, $row['totalRows'] );
     
   }//End fetchProducts
+  
+  /*
+    *	This function updates table products in db. 
+    *	@param: Object $Product
+    *	@return: boolean false if unsuccessfull.
+    */
+  public function update_product(Product $Product)
+  {
+	  $stmt = $this->_conn->prepare("UPDATE products SET ptype_id = :ptype_id,
+														 product_name = :product_name,
+														 product_price = :product_price,
+														 product_language = :product_language,
+														 product_description = :product_description,
+														 product_author = :product_author,
+														 product_isbn10 = :product_isbn10 
+									WHERE product_id = :product_id");
+		
+		$stmt->bindParam( ":ptype_id", $Product->ptype_id );	
+		$stmt->bindParam( ":product_name", $Product->product_name );
+		$stmt->bindParam( ":product_price", $Product->product_price );
+		$stmt->bindParam( ":product_language", $Product->product_language );
+		$stmt->bindParam( ":product_description", $Product->product_description );
+		$stmt->bindParam( ":product_author", $Product->product_author );
+		$stmt->bindParam( ":product_isbn10", $Product->product_isbn10 );
+		$stmt->bindParam( ":product_id", $Product->product_id );
+
+		
+		if( !$stmt->execute() ) {
+			print_r( $stmt->errorInfo() );
+			return FALSE;
+		}
+		
+		if(isset($_FILES['cover']) && $_FILES['cover']['error'] == UPLOAD_ERR_OK)
+		{
+			$path = realpath(APPLICATION_PATH);
+			$imagePath = $path.'/images/products_images/';
+			$imageName = $Product->product_id.".jpg";
+		
+			if(!move_uploaded_file($_FILES["cover"]["tmp_name"], $imagePath.$imageName)) 
+			{
+				echo "<p>Sorry, there was a problem uploading that photo.</p>";
+				return FALSE;	
+			}
+			//unset($_POST['cover']);
+			return TRUE;
+		}
+		
+		return TRUE;			
+  }//End method update_product
 
 
 }

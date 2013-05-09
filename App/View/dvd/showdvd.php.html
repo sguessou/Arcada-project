@@ -29,17 +29,17 @@
 	
 			if ( empty( $qty ) ) 
 			{
-				echo "<p>Your Shopping Cart is empty!</p>";
+				echo "<div><p>Your Shopping Cart is empty!</p>";
 			}
 			else
 			{
 				if( $qty == 1 )
 				{
-					echo '<p>You have <a href="#" id="cartLink">'.$qty.' product</a> in your Shopping Cart!</p>';
+					echo '<div class="link"><p>You have <a href="#" id="cartLink">'.$qty.' product</a> in your Shopping Cart!</p>';
 				}
 				else
 				{
-					echo '<p>You have <a href="#" id="cartLink">'.$qty.' products</a> in your Shopping Cart!</p>';
+					echo '<div class="link"><p>You have <a href="#" id="cartLink">'.$qty.' products</a> in your Shopping Cart!</p>';
 				}
 			}
 			?>
@@ -69,6 +69,7 @@
 			 <a class="checkout" id="checkout" href="<?php echo $path; ?>/index.php?controller=login&action=index&checkout=checkout">Proceed to Checkout</a>
 			<a class="close" id="close" href="#">Close</a>
 		</div>	
+		</div>
 	</div>
 <div class="clear">&nbsp;</div>
 </div>
@@ -84,7 +85,7 @@
 			<h1 class="dvd"><strong><?php echo htmlspecialchars( $Product->product_name ); ?></strong></h1>
 			<h2 class="instructions"><?php echo  htmlspecialchars( $ProductTypeName["type_name"] ) . " Description"; ?></h2>
 			<?php
-			$img = $path."/images/products_images/" . htmlspecialchars( $Product->product_id ) . "R.jpg";
+			$img = $path."/images/products_images/" . htmlspecialchars( $Product->product_id ) . ".jpg";
 			?>
 			<img src="<?php echo $img; ?>" alt="<?php echo $img; ?>" height="180" width="160" />
 			<p><?php echo htmlspecialchars( $Product->product_description ); ?></p>

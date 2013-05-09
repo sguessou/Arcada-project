@@ -94,8 +94,8 @@
     		$rowCount++;
     ?>
     	<tr <?php if ( $rowCount % 2 != 0 ) echo ' class="alt"' ?>>
-    	<td><a href="#"><?php echo $product['product_name']; ?></a></td>	
-    	<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"><img src="<?php echo $path ?>/css/images/Update.png"></a></td>
+    	<td><a href="<?php echo $path; ?>/index.php?controller=admin&action=update_product&product_id=<?php echo $product['product_id']; ?>"><?php echo $product['product_name']; ?></a></td>	
+    	<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="<?php echo $path; ?>/index.php?controller=admin&action=update_product&product_id=<?php echo $product['product_id']; ?>"><img src="<?php echo $path ?>/css/images/Update.png"></a></td>
     	<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"><img src="<?php echo $path ?>/css/images/Remove.png"></a></td>
     	<td></td>
     	</tr>

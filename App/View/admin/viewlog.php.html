@@ -52,7 +52,7 @@
   
   <h4 class="admin-sign">Admin Menu>>View Access Log-></h4>
  <br />
-    <table cellspacing="0" style="width: 80%">
+    <table cellspacing="0" style="width: 95%">
       <tr>
         <th align="left">Web Page</th>
         <th align="left">Date</th>
@@ -76,7 +76,7 @@ foreach ( $logs as $logEntry ) {
 ?>
     </table>
     
-<div style="width: 75%; margin-top: 20px; text-align: center;">
+<div style="width: 95%; margin-top: 20px; text-align: center;">
 <?php if ( $start > 0 ) { ?>
       <a href="<?php echo $path ?>/index.php?controller=Admin&action=viewLog&start=<?php echo max( $start - $PAGE_SIZE, 0 ) ?>&first=<?php echo max( $first - 1, 1 ) ?>">Previous page</a>
 <?php } ?>

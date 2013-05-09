@@ -108,10 +108,20 @@ CSS for form
   padding: 0 0 0.75em 0;
 }
 
+.style-form img {
+  float: left;
+  margin-left: 30px;
+}
+
 .style-form label {
   float: left;
   width: 120px;
   text-align: right;
+}
+
+.style-form h4 {
+  float: left;
+  margin-left: 30px; 
 }
 
 .style-form textarea, .style-form input{
@@ -645,6 +655,21 @@ a.cart-dvd:link, a.cart-dvd:visited {
   text-decoration: none;
 }
 
+a.add-cart-book:link, a.add-cart-book:visited {
+  display: block;
+  /* padding: 0.3em 40px 0.3em 0; */
+  padding-left: 30px;
+  height: 24px;
+  margin-left: 2px;
+  text-align: left;
+  color: #666;
+  font-weight: bold;
+  background-image: url(./images/001_47.png);
+  background-position: left center; 
+  background-repeat: no-repeat;
+  text-decoration: none;
+}
+
 a.dvd 
 {
 	text-decoration: none;
@@ -681,7 +706,7 @@ ul.gallery li {
   float: left; 
   width: 150px;
   height: 220px;
-  margin: 0 20px 20px 0;
+  margin: 20px 20px 40px 0; 
   border: 1px solid #000; 
   position: relative;
   -webkit-box-shadow: 1px 2px 5px 2px rgba(0, 0, 0, 0.3);

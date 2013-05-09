@@ -32,17 +32,17 @@
 	
 			if ( empty( $qty ) ) 
 			{
-				echo "<p>Your Shopping Cart is empty!</p>";
+				echo "<div><p>Your Shopping Cart is empty!</p>";
 			}
 			else
 			{
 				if( $qty == 1 )
 				{
-					echo '<p>You have <a href="#" id="cartLink">'.$qty.' product</a> in your Shopping Cart!</p>';
+					echo '<div class="link"><p>You have <a href="#" id="cartLink">'.$qty.' product</a> in your Shopping Cart!</p>';
 				}
 				else
 				{
-					echo '<p>You have <a href="#" id="cartLink">'.$qty.' products</a> in your Shopping Cart!</p>';
+					echo '<div class="link"><p>You have <a href="#" id="cartLink">'.$qty.' products</a> in your Shopping Cart!</p>';
 				}
 			}
 			?>
@@ -73,7 +73,7 @@
 			 <a class="checkout" id="checkout" href="<?php echo $path; ?>/index.php?controller=login&action=index&checkout=checkout">Proceed to Checkout</a>
 			<a class="close" id="close" href="#">Close</a>
 		</div>	
-		
+	   </div>
 	</div>
 	
 	

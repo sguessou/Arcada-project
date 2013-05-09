@@ -619,9 +619,9 @@ EOD;
 						$this->viewVars->flag = 'passwd';
 						$this->viewVars->userInfo = $user->fetchUser($auth->getLogin());
 					}
-				}//End inner if stmt
+				}//End inner if statement
 					
-			}//End outer if stmt
+			}//End outer if statement
 			
 			
 		}//End function viewUser

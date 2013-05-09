@@ -29,17 +29,17 @@
 	
 			if ( empty( $qty ) ) 
 			{
-				echo "<p>Your Shopping Cart is empty!</p>";
+				echo "<div><p>Your Shopping Cart is empty!</p>";
 			}
 			else
 			{
 				if( $qty == 1 )
 				{
-					echo '<p>You have <a href="#" id="cartLink">'.$qty.' product</a> in your Shopping Cart!</p>';
+					echo '<div class="link"><p>You have <a href="#" id="cartLink">'.$qty.' product</a> in your Shopping Cart!</p>';
 				}
 				else
 				{
-					echo '<p>You have <a href="#" id="cartLink">'.$qty.' products</a> in your Shopping Cart!</p>';
+					echo '<div class="link"><p>You have <a href="#" id="cartLink">'.$qty.' products</a> in your Shopping Cart!</p>';
 				}
 			}
 			?>
@@ -69,7 +69,8 @@
 			</ul>
 				<a class="checkout" id="checkout" href="<?php echo $path; ?>/index.php?controller=login&action=index&checkout=checkout">Proceed to Checkout</a>
 			<a class="close" id="close" href="#">Close</a>
-		</div>	
+		</div>
+		</div>
 	</div>
 <div class="clear">&nbsp;</div>
 </div>
@@ -89,7 +90,7 @@
 			   echo '<tr height="235">';	
 			   foreach ( $Dvds as $Product ) { 
 			   $rowCnt++;
-				$coverSrc = $path."/images/products_images/" . $Product['product_id'] . "R.jpg";
+				$coverSrc = $path."/images/products_images/" . $Product['product_id'] . ".jpg";
 				echo '<td>';
 				?>	
 				<li><a href="index.php?controller=dvd&action=showDvd&pid=<?php echo $Product['product_id']; ?>"><img src="<?php echo $coverSrc; ?>" alt="<?php echo $Product['product_name']; ?>" height="225" width="150" /></a>

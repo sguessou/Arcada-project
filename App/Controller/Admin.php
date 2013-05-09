@@ -228,6 +228,60 @@ class Admin extends AbstractController {
 				//return;
 			} 
 
-		}				
+		}//End method viewProduct
+		
+		/*
+    *	This function updates product associated data in database. 
+    *	@param: int $product_id
+    *	@return: boolean true if successfull, boolean false if unsuccessfull.
+    */
+		public function update_product()
+		{
+			$auth = new Auth();		
+			$session = new Session();
+			$this->viewVars->path = $session->get('path');
+			
+			$this->viewVars->loggedIn = NULL;
+			$this->viewVars->admin = NULL;
+			
+			if( $auth->isLogged() )
+			{
+				$this->viewVars->loggedIn = TRUE;
+				
+					//Checks for admin credentials
+					if( $auth->isAdmin( $auth->getLogin() ) )
+					{
+						$this->viewVars->admin = TRUE;
+					}
+			}
+			else { $auth->logout(); }
+			
+			$PTMapper = new ProductTypesMapper();
+			$this->viewVars->MPTypes = $PTMapper->fetchMPTypes();	
+			
+			$PrdMapper = new ProductMapper();
+			
+			$this->viewVars->product_data = NULL;
+			
+			//We get products id in order to display it.
+			if(isset($_GET['product_id']))
+			{
+				$this->viewVars->product_data = $PrdMapper->getProduct((int)$_GET['product_id']);
+			}
+			
+			$this->viewVars->updated = NULL;
+			//If $_POST['product_id'] is set, the form has been submitted for update.
+			if(isset($_POST['product_id']))
+			{
+				$var = $PrdMapper->update_product(new Product($_POST["product_id"], $_POST["ptype_id"], $_POST["title"], 
+															  $_POST["price"], $_POST["language"], $_POST["description"], 
+															  $_POST["author"], $_POST["isbn10"]));	
+				if($var) 
+				{
+					$this->viewVars->updated = TRUE;
+					$this->viewVars->product_data = $PrdMapper->getProduct((int)$_POST['product_id']);			
+				}
+			}		
+		}//End method update_product				
 	
  }//End Class Admin

@@ -30,17 +30,17 @@
 	
 			if ( empty( $qty ) ) 
 			{
-				echo "<p>Your Shopping Cart is empty!</p>";
+				echo "<div><p>Your Shopping Cart is empty!</p>";
 			}
 			else
 			{
 				if( $qty == 1 )
 				{
-					echo '<p>You have <a href="#" id="cartLink">'.$qty.' product</a> in your Shopping Cart!</p>';
+					echo '<div class="link"><p>You have <a href="#" id="cartLink">'.$qty.' product</a> in your Shopping Cart!</p>';
 				}
 				else
 				{
-					echo '<p>You have <a href="#" id="cartLink">'.$qty.' products</a> in your Shopping Cart!</p>';
+					echo '<div class="link"><p>You have <a href="#" id="cartLink">'.$qty.' products</a> in your Shopping Cart!</p>';
 				}
 			}
 			?>
@@ -74,6 +74,7 @@
 			<a class="checkout" id="checkout" href="<?php echo $path; ?>/index.php?controller=login&action=index&checkout=checkout">Proceed to Checkout</a>
 			<a class="close" id="close" href="#">Close</a>
 		  </div>
+		  </div>
 	</div>
 	
 	<div class="right">
@@ -100,7 +101,7 @@
       	foreach ( $Products as $Product ) 
       	{ 
       	 $rowCount++;
-		 $coverSrc = $path."/images/products_images/" . $Product->product_id . "R.jpg";
+		 $coverSrc = $path."/images/products_images/" . $Product->product_id . ".jpg";
 		 $description = implode(' ', array_slice(explode(' ', $Product->product_description), 0, 40));
 		 $description .= '...'; 
 		 
@@ -135,7 +136,7 @@
       	foreach ( $Dvds as $Dvd ) 
       	{ 
       	 $rowCnt++;
-		 $cvrSrc = $path."/images/products_images/" . $Dvd->product_id . "R.jpg";
+		 $cvrSrc = $path."/images/products_images/" . $Dvd->product_id . ".jpg";
 		 $descp = implode(' ', array_slice(explode(' ', $Dvd->product_description), 0, 40));
 		 $descp .= '...'; 
 		 
