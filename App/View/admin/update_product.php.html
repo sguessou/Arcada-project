@@ -1,0 +1,121 @@
+<div id="menu"> 
+		<ul>     
+			<li><a href="<?php echo $path ?>/index.php?controller=index">Main</a></li>
+			<li><a href="<?php echo $path ?>/index.php?controller=books&flag=begin">Books</a></li>
+			<li><a href="<?php echo $path ?>/index.php?controller=dvd&flag=begin">Movies</a></li>
+			<?php
+			 
+				if( $loggedIn && !$admin )
+				{
+					echo '<li><a class="current" href="'.$path.'/index.php?controller=login&action=login">My Account</a></li>';
+				}
+				elseif( !$loggedIn)
+				{
+					echo '<li><a class="current" href="'.$path.'/index.php?controller=login">Login</a></li>';
+				}
+				
+				if( $admin )
+				{
+					echo '<li><a class="current" href="'.$path.'/index.php?controller=admin">Admin</a></li>';
+				}
+				?>
+		</ul>
+	</div>
+	
+	<div id="feature">
+		<div class="left">			
+			<h2>Welcome To The Admin CMS Area!</h2>
+			<!--p>In here you can manage users !</p-->
+		</div>
+		
+			<div class="clear">&nbsp;</div>
+	</div>
+<div id="main">
+   <div id="sidebar">
+			<div class="sidebarbox">
+               <h2>Admin Menu</h2>
+				<ul class="sidemenu">
+					<li><a href="">Manage Users</a></li>
+					<li><a href="<?php echo $path ?>/index.php?controller=admin&action=ptypes">Manage Product Types</a></li>
+					<li><a href="<?php echo $path ?>/index.php?controller=admin&action=addproduct">Manage Products</a>
+						<ul>
+							<li><a href="<?php echo $path ?>/index.php?controller=admin&action=addproduct">Add Product</a></li>
+							<li><a href="<?php echo $path ?>/index.php?controller=admin&action=viewProducts">Update or Remove</a></li>
+						</ul></li>
+					<li><a href="#">Manage Orders</a></li>	
+					<li><a href="<?php echo $path ?>/index.php?controller=admin&action=viewLog">View Access Log</a></li>
+					<li><a href="<?php echo $path ?>/index.php?controller=login&action=login&logout=logout">Logout</a></li>	
+				</ul>
+			</div>
+	    </div> 		   
+	<div id="content">
+  
+  <h4 class="admin-sign">Admin Menu>>Manage Products>>Update or Remove-></h4>
+ <br />
+ <!----------------------Form with product values pre-fetched from db----------------------------------------------------------------->
+			<form action="<?php echo $path ?>/index.php?controller=admin&action=update_product" method="post" enctype="multipart/form-data" class="style-form">
+			<div><label for="title">Title</label>
+			<input type="text" name="title" id="title" value="<?php echo $product_data->product_name; ?>" required="required" /></div>
+			<input type="hidden" name="product_id" value="<?php echo $product_data->product_id; ?>" />
+			
+			<div><label for="price">Price</label>
+			<input type="text" name="price" id="price" value="<?php echo $product_data->product_price ?>" required="required"/></div>
+			
+			<div><label for="language">Language</label>
+			<input type="text" name="language" id="language" value="<?php echo $product_data->product_language ?>" required="required"/></div>
+			
+			<div><label for="ptype_id">Product type</label>
+			<select name="ptype_id" id="ptype_id" size="1"> 
+			<?php   
+			   foreach ( $MPTypes as $productType )
+			   { 
+				   if((int)$productType->ptype_id == (int)$product_data->ptype_id)
+					{	echo '<option value="'.$productType->ptype_id.'" selected="selected">'.$productType->type_name.'</option>'; }	
+					else
+					{ 	echo '<option value="'.$productType->ptype_id.'">'.$productType->type_name.'</option>'; }
+				} ?>
+			</select>
+			</div>
+			
+			<div><label for="description">Description</label>
+			<textarea name="description" id="description" rows="10" cols="30"><?php echo $product_data->product_description ?></textarea></div>
+			
+			<?php
+				$cover_path = $path."/images/products_images/".$product_data->product_id.".jpg";
+			?>
+			
+			<div><label for="old_cover">Current Cover</label>
+			<img src="<?php echo $cover_path; ?>" alt="<?php echo $product_data->product_name; ?>" height="225" width="150" /></div>
+			
+			<div><label for="cover">New Cover</label>
+			<input type="hidden" name="MAX_FILE_SIZE" value="60000" />
+			<input type="file" name="cover" id="cover" /></div>
+			
+			<div><label for="author">Author</label>
+			<input type="text" name="author" id="author" value="<?php echo $product_data->product_author ?>" required="required"/></div>
+			
+			<div><label for="isbn10">ISBN-10</label>
+			<input type="text" name="isbn10" id="isbn10" value="<?php echo $product_data->product_isbn10 ?>" required="required"/></div>
+			
+			<div class="submit"><input type="submit" name="contact-submit" id="contact-submit" value="Update Product" /></div>
+			
+			<?php
+			if($updated)
+			{
+				echo '<div><h4 class="data-updated">Your product have been updated.</h4></div>';
+			}
+			?>
+			
+		</form>
+		
+		
+ <!--------------------------------------------------------------------------------------->
+	
+	
+
+		
+ </div>
+   <div class="clear">&nbsp;</div>
+ </div>
+
+
