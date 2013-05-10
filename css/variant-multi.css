@@ -681,8 +681,12 @@ CSS for Products gallery
 
 .wrapper-dvd {
   width: 100%;
+  max-width: 1024px;
+  min-width: 1000px;
   /* margin: 0 20px 10px 40px; */
-  margin: 20px 32px;
+  margin: auto;
+  padding-left: 60px;
+  padding-top: 20px;
 }
 
 .wrapper-book {
@@ -746,10 +750,10 @@ ul.gallery-dvd {
 
 ul.gallery-dvd li {
   display: inline-block;
-  /*float: left;*/
+  float: left;
   width: 150px;
   height: 220px;
-  margin: 0 20px 20px 0;
+  margin: 20px 20px 40px 0; 
   border: 1px solid #000;
   position: relative;
   -webkit-box-shadow: 1px 2px 5px 2px rgba(0, 0, 0, 0.3);

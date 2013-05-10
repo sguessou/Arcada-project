@@ -83,29 +83,22 @@
    	
    	<div class="wrapper-dvd">
 		<ul class="gallery-dvd">
-		  <table width="100%" align="center">
-		   <tbody>
 			<?php
-			   $rowCnt = 0; 
-			   echo '<tr height="235">';	
+			   $rowCnt = 0; 	
 			   foreach ( $Dvds as $Product ) { 
+				echo '<li>';   
 			   $rowCnt++;
 				$coverSrc = $path."/images/products_images/" . $Product['product_id'] . ".jpg";
-				echo '<td>';
 				?>	
-				<li><a href="index.php?controller=dvd&action=showDvd&pid=<?php echo $Product['product_id']; ?>"><img src="<?php echo $coverSrc; ?>" alt="<?php echo $Product['product_name']; ?>" height="225" width="150" /></a>
-				<span><strong><?php echo $Product['product_name']; ?></strong><br /><strong>Price:</strong>&nbsp;<?php echo $Product['product_price']; ?>&nbsp;&euro;<br /><br /><a class="dvd" href="<?php echo $path; ?>/index.php?controller=dvd&action=showDvd&pid=<?php echo $Product['product_id']; ?>"><strong class="click">CLICK FOR MORE DETAILS!</strong></a></span></li>
+				<a href="index.php?controller=dvd&action=showDvd&pid=<?php echo $Product['product_id']; ?>"><img src="<?php echo $coverSrc; ?>" alt="<?php echo $Product['product_name']; ?>" height="225" width="150" /></a>
+				<span><strong><?php echo $Product['product_name']; ?></strong><br /><strong>Price:</strong>&nbsp;<?php echo $Product['product_price']; ?>&nbsp;&euro;<br /><br /><a class="dvd" href="<?php echo $path; ?>/index.php?controller=dvd&action=showDvd&pid=<?php echo $Product['product_id']; ?>"><strong class="click">CLICK FOR MORE DETAILS!</strong></a></span>
 			<?php 
-				echo '<div style="padding-top:0;padding-bottom:10px; text-align:justify;"><a class="cart-dvd" href="index.php?controller=cart&action=addcart&pid='.htmlspecialchars( $Product['product_id'] ).'&prod=dvd">Add to cart</a></div></td>';
-				if($rowCnt % 5 == 0 && $rowCnt != 10) echo '</tr><tr height="235">';
-				elseif($rowCnt == 10) echo '</tr>';
+				echo '<br /><a class="cart-dvd" href="index.php?controller=cart&action=addcart&pid='.htmlspecialchars( $Product['product_id'] ).'&prod=dvd">Add to cart</a></li>';
 			}
 			?>
-			</tbody>
-			</table>
 		</ul>
 		
-		<div style="width: 100%; margin-top: 20px; text-align: center;">
+		<div style="width: 80%; margin-top: 20px; text-align: center; float:left;">
         <?php 
         
         if ( $start > 0 ) 
