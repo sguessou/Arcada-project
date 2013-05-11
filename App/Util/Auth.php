@@ -3,6 +3,7 @@
 namespace App\Util;
 
 use App\Model\AbstractMapper;
+use App\Model\UserMapper;
 
 class Auth extends AbstractMapper
 {
@@ -81,6 +82,10 @@ class Auth extends AbstractMapper
 		else
 		{
 			$this->storeAuth( $_POST['login'], $password );
+			
+			//We set login flag to 1 
+			$user_mapper = new UserMapper();
+			$user_mapper->set_logging_flag($_POST['login'], 1);
 		}
 	  }//End function login
 
@@ -115,6 +120,10 @@ class Auth extends AbstractMapper
 	//Logs the user out
 	public function logout()
   {
+	//We set user table login flag to 0 
+		$user_mapper = new UserMapper();
+		$user_mapper->set_logging_flag($this->_session->get('login'), 0);
+		  
 		$this->_session->del( 'login' );
 		$this->_session->del( 'password' );
 		$this->_session->del( 'hash' );

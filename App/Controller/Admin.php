@@ -232,8 +232,8 @@ class Admin extends AbstractController {
 		
 		/*
     *	This function updates product associated data in database. 
-    *	@param: int $product_id
-    *	@return: boolean true if successfull, boolean false if unsuccessfull.
+    *	@param: none
+    *	@return: none
     */
 		public function update_product()
 		{
@@ -282,6 +282,37 @@ class Admin extends AbstractController {
 					$this->viewVars->product_data = $PrdMapper->getProduct((int)$_POST['product_id']);			
 				}
 			}		
-		}//End method update_product				
+		}//End method update_product
+		
+		/*
+    *	This function displays users and their associated data. 
+    *	@param: none
+    *	@return: none
+    */
+		public function manage_users()
+		{
+			$auth = new Auth();		
+			$session = new Session();
+			$this->viewVars->path = $session->get('path');
+			
+			$this->viewVars->loggedIn = NULL;
+			$this->viewVars->admin = NULL;
+			
+			if( $auth->isLogged() )
+			{
+				$this->viewVars->loggedIn = TRUE;
+				
+					//Checks for admin credentials
+					if( $auth->isAdmin( $auth->getLogin() ) )
+					{
+						$this->viewVars->admin = TRUE;
+					}
+			}
+			else { $auth->logout(); }
+			
+			$user_mapper = new UserMapper();
+			$this->viewVars->users_data = $user_mapper->fetchUsers();
+			
+		}//End method manage_users				
 	
  }//End Class Admin

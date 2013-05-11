@@ -50,6 +50,28 @@ class UserMapper extends AbstractMapper
 	}
 	
 	/**
+	* Gets all rows from user table 
+	* @param none 
+	* @return all rows of data on success
+	*/	
+	public function fetchUsers()
+	{
+		$sql = "SELECT * FROM user";
+		$stmt = $this->_db->query($sql);
+
+		
+		if( $stmt->execute() )
+		{
+			return $row = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+		}
+		else
+		{
+			print_r( $stmt->errorInfo() );
+			return;
+		}
+	}
+	
+	/**
 	* Updates user table column last_log to current time 
 	*	@param string contains login 
 	* @return none
@@ -252,6 +274,25 @@ class UserMapper extends AbstractMapper
 			return FALSE;
 		}
 	}//End method updateAddress
+	
+	/**
+	* Sets flag to true if user logs in and to false when logging out. 
+	* @param string $login, int $val
+	* @return none
+	*/	
+	public function set_logging_flag($login, $val)
+	{
+		$sql = "UPDATE user SET flag_logged = :val WHERE login = :login";
+		$stmt = $this->_db->prepare($sql);		
+		$stmt->bindParam(':val', $val);
+		$stmt->bindParam(':login', $login);
+		
+		if(!$stmt->execute())
+		{
+			print_r($stmt->errorInfo());
+		}
+		
+	}
 	
 
 }//End Class UserMapper
