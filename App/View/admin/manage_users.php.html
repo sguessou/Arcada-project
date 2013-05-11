@@ -1,0 +1,84 @@
+<div id="menu"> 
+		<ul>     
+			<li><a href="<?php echo $path ?>/index.php?controller=index">Main</a></li>
+			<li><a href="<?php echo $path ?>/index.php?controller=books&flag=begin">Books</a></li>
+			<li><a href="<?php echo $path ?>/index.php?controller=dvd&flag=begin">Movies</a></li>
+			<?php
+			 
+				if( $loggedIn && !$admin )
+				{
+					echo '<li><a class="current" href="'.$path.'/index.php?controller=login&action=login">My Account</a></li>';
+				}
+				elseif( !$loggedIn)
+				{
+					echo '<li><a class="current" href="'.$path.'/index.php?controller=login">Login</a></li>';
+				}
+				
+				if( $admin )
+				{
+					echo '<li><a class="current" href="'.$path.'/index.php?controller=admin">Admin</a></li>';
+				}
+				?>
+		</ul>
+	</div>
+	
+	<div id="feature">
+		<div class="left">			
+			<h2>Welcome to the Admin CMS area!</h2>
+			<!--p>In here you can manage users !</p-->
+		</div>
+		
+			<div class="clear">&nbsp;</div>
+	</div>
+<div id="main">
+   <div id="sidebar">
+			<div class="sidebarbox">
+               <h2>Admin Menu</h2>
+				<ul class="sidemenu">
+					<li><a href="<?php echo $path ?>/index.php?controller=admin&action=manage_users">Manage Users</a></li>
+					<li><a href="<?php echo $path ?>/index.php?controller=admin&action=ptypes">Manage Product Types</a></li>
+					<li><a href="<?php echo $path ?>/index.php?controller=admin&action=addproduct">Manage Products</a>
+						<ul>
+							<li><a href="<?php echo $path ?>/index.php?controller=admin&action=addproduct">Add Product</a></li>
+							<li><a href="<?php echo $path ?>/index.php?controller=admin&action=viewProducts">Update or Remove</a></li>
+						</ul></li>
+					<li><a href="#">Manage Orders</a></li>	
+					<li><a href="<?php echo $path ?>/index.php?controller=admin&action=viewLog">View Access Log</a></li>
+					<li><a href="<?php echo $path ?>/index.php?controller=login&action=login&logout=logout">Logout</a></li>	
+				</ul>
+			</div>
+	    </div> 		   
+	<div id="content">
+  
+  <?php 
+  
+	echo '<h4 class="admin-sign">Admin Menu>>Manage Users-></h4><br />'; ?>
+	
+  	<table cellspacing="0" style="width: 95%">
+      <tr>
+        <th align="left">Username</th>
+        <th align="left">Last Activity</th>
+        <th align="left">Currently Logged In</th>
+      </tr>
+      
+      <?php
+$rowCount = 0;
+
+foreach ($users_data as $user_data) {
+  $rowCount++;
+?>
+      <tr <?php if ( $rowCount % 2 == 0 ) echo ' class="alt"' ?>>
+        <td><a href=""><?php echo $user_data['login']; ?></a></td>
+        <td><?php echo $user_data['last_log']; ?></td>
+        <td><?php echo $user_data['flag_logged'] ? '<strong>Yes</strong>':'<strong>No</strong>'; ?></td>
+      </tr>
+<?php
+}
+?>
+    </table>
+				
+		
+      </div>  
+    <div class="clear">&nbsp;</div>
+   </div>
+
