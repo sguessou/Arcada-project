@@ -474,6 +474,16 @@ h4.dvd-selected {
   height: 32px;
 } 
 
+h4.user-data { 
+  font-size: 100%;
+  background-image: url(./images/person_info.png);
+  background-repeat: no-repeat;
+  background-position: left center;
+  padding-left: 42px;
+  padding-top: 18px;
+  height: 32px;
+} 
+
 h4.passwd-warning { 
   font-size: 100%;
   background-image: url(./images/warning-round-red.png);

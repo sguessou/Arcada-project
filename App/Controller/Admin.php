@@ -313,6 +313,14 @@ class Admin extends AbstractController {
 			$user_mapper = new UserMapper();
 			$this->viewVars->users_data = $user_mapper->fetchUsers();
 			
+			$this->viewVars->user_data = NULL;
+			if(isset($_GET['login']))
+			{
+				$this->viewVars->user_data = $user_mapper->fetchUser($_GET['login']);
+			}
+			
+			
+			
 		}//End method manage_users				
 	
  }//End Class Admin
