@@ -6,37 +6,9 @@
 	<meta name="keywords" content="Books, dvd's" />
 	<meta name="author" content="sguessou" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $this->path; ?>/css/variant-multi.css" title="Variant Multi" media="all" />
-	<script src="_js/jquery-1.9.1.min.js"></script>
+	
 	<title>Online Store</title>
-	<script>
-		$(document).ready(function(){
-			$('#cartLink').click(function(){
-				$('#cartSlider').slideToggle(300);
-				return false;
-			});//end click
-			$('#close').click(function(){
-				$('#cartSlider').slideToggle(300);
-				return false;
-			});// end #close
-		});//end ready
-	</script>
-	<script type="text/javascript">
-			// using some javascript to make the user experience a bit better
-			// this script simply automatically submits the filter form whenever the
-			// user changes a selection.			
-			window.onload = function(){
-				// fetch references to each form element
-				var PrdTypeSelect = document.getElementById('TypeSelect');
-				var form = document.getElementById('PrdTypeForm');
-				
-				// connect a event listener to the country drop down that listens for when it changes
-				// send the form again so that we load specific country information
-				PrdTypeSelect.onchange = function(){
-					form.submit();
-				}
-			}
-			
-		</script>
+
 </head>
 <body>
 <div id="containerfull"><!-- Use"containerfull" for 100% width. For fixed width, use "container980", "container760" or "container600" (the number is the layout width in pixels). -->
@@ -90,5 +62,49 @@
 		<span class="small">Template design by <a href="http://andreasviklund.com/">Andreas Viklund</a></span></p>
 	</div>  
 </div>
+
+<script src="_js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+
+		$(document).ready(function(){
+			$('#cartLink').click(function(){
+				$('#cartSlider').slideToggle(300);
+				return false;
+			});//end click
+			$('#close').click(function(){
+				$('#cartSlider').slideToggle(300);
+				return false;
+			});// end #close
+		});//end ready
+	
+	
+			// using some javascript to make the user experience a bit better
+			// this script simply automatically submits the filter form whenever the
+			// user changes a selection.			
+			window.onload = function(){
+				// fetch references to each form element
+				var PrdTypeSelect = document.getElementById('TypeSelect');
+				var form = document.getElementById('PrdTypeForm');
+				
+				// connect a event listener to the country drop down that listens for when it changes
+				// send the form again so that we load specific country information
+				PrdTypeSelect.onchange = function(){
+					form.submit();
+				}
+			}
+			
+		
+  //Google analytics			
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-44753445-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
 </body>
 </html>
